@@ -1,0 +1,14 @@
+{
+  	"name"		: "sokobank_monitor"
+,	"version"	: "0.0.1"
+,
+  	"dependencies"	: {
+       	"commons"   : "../commons/commons.js"
+	}
+,
+	"engines" : {
+    	"node"	: "0.8.x"
+    ,	"npm"	: "1.1.x"
+  	}
+}
+

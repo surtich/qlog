@@ -1,0 +1,14 @@
+module.exports.request	= require('request');    	// to easy request
+module.exports.express	= require('express');    	// basic framework
+module.exports.async 	= require('async');    		// asynchronous management
+module.exports.q 		= require('q');      		// defered & promises management
+module.exports.amqp		= require("amqp");  		// raw mq
+module.exports.mongodb	= require("mongodb");    	// document data store
+module.exports.redis	= require("redis");      	// key-value data store
+module.exports.assert	= require("assert");     	// unit test
+module.exports.fs		= require('fs');          	// file system
+module.exports.extend	= require('xtend');			// merge object properties
+module.exports.passport	= require('passport');		// security strategies framework
+module.exports.uuid 	= require('node-uuid');
+module.exports.hero		= require('./hero.js');		// hero beta library
+module.exports.qlog		= require('./qlog.js');		// qlog common library

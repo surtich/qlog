@@ -1,0 +1,28 @@
+{
+    "mq" : {
+        "log" : {
+            "host"      : "localhost"
+        ,   "port"      : ""
+        ,   "exchange"  : "qlog_ex"
+        ,   "queue"     : "qlog_q"
+        ,   "type"      : "amqp"
+        }
+    }
+,
+    "db" : {
+        "session" : {
+            "host" : "localhost"
+        ,   "port" : "6379"
+        ,   "type" : "redis"
+        ,   "params" : {}
+        }
+    ,
+        "log" : {
+            "host" : "localhost"
+        ,   "port" : "27017"
+        ,   "name" : "qlog"
+        ,   "type" : "mongodb"
+        ,   "params" : {}
+        }
+    }
+}
