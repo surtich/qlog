@@ -1,4 +1,4 @@
 qlog
 ====
 
-Logs recorded deferred driven by amqp
+Log system deferred driven by amqp written in NodeJS
