@@ -1,7 +1,6 @@
 var express	= require('express')    	// basic framework
 ,	async	= require('async')      	// asynchronous management
 ,	q		= require('q')      		// deferred and promises management
-,	rabbit	= require("./rabbit_manager.js")  	// queues management
 ,	mongodb	= require("mongodb")    	// document data store
 ,	redis	= require("redis")      	// key-value data store
 ,	assert	= require("assert")     	// unit test
@@ -268,6 +267,8 @@ hero.init = function (p_paths, f_callback){
  	}
  	f_callback();
 };
+
+hero.getProcParam = getParamValue;
 
 var paramPort = getParamValue('port');
 var paramEnv  = getParamValue('env');
