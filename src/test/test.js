@@ -5,14 +5,23 @@ var commons = require("../lib/commons.js")
 ,	qlog	= require("../qlog/qlog.js")
 ;
 
-var testEmail   = 'jonas.dacruz@intelygenz.com';
-var testPwd   	= '123456';
+var user = 'user';
+var pwd  = '123456';
 
-describe('Testing security concerns'
+var adminUsr = 'admin';
+var adminPwd = '123456';
+
+var appName = 'test'
+
+var logMsg  = 'this message is a test'
+var logTags = 'test,qlog'
+
+describe('QLog testing'
 , 	function(){
 
 		before(
 			function (done){
+
 				qlog.ready(
 					function (err){
 						if(err) {
@@ -24,6 +33,7 @@ describe('Testing security concerns'
 						}
 					}
 				);
+
 			}
 		);
 

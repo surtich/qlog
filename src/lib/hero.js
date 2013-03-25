@@ -71,7 +71,7 @@ function db(p_config){
 				 		, 
 				 			function(err, client) {
 				   				if(err) { 
-									hero.error(err);;
+									hero.error(err);
 				   				}
 				   				self.client = client;
 				   				f_callback( err, self.client );
@@ -86,9 +86,8 @@ function db(p_config){
 				   		, 	
 				   			p_config.params
 				   		);
-
 				  		self.client.open(
-				   			function(err, p_client) {
+				   			function(err, client) {
 								if(err) {
 					 				hero.error(err);
 								}

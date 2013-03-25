@@ -1,47 +1,47 @@
 exports.paths = [
 
 	{ 	"method"  	: "GET"
-	, 	"path"		: "/auth" 
-	, 	"handler" 	: require("./path/auth.js")
+	, 	"path"		: "/oauth" 
+	, 	"handler" 	: require("./path/oauth_get.js")
+	}
+,
+	{ 	"method"  	: "GET"
+	, 	"path"		: "/app" 
+	, 	"handler" 	: require("./path/app_get.js")
+	}
+,
+	{ 	"method"  	: "PUT"
+	, 	"path"		: "/app" 
+	, 	"handler" 	: require("./path/app_put.js")
 	}
 ,
 	{ 	"method"  	: "POST"
 	, 	"path"		: "/singup" 
-	, 	"handler" 	: require("./path/singup.js")
+	, 	"handler" 	: require("./path/singup_post.js")
 	}
 ,
 	{ 	"method"  	: "POST"
-	, 	"path"		: "/login" 
-	, 	"handler" 	: require("./path/login.js")
+	, 	"path"		: "/singin" 
+	, 	"handler" 	: require("./path/singin_post.js")
 	}
 ,
 	{ 	"method"  	: "POST"
-	, 	"path"		: "/logout" 
-	, 	"handler" 	: require("./path/logut.js")
+	, 	"path"		: "/singout" 
+	, 	"handler" 	: require("./path/singout_post.js")
 	}
 ,
 	{ 	"method"  	: "GET"
 	, 	"path"		: "/log" 
-	, 	"handler" 	: require(["./filter/user.js","./path/log.js"])
+	, 	"handler" 	: require("./path/log_get.js")
 	}
 ,
-	{ 	"method"  	: "GET"
-	, 	"path"		: "/settings" 
-	, 	"handler" 	: require(["./filter/user.js","./path/settings.js"])
-	}
-,
-	{ 	"method"  	: "GET"
-	, 	"path"		: "/admin/list" 
-	, 	"handler" 	: require(["./filter/admin.js","./path/admin/client_list.js"])
-	}
-,
-	{ 	"method"  	: "GET"
-	, 	"path"		: "/admin/"
-	, 	"handler" 	: require(["./filter/admin.js","./path/admin/client_list.js"])
-	}
-,
-	{ 	"method"  	: "POST"
+	{ 	"method"  	: "PUT"
 	, 	"path"		: "/log" 
-	, 	"handler" 	: require(["./filter/session.js", "./path/log.js"])
+	, 	"handler" 	: require("./path/log_put.js")
+	}
+,
+	{ 	"method"  	: "GET"
+	, 	"path"		: "/user" 
+	, 	"handler" 	: require("./path/user_get.js")
 	}
 ]

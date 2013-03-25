@@ -1,126 +1,189 @@
-var commons = require('../../lib/commons.js')
+var commons = require('../lib/commons.js')
 ,   async   = commons.async
 ,   mongodb = commons.mongodb
+,   express = commons.express
 ,   hero 	= commons.hero
-,	uuid	= commons.uuid
 ;
+
+var qlog = {};
 
 module.exports = hero.worker(
 	function (self){
 
-		var _REDIS_PREFIX 		= 'QLOG:'
-		,	_LABEL_COOKIE_ADMIN = 'QLAID'
-		,	_LABEL_COOKIE_USER  = 'QLUID'
-		;
+		var dbLog 	  = self.db('log', self.config.db.log);
+		var dbSession = self.db('session', self.config.db.log);
+		var mq 		  = self.mq('log', self.config.mq.log);
 
-		var _dbSessions = self.db( 'session', self.config.db.session );
+		function _checkAdminUser(next){
+			var defUsr = hero.getProcParam('defusr');
+			var defPwd = hero.getProcParam('defpwd');
 
-		function _getCookies(p_cookies){
-			var regex  	= /(([^= ]*)=([^;]*))/g
-			,	matches = []
-			,	cookies = {}
-			;
-			if ( p_cookies ) {
-				matches = regex.exec( p_cookies );
-				while (matches) {
-					cookies[matches[2]] = matches[3];
-					matches = regex.exec( p_cookies );
-				}
+			if ( defUsr && defPwd ) {
+				self.user.createAdmin( defUsr, defPwd, next );
 			}
-		  	return cookies;
+			else {
+				self.user.checkAdminUser( next );
+			}
 		}
 
-		function _getUserSession(p_cookie, f_callback){
-			_dbSessions.get( p_cookie, f_callback);
-		}
+		function _user (p_collection){
+			var _userCol = p_collection;
 
-		function _getUserByEmailAndPwd(p_email, p_pwd, f_callback){
-			_userCollection.findOne( 
-				{ email : p_email, pwd : p_pwd }
-			, 
-				function (err, p_json){
-					f_callback( err, p_json );		
-				}
-			);
-		}
+			function _createAdmin(p_user, p_pwd, f_callback){
+				_createUser(p_user, p_pwd, true, f_callback);
+			}
 
-		function _checkUserCookie(p_req, f_callback){
-			_getUserSession( _REDIS_PREFIX+_LABEL_COOKIE_USER+':'+_getCookies(p_req.headers.cookie), f_callback );
-		}
-		
-		function _checkAdminCookie(p_req, f_callback){
-			_getUserSession( _REDIS_PREFIX+_LABEL_COOKIE_ADMIN+':'+_getCookies(p_req.headers.cookie), f_callback );
-		}
-
-		function _removeCookies(p_req, f_callback){
-			async.parallel (
-				[
-					function (f_next){
-						_dbSessions.del( _LABEL_COOKIE_USER+':'+_getCookies(p_req.headers.cookie), f_next);	
+			function _createUser(p_user, p_pwd, p_admin, f_callback){
+				_userCol.insert(
+					{ usr   : p_user
+					, pwd   : p_pwd
+					, admin : p_admin
+					, created : new Date()
 					}
+				,	
+					f_callback
+				);
+			}
+
+			function _checkAdminUser(f_callback) {
+				_userCol.findOne (
+					{ admin : true }
 				,
-					function (f_next){
-						_dbSessions.del( _LABEL_COOKIE_ADMIN+':'+_getCookies(p_req.headers.cookie), f_next);	
-					}
-				]
+					f_callback
+				);
+			}
+
+			function _getByUserAndPwd(p_usr, p_pwd, f_callback) {
+				_userCol.findOne(
+					{ usr : p_usr, pwd : p_pwd }
 				,
-				function (err){
-					f_callback(err);
-				}
-			);
+					f_callback
+				);
+			}
+
+			function _getUsers(p_from, p_limit, f_callback) {
+				var from = p_from | 0;
+				var limit = p_limit | 25;
+				_userCol
+					.find(
+						{}
+					,
+						f_callback
+					)
+					.skip(from)
+					.limit(limit)
+				;
+			}
+
+			this.createAdmin 	 = _createAdmin;
+			this.createUser 	 = _createUser;
+			this.checkAdminUser  = _checkAdminUser;
+			this.getByUserAndPwd = _getByUserAndPwd;
+			this.getUsers 		 = _getUsers;
+
 		}
 
-		function _createUserSession(p_uid, p_admin, f_callback){
-			var cookieAdmin = ''
-			,	cookieUser  = ''
-			;
-			async.parallel(
-				[
-					function (f_next){
-						if (p_admin) {
-							cookieAdmin = _LABEL_COOKIE_ADMIN+'='+uuid.v4();
-							_dbSessions.set( cookieAdmin, p_uid, f_next);
-						}
-						else {
-							f_next();
-						}
+
+		function _log(p_collection){
+			var _log = p_collection;
+
+			function _save(p_appId, p_msg, p_time, p_tags, f_callback){
+				_log.insert(
+					{
+					  appId : p_appId 
+					, msg 	: p_msg 
+					, time 	: p_time
+					, tags 	: p_tags
+					, created: new Date()
 					}
-				,
-					function (f_next) {
-						cookieUser = _LABEL_COOKIE_USER+'='+uuid.v4();
-						_dbSessions.set(cookieUser , p_uid, f_next);
-					}
-				]
-			, 
-				function (err){
-					f_callback( 
-						err
-						, 
-						{ 'Set-Cookie' : cookieUser 
-						, 'Set-Cookie' : cookieAdmin
+				, 
+					f_callback
+				)
+			}
+
+			function _get(p_appId, p_date, p_tags, p_from, p_limit, f_callback){
+				var dateFilter = p_date | new Date();
+				var from = p_from | 0;
+				var limit = p_limit | 25;
+				_log
+					.find(
+						{ appId : p_appId 
+						, created : {"$gte": dateFilter }
+						, tags : $in( p_tags.split(',')  )
 						}
+					,
+						f_callback
+					)
+					.sort( { 'created' : 'asc' })
+					.skip(from)
+					.limit(limit)
+				;
+			}
+
+			this.save= _save;
+			this.get = _get;
+
+		}
+
+		self.user = null;
+		self.log = null;
+
+		self.ready = function (next){
+			hero.app.configure (
+				function() {
+					hero.app.use( express.bodyParser() );
+					hero.app.use( hero.app.router );
+					hero.app.use(
+						express.errorHandler(
+							{	dumpExceptions 	: true
+							,	showStack 		: true
+							}
+						)
 					);
-
 				}
 			);
-		}
 
-		function _singin(p_req, p_res, f_callback){
-			var email = _getParameter(p_req, 'e')
-			,	pwd   = _getParameter(p_req, 'p')
-			;
-			_getUserByEmailAndPwd(
-				email, pwd
-				, function (err, data){
-					if ( data.uid ) {
-						_createUserSession( data.uid, data.admin, f_callback );
-					}
+			hero.init(
+				require("./paths.js").paths
+			,
+				function (){
+			
+					async.series(
+						[
+							function (done){
+								dbLog.setup(
+					 	 			function(err, client){
+					 	 				if(err) {
+					 	 					hero.error( err );
+					 	 				}
+					 	 				if ( client ) {
+					 	 					self.user = new _user( new mongodb.Collection(client, 'user') );
+											self.log = new _log( new mongodb.Collection(client, 'log') );
+								 	 		done(null);
+					 	 				}
+								 	 }
+								);
+							}
+						,
+							function (done){
+								_checkAdminUser(
+									function (err, data){
+										if ( !data ) {
+											hero.error('On the first time you have the following parameters "qlog/main -defusr=admin -defpwd=[YOUR_PASSWORD]"');
+											process.exit(1);
+										}
+										else {
+											done();
+										}
+									}
+								);
+							}
+						]
+						, next
+					);
 				}
 			);
-		}
 
-		function _singout(p_req, p_res, f_callback){
-			_removeCookies(p_req, p_res, f_callback)
 		}
 
 	}
