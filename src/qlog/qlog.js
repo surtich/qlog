@@ -58,7 +58,7 @@ module.exports = hero.worker(
 					,	usr   	: p_user
 					, 	pwd   	: p_pwd
 					, 	admin 	: p_admin
-					, 	created : new Date()
+					, 	created : (new Date()).getTime()
 					}
 				,	
 					f_callback
@@ -81,9 +81,10 @@ module.exports = hero.worker(
 				);
 			}
 
-			function _getUsers(p_from, p_limit, f_callback) {
-				var from  = p_from || 0;
-				var limit = p_limit || 25;
+			function _getUsers(p_filter, f_callback) {
+				p_filter = p_filter || {};
+				var from  = p_filter.from || 0;
+				var limit = p_filter.limit || 25;
 				_userCol
 					.find(
 						{}
@@ -106,42 +107,52 @@ module.exports = hero.worker(
 		function _log(p_collection){
 			var _logCol = p_collection;
 
-			function _save(p_appId, p_msg, p_time, p_tags, f_callback){
+			function _create(p_appId, p_msg, p_time, p_tags, f_callback){
 				_logCol.insert(
 					{
 					  logId 	: new ObjectID()
+					, appId 	: p_appId
 					, msg 		: p_msg 
 					, time 		: p_time
 					, tags 		: p_tags
-					, created 	: new Date()
+					, created 	: (new Date()).getTime()
 					}
 				, 
 					f_callback
 				)
 			}
 
-			function _get(p_appId, p_date, p_tags, p_from, p_limit, f_callback){
-				var dateFilter = p_date || new Date();
-				var from = p_from || 0;
-				var limit = p_limit || 25;
+			function _get(p_appId, p_filter, f_callback){;
+				p_filter = p_filter || {};
+				var filter = { 
+					appId : new ObjectID(String(p_appId))
+				}
+				
+				var from 	= p_filter.from || 0;
+				var limit 	= p_filter.limit || 25;
+
+				if ( p_filter.date ) {
+				 	filter.created = { $lte : p_filter.date };
+				}
+
+				if ( p_filter.tags ) {
+					filter.tags = { $in : p_filter.tags };
+				}
+
 				_logCol
 					.find(
-						{ appId : new ObjectID(String(p_appId))
-						, created : {"$gte": dateFilter }
-						, tags : $in( p_tags.split(',')  )
-						}
-					,
-						f_callback
+						filter
 					)
 					.sort( { 'created' : 'asc' })
 					.skip(from)
 					.limit(limit)
+					.toArray(f_callback)
 				;
 			}
 
-			this.save= _save;
-			this.get = _get;
-			this.remove = function (f_callback){ _logCol.remove(f_callback) };
+			this.create 	= _create;
+			this.getByApp 	= _get;
+			this.remove 	= function (f_callback){ _logCol.remove(f_callback) };
 
 		}
 
@@ -157,7 +168,7 @@ module.exports = hero.worker(
 					, 	clientId	: _createToken( _CLIENT_ID_LENGTH )
 					, 	secretKey	: _createToken( _SCECRET_KEY_LENGTH )
 					, 	callback 	: p_callback
-					,	created		: new Date()
+					,	created		: (new Date()).getTime()
 					}
 				,
 					f_callback
@@ -201,7 +212,7 @@ module.exports = hero.worker(
 			function _getAppsByUser(p_uid, f_callback){
 				_appCol
 					.find(
-						{ 
+						{ uid : new ObjectID(String(p_uid))
 						}
 					)
 					.sort( { 'created' : 'asc' })
@@ -209,14 +220,20 @@ module.exports = hero.worker(
 				;
 			}
 
-			function _get(p_date, p_from, p_limit, f_callback){
-				var dateFilter = p_date || new Date();
-				var from = p_from || 0;
-				var limit = p_limit || 25;
+			function _get(p_date, p_filter, f_callback){
+				p_filter = p_filter || {};
+				var filter = {};
+
+				var from  = p_filter.from || 0;
+				var limit = p_filter.limit || 25;
+
+				if(p_filter.date) {
+					filter.created = { $lte : p_filter.date }
+				}
+
 				_appCol
 					.find(
-						{ created : {"$gte": dateFilter }
-						}
+						filter
 					,
 						f_callback
 					)

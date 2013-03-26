@@ -7,7 +7,6 @@ var commons = require("../lib/commons.js")
 
 var testUser = {
 	usr : 'user'
-,	uid : null
 ,	pwd : '123456'
 ,	admin : false
 }
@@ -16,6 +15,11 @@ var testApp = {
 	"uid"		: null
 , 	"name"  	: "Test app"
 , 	"callback" 	: "http://test.app.com/callback"
+}
+
+var testLog = {
+	"msg"	: "Test log message"
+,	"tags"	: ["tag1","tag2"]
 }
 
 var adminUser = {
@@ -69,7 +73,7 @@ describe('QLog testing'
 							,
 								function(next){
 									qlog.user.getUsers(
-										null, null
+										{}
 									,
 										function (err, data){
 											assert.equal(data.length, 1);
@@ -105,7 +109,7 @@ describe('QLog testing'
 									qlog.user.getByUsrAndPwd(
 										testUser.usr, testUser.pwd
 									,
-										function (err, data){
+										function (err, data){											
 											assert.equal(testUser.usr, data.usr);
 											assert.equal(testUser.pwd, data.pwd);
 											assert.equal(testUser.admin, data.admin);
@@ -175,7 +179,7 @@ describe('QLog testing'
 							.concat(
 								function(next){
 									qlog.user.getUsers(
-										10, 20
+										{ from : 10, limit : 20 }
 									,
 										function (err, data){
 											assert.equal(20, data.length);
@@ -217,7 +221,7 @@ describe('QLog testing'
 									, 	testUser.pwd
 									, 
 										function (err, data){
-											userId = String(data.uid);
+											userId = data.uid;
 											next();
 										}
 									);
@@ -281,7 +285,7 @@ describe('QLog testing'
 									, 	testUser.pwd
 									, 
 										function (err, data){
-											userId = String(data.uid);
+											userId = data.uid;
 											next();
 										}
 									);
@@ -314,7 +318,7 @@ describe('QLog testing'
 							,
 								function(next){
 									qlog.app.getByUser(
-										testUser.uid
+										userId
 									,
 										function (err, data){
 											assert.equal(data.length, 1);
@@ -339,10 +343,6 @@ describe('QLog testing'
 
 
 
-
-
-
-
 	    		it('refresh app secret token'
 	    		, 	function(done){
 
@@ -362,7 +362,7 @@ describe('QLog testing'
 									, 	testUser.pwd
 									, 
 										function (err, data){
-											userId = String(data.uid);
+											userId = data.uid;
 											next();
 										}
 									);
@@ -394,12 +394,110 @@ describe('QLog testing'
 							,
 								function(next){
 									qlog.app.getByUser(
-										testUser.uid
+										userId
 									,
 										function (err, data){
 											assert.equal(data.length, 1);
 											assert.equal(32, data[0].secretKey.length);
-											assert.notEqual(secretKey, data[0].secretKey.length);
+											assert.notEqual(secretKey, data[0].secretKey);
+											next();
+										} 
+									);
+								}
+
+							]
+							,
+							function(err, results){
+								done();
+							}
+						);
+	    			}
+	    		);
+
+
+	    	}
+
+	    );
+
+
+
+
+
+
+
+
+
+		describe('#Log tests'
+	  	, 	function(){
+
+	    		it('log app'
+	    		, 	function(done){
+	    				
+	    				var userId = null;
+	    				var appId = null;
+
+						async.series(
+							[
+								function(next){
+									qlog.user.createUser( 
+										testUser.usr
+									, 	testUser.pwd
+									, 
+										function (err, data){
+											userId = data[0].uid
+											next();
+										}
+									);
+								}
+							,
+								function(next){
+									qlog.user.getByUsrAndPwd( 
+										testUser.usr
+									, 	testUser.pwd
+									, 
+										function (err, data){
+											userId = data.uid;
+											next();
+										}
+									);
+								}
+							,
+								function(next){
+									qlog.app.create(
+										userId
+									,	testApp.name
+									,	testApp.callback
+									,
+										function (err, data){
+											appId = data[0].appId;
+											next();
+										} 
+									);
+								}
+							,
+								function(next){
+									qlog.log.create(
+										appId
+									,	testLog.msg
+									, 	new Date().getTime()
+									, 	testLog.tags
+									,
+										function (err, data){
+											next();
+										} 
+									);
+								}
+							,
+								function(next){
+									qlog.log.getByApp(
+										appId
+									, 	{}
+									,
+										function (err, data){								
+											assert.equal(data.length, 1);
+											assert.equal(testLog.msg, data[0].msg);
+											assert.deepEqual(testLog.tags, data[0].tags);
+											assert.notEqual(null, data[0].logId);
 											next();
 										} 
 									);
@@ -416,10 +514,14 @@ describe('QLog testing'
 
 
 
-
 	    	}
 
 	    );
+
+
+
+
+
 
 
 	}
