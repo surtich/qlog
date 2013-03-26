@@ -1,20 +1,19 @@
 
 module.exports = function (req, res, next){
 
-	qlog.app.create(
-		req.pastry.data.uid
-	, 	req.body.n
-	, 	req.body.cb
+	qlog.app.refreshSecretKey(
+		req.body.appId
 	, 
 		function (err, data){
 			if ( err ) {
 				console.log( err );
 				res.writeHead(500);
+				res.end( {} );
 			}
 			else {
 				res.writeHead(200);
+				res.end( { secretKey : data.secretKey } );
 			}
-			res.end( {} );
 		}
 	);
 

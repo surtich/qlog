@@ -204,7 +204,7 @@ describe('QLog testing'
 
 	    		it('create app'
 	    		, 	function(done){
-
+	    				var userId = null;
 						async.series(
 							[
 								function(next){
@@ -217,15 +217,15 @@ describe('QLog testing'
 									, 	testUser.pwd
 									, 
 										function (err, data){
-											testUser.uid = String(data.uid);
+											userId = String(data.uid);
 											next();
 										}
 									);
 								}
 							,
 								function(next){
-									qlog.app.save(
-										testUser.uid
+									qlog.app.create(
+										userId
 									,	testApp.name
 									,	testApp.callback
 									,
@@ -237,7 +237,7 @@ describe('QLog testing'
 							,
 								function(next){
 									qlog.app.getByUser(
-										testUser.uid
+										userId
 									,
 										function (err, data){
 											assert.equal(data.length, 1);
@@ -263,7 +263,162 @@ describe('QLog testing'
 
 
 
+	    		it('update app'
+	    		, 	function(done){
+
+						var userId = null;
+						var appId  = null;
+
+						async.series(
+							[
+								function(next){
+									qlog.user.createUser( testUser.usr, testUser.pwd, next );
+								}
+							,
+								function(next){
+									qlog.user.getByUsrAndPwd( 
+										testUser.usr
+									, 	testUser.pwd
+									, 
+										function (err, data){
+											userId = String(data.uid);
+											next();
+										}
+									);
+								}
+							,
+								function(next){
+									qlog.app.create(
+										userId
+									,	testApp.name
+									,	testApp.callback
+									,
+										function (err, data){
+											appId = data[0].appId;
+											next();
+										} 
+									);
+								}
+							,
+								function(next){
+									qlog.app.update(
+										appId
+									,	testApp.name+'_updated'
+									,	testApp.callback+'_updated'
+									,
+										function (){
+											next();
+										} 
+									);
+								}
+							,
+								function(next){
+									qlog.app.getByUser(
+										testUser.uid
+									,
+										function (err, data){
+											assert.equal(data.length, 1);
+											assert.equal(testApp.name+'_updated', data[0].name);
+											assert.equal(testApp.callback+'_updated', data[0].callback);
+											assert.equal(16, data[0].clientId.length);
+											assert.equal(32, data[0].secretKey.length);
+											assert.notEqual(null, data[0].uid);
+											next();
+										} 
+									);
+								}
+
+							]
+							,
+							function(err, results){
+								done();
+							}
+						);
+	    			}
+	    		);
+
+
+
+
+
+
+
+	    		it('refresh app secret token'
+	    		, 	function(done){
+
+						var userId = null;
+						var appId  = null;
+						var secretKey = null;
+
+						async.series(
+							[
+								function(next){
+									qlog.user.createUser( testUser.usr, testUser.pwd, next );
+								}
+							,
+								function(next){
+									qlog.user.getByUsrAndPwd( 
+										testUser.usr
+									, 	testUser.pwd
+									, 
+										function (err, data){
+											userId = String(data.uid);
+											next();
+										}
+									);
+								}
+							,
+								function(next){
+									qlog.app.create(
+										userId
+									,	testApp.name
+									,	testApp.callback
+									,
+										function (err, data){
+											appId = data[0].appId;
+											secretKey = data[0].secretKey;
+											next();
+										} 
+									);
+								}
+							,
+								function(next){
+									qlog.app.refreshSecretKey(
+										appId
+									,
+										function (){
+											next();
+										} 
+									);
+								}
+							,
+								function(next){
+									qlog.app.getByUser(
+										testUser.uid
+									,
+										function (err, data){
+											assert.equal(data.length, 1);
+											assert.equal(32, data[0].secretKey.length);
+											assert.notEqual(secretKey, data[0].secretKey.length);
+											next();
+										} 
+									);
+								}
+
+							]
+							,
+							function(err, results){
+								done();
+							}
+						);
+	    			}
+	    		);
+
+
+
+
 	    	}
+
 	    );
 
 

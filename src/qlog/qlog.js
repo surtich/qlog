@@ -126,7 +126,7 @@ module.exports = hero.worker(
 				var limit = p_limit || 25;
 				_logCol
 					.find(
-						{ appId : new ObjectID(p_appId)
+						{ appId : new ObjectID(String(p_appId))
 						, created : {"$gte": dateFilter }
 						, tags : $in( p_tags.split(',')  )
 						}
@@ -164,6 +164,40 @@ module.exports = hero.worker(
 				);
 			}
 
+			function _update(p_appId, p_name, p_callback, f_callback){				
+				var updateData = { };
+				if ( p_name ) {
+					updateData.name = p_name;
+				}
+				if ( p_callback ){
+					updateData.callback = p_callback;	
+				}
+
+				_appCol.update(
+					{ appId : new ObjectID(String(p_appId)) }
+				,
+					{
+						$set : updateData
+					}
+				,
+					f_callback
+				);
+			}
+
+			function _refreshSecretKey(p_appId, f_callback){
+				_appCol.update(
+					{ appId : new ObjectID(String(p_appId)) }
+				,
+					{	
+						$set : {
+					 		secretKey	: _createToken( _SCECRET_KEY_LENGTH )
+					 	}
+					}
+				,
+					f_callback
+				);
+			}
+
 			function _getAppsByUser(p_uid, f_callback){
 				_appCol
 					.find(
@@ -192,7 +226,9 @@ module.exports = hero.worker(
 				;
 			}
 
-			this.save 		= _create;
+			this.create = _create;
+			this.update = _update;
+			this.refreshSecretKey = _refreshSecretKey;
 			this.getByUser 	= _getAppsByUser;
 			this.get 		= _get;
 			this.remove = function (f_callback){ _appCol.remove(f_callback) };

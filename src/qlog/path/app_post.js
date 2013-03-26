@@ -1,8 +1,8 @@
 
 module.exports = function (req, res, next){
 
-	qlog.app.create(
-		req.pastry.data.uid
+	qlog.app.update(
+		req.body.appId
 	, 	req.body.n
 	, 	req.body.cb
 	, 
