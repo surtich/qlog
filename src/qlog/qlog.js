@@ -53,7 +53,7 @@ module.exports = hero.worker(
 				);
 			}
 
-			function _getByUserAndPwd(p_usr, p_pwd, f_callback) {
+			function _getByUsrAndPwd(p_usr, p_pwd, f_callback) {
 				_userCol.findOne(
 					{ usr : p_usr, pwd : p_pwd }
 				,
@@ -62,33 +62,32 @@ module.exports = hero.worker(
 			}
 
 			function _getUsers(p_from, p_limit, f_callback) {
-				var from = p_from | 0;
-				var limit = p_limit | 25;
+				var from  = p_from || 0;
+				var limit = p_limit || 25;
 				_userCol
 					.find(
 						{}
-					,
-						f_callback
 					)
 					.skip(from)
 					.limit(limit)
+					.toArray(f_callback)
 				;
 			}
 
 			this.createAdmin 	 = _createAdmin;
-			this.createUser 	 = _createUser;
+			this.createUser 	 = function (p_usr, p_pwd, f_callback) { _createUser(p_usr, p_pwd, false, f_callback) };
 			this.checkAdminUser  = _checkAdminUser;
-			this.getByUserAndPwd = _getByUserAndPwd;
+			this.getByUsrAndPwd  = _getByUsrAndPwd;
 			this.getUsers 		 = _getUsers;
-
+			this.remove = function (f_callback){ _userCol.remove(f_callback) };
 		}
 
 
 		function _log(p_collection){
-			var _log = p_collection;
+			var _logCol = p_collection;
 
 			function _save(p_appId, p_msg, p_time, p_tags, f_callback){
-				_log.insert(
+				_logCol.insert(
 					{
 					  appId : p_appId 
 					, msg 	: p_msg 
@@ -105,7 +104,7 @@ module.exports = hero.worker(
 				var dateFilter = p_date | new Date();
 				var from = p_from | 0;
 				var limit = p_limit | 25;
-				_log
+				_logCol
 					.find(
 						{ appId : p_appId 
 						, created : {"$gte": dateFilter }
@@ -122,7 +121,23 @@ module.exports = hero.worker(
 
 			this.save= _save;
 			this.get = _get;
+			this.remove = function (f_callback){ _logCol.remove(f_callback) };
 
+		}
+
+		self.resetLogDatabase = function (f_callback){
+			async.parallel(
+				[
+					function (done){
+						self.user.remove( done );
+					}
+				,
+					function (done){
+						self.log.remove( done );
+					}
+				]
+				, f_callback
+			);
 		}
 
 		self.user = null;
@@ -147,7 +162,6 @@ module.exports = hero.worker(
 				require("./paths.js").paths
 			,
 				function (){
-			
 					async.series(
 						[
 							function (done){

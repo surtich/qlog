@@ -4,7 +4,6 @@ var express	= require('express')    	// basic framework
 ,	mongodb	= require("mongodb")    	// document data store
 ,	redis	= require("redis")      	// key-value data store
 ,	assert	= require("assert")     	// unit test
-,	fs		= require('fs')          	// filesystem
 ,	extend	= require('xtend')			// Merge object properties
 ,	app		= express()
 ;
@@ -23,7 +22,10 @@ hero.mqType = {
 
 var config = null;
 
+console.log('hero!!!');
+
 function getParamValue (p_label) {
+console.log('getParamValue', p_label);
 	var idx=-1;
 	for ( var f=0, F=process.argv.length; f<F; f++ ) {
 		idx = process.argv[f].indexOf( p_label+'=' )

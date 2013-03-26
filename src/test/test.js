@@ -1,15 +1,21 @@
 var commons = require("../lib/commons.js")
-,   assert  = commons.assert
 ,	async	= commons.async
+,	assert	= commons.assert
 ,	hero	= commons.hero
 ,	qlog	= require("../qlog/qlog.js")
 ;
 
-var user = 'user';
-var pwd  = '123456';
+var testUser = {
+	usr : 'user'
+,	pwd : '123456'
+,	admin : false
+}
 
-var adminUsr = 'admin';
-var adminPwd = '123456';
+var adminUser = {
+	usr : 'admin'
+,	pwd : 'admin'
+,	admin : true
+}
 
 var appName = 'test'
 
@@ -21,63 +27,44 @@ describe('QLog testing'
 
 		before(
 			function (done){
-
 				qlog.ready(
-					function (err){
-						if(err) {
-							hero.error(err);
-						}
-						else {
-							hero.app.listen( hero.port() );
-							done();
-						}
+					function (){
+						hero.app.listen( hero.port() );
+						qlog.resetLogDatabase( done );
 					}
 				);
-
 			}
 		);
 
 	  	beforeEach( 
 		  	function(done){
-		  		monitor.resetDB(
-					function(err) {
-						if(err){
-							hero.error('mongoDB reset fails!', err);
-						}
-						else {
-							done(err, 'monitor mongoDB reset success');
-						}
-					}
-				);
+		  		qlog.resetLogDatabase( done );
 			}
 	  	);
 
-		describe('#Saving and getting data from MongoDB'
+		describe('#User tests'
 	  	, 	function(){
 
-	    		it('save a trace and get it by user'
+	    		it('create user'
 	    		, 	function(done){
 
 						async.series(
 							[
-								function(callback){
-									monitor.save(
-										testUser, testDesc, testSender
-									, 	function (err){
-											callback(null, 'save');
-										}
-									);
+								function(next){
+									qlog.user.createUser( testUser.usr, testUser.pwd, next );
 								}
 							,
-								function(callback){
-									monitor.getByUser(
-										testUser
-									,	function (err, obj){
-											assert.equal(testUser	, obj.user);
-											assert.equal(testDesc	, obj.desc);
-											assert.equal(testSender	, obj.sender);
-											callback(null, 'getByUser');
-										}
+								function(next){
+									qlog.user.getUsers(
+										null, null
+									,
+										function (err, data){
+											assert.equal(data.length, 1);
+											assert.equal(testUser.usr, data[0].usr);
+											assert.equal(testUser.pwd, data[0].pwd);
+											assert.equal(testUser.admin, data[0].admin);
+											next();
+										} 
 									);
 								}
 							]
@@ -86,52 +73,30 @@ describe('QLog testing'
 								done();
 							}
 						);
-
 	    			}
 	    		);
 
-	    		it('save three traces, twice with the same sender and find by sender returning only two'
-	    		, 	function(done) {
+
+
+				it('get user correctly for login using usr+pwd credentials'
+	    		, 	function(done){
 
 						async.series(
 							[
-								function(callback){
-									monitor.save(
-										testUser, testDesc+' 1 ', testSender
-										, 	function (err){
-											callback(null, 'save1');
-										}
-									);
+								function(next){
+									qlog.user.createUser( testUser.usr, testUser.pwd, next );
 								}
-								,
-								function(callback){
-									monitor.save(
-										testUser, testDesc, 'other_sender'
-										, 	function (err){
-											callback(null, 'save2');
-										}
-									);
-								}
-								,
-								function(callback){
-									monitor.save(
-										testUser, testDesc+' 2 ', testSender
-										, 	function (err){
-											callback(null, 'save2');
-										}
-									);
-								}
-								,
-								function(callback){
-									monitor.findBySender(
-										testSender
-										,	function (err, docs){
-											assert.equal(docs.length, 2);
-											for ( var f= 0, F=docs.length; f<F; f++ ){
-												assert.equal(testSender, docs[f].sender);
-											}
-											callback(null, 'findBySender');
-										}
+							,
+								function(next){
+									qlog.user.getByUsrAndPwd(
+										testUser.usr, testUser.pwd
+									,
+										function (err, data){
+											assert.equal(testUser.usr, data.usr);
+											assert.equal(testUser.pwd, data.pwd);
+											assert.equal(testUser.admin, data.admin);
+											next();
+										} 
 									);
 								}
 							]
@@ -140,29 +105,84 @@ describe('QLog testing'
 								done();
 							}
 						);
-
-					}
-				);
-
-	  		}
-	  	);
-
-		var mqMessage = {'msg' : 'writing message at '+(new Date()).getTime() };
-
-		describe(
-			'#Sending and getting tasks with RabbitMQ'
-	  	, 	
-	  		function(){
-
-	    		it('sending data to RabbitMQ'
-	    		, 	function(done){
-						sokobank.mq.monitor( mqMessage );
-						done();
 	    			}
 	    		);
+
+
+
+				it('get user fails for incorrect login using usr+pwd credentials'
+	    		, 	function(done){
+
+						async.series(
+							[
+								function(next){
+									qlog.user.createUser( testUser.usr, testUser.pwd, next );
+								}
+							,
+								function(next){
+									qlog.user.getByUsrAndPwd(
+										'userIncorrect', 'pwdIncorrect'
+									,
+										function (err, data){
+											assert.equal(null, data);
+											next();
+										} 
+									);
+								}
+							]
+							,
+							function(err, results){
+								done();
+							}
+						);
+	    			}
+	    		);
+
+
+				it('get paginated users'
+	    		, 	function(done){
+
+						var _users = [];
+						var _usersC = 0;
+						function _createUsers(){
+							for (var f=0, F=50; f<F; f++ ) {
+								_users[_users.length] = _createUser;
+							}
+							return _users;
+						}
+
+						function _createUser(next){
+							_usersC++;
+							qlog.user.createUser( testUser.usr+'_'+_usersC, testUser.pwd, next );
+						}
+
+						async.series(
+							_createUsers()
+							.concat(
+								function(next){
+									qlog.user.getUsers(
+										10, 20
+									,
+										function (err, data){
+											console.log( data.length, data );
+											assert.equal(20, data.length);
+											next();
+										} 
+									);
+								}
+							)
+							,
+							function(err, results){
+								done();
+							}
+						);
+	    			}
+	    		);
+
+
+
 	    	}
 	    );
-
 
 	}
 
