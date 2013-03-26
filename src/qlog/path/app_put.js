@@ -4,6 +4,7 @@ module.exports = function (req, res, next){
 	qlog.auth.create (
 		{ 'uid'  	: req.pastry.data.uid
 		, 'appName' : req.body.an
+		, 'callback': req.body.cb
 		}
 	, 
 		function (err, data){

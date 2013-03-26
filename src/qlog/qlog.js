@@ -142,6 +142,7 @@ module.exports = hero.worker(
 
 		self.user = null;
 		self.log = null;
+		self.app = null;
 
 		self.ready = function (next){
 			hero.app.configure (
