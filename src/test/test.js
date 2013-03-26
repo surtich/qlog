@@ -7,8 +7,15 @@ var commons = require("../lib/commons.js")
 
 var testUser = {
 	usr : 'user'
+,	uid : null
 ,	pwd : '123456'
 ,	admin : false
+}
+
+var testApp = {
+	"uid"		: null
+, 	"name"  	: "Test app"
+, 	"callback" 	: "http://test.app.com/callback"
 }
 
 var adminUser = {
@@ -42,6 +49,12 @@ describe('QLog testing'
 			}
 	  	);
 
+		after(
+			function (done){
+				qlog.resetLogDatabase( done );
+			}
+		);
+
 		describe('#User tests'
 	  	, 	function(){
 
@@ -63,6 +76,7 @@ describe('QLog testing'
 											assert.equal(testUser.usr, data[0].usr);
 											assert.equal(testUser.pwd, data[0].pwd);
 											assert.equal(testUser.admin, data[0].admin);
+											assert.notEqual(null, data[0].uid);
 											next();
 										} 
 									);
@@ -164,7 +178,6 @@ describe('QLog testing'
 										10, 20
 									,
 										function (err, data){
-											console.log( data.length, data );
 											assert.equal(20, data.length);
 											next();
 										} 
@@ -179,10 +192,80 @@ describe('QLog testing'
 	    			}
 	    		);
 
+	    	}
+	    );
+
+
+
+
+
+		describe('#App tests'
+	  	, 	function(){
+
+	    		it('create app'
+	    		, 	function(done){
+
+						async.series(
+							[
+								function(next){
+									qlog.user.createUser( testUser.usr, testUser.pwd, next );
+								}
+							,
+								function(next){
+									qlog.user.getByUsrAndPwd( 
+										testUser.usr
+									, 	testUser.pwd
+									, 
+										function (err, data){
+											testUser.uid = String(data.uid);
+											next();
+										}
+									);
+								}
+							,
+								function(next){
+									qlog.app.save(
+										testUser.uid
+									,	testApp.name
+									,	testApp.callback
+									,
+										function (err, data){
+											next();
+										} 
+									);
+								}
+							,
+								function(next){
+									qlog.app.getByUser(
+										testUser.uid
+									,
+										function (err, data){
+											assert.equal(data.length, 1);
+											assert.equal(testApp.name, data[0].name);
+											assert.equal(testApp.callback, data[0].callback);
+											assert.equal(16, data[0].clientId.length);
+											assert.equal(32, data[0].secretKey.length);
+											assert.notEqual(null, data[0].uid);
+											next();
+										} 
+									);
+								}
+
+							]
+							,
+							function(err, results){
+								done();
+							}
+						);
+	    			}
+	    		);
+
+
 
 
 	    	}
 	    );
+
 
 	}
 

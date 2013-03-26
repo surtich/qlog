@@ -1,11 +1,10 @@
 
 module.exports = function (req, res, next){
 
-	qlog.auth.create (
-		{ 'uid'  	: req.pastry.data.uid
-		, 'appName' : req.body.an
-		, 'callback': req.body.cb
-		}
+	qlog.user.createApp (
+		req.pastry.data.uid
+	, 	req.body.n
+	, 	req.body.cb
 	, 
 		function (err, data){
 			if ( err ) {

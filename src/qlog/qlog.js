@@ -1,8 +1,10 @@
-var commons = require('../lib/commons.js')
-,   async   = commons.async
-,   mongodb = commons.mongodb
-,   express = commons.express
-,   hero 	= commons.hero
+var commons  = require('../lib/commons.js')
+,   async    = commons.async
+,   mongodb  = commons.mongodb
+,   express  = commons.express
+,   hero 	 = commons.hero
+, 	ObjectID = commons.ObjectID
+,   crypto   = commons.crypto
 ;
 
 var qlog = {};
@@ -13,6 +15,22 @@ module.exports = hero.worker(
 		var dbLog 	  = self.db('log', self.config.db.log);
 		var dbSession = self.db('session', self.config.db.log);
 		var mq 		  = self.mq('log', self.config.mq.log);
+
+		var _CLIENT_ID_LENGTH 	= 16
+		,	_SCECRET_KEY_LENGTH = 32
+		;
+
+		function _createToken(len){
+			var tkn = crypto
+				.randomBytes(Math.ceil(len * 3 / 4))
+			    .toString('base64')
+			    .slice(0, len)
+			    .replace(/\//g, '-')
+			    .replace(/\+/g, '_')
+			;
+			return tkn;
+		}
+
 
 		function _checkAdminUser(next){
 			var defUsr = hero.getProcParam('defusr');
@@ -35,10 +53,12 @@ module.exports = hero.worker(
 
 			function _createUser(p_user, p_pwd, p_admin, f_callback){
 				_userCol.insert(
-					{ usr   : p_user
-					, pwd   : p_pwd
-					, admin : p_admin
-					, created : new Date()
+					{
+					 	uid 	: new ObjectID()
+					,	usr   	: p_user
+					, 	pwd   	: p_pwd
+					, 	admin 	: p_admin
+					, 	created : new Date()
 					}
 				,	
 					f_callback
@@ -89,11 +109,11 @@ module.exports = hero.worker(
 			function _save(p_appId, p_msg, p_time, p_tags, f_callback){
 				_logCol.insert(
 					{
-					  appId : p_appId 
-					, msg 	: p_msg 
-					, time 	: p_time
-					, tags 	: p_tags
-					, created: new Date()
+					  logId 	: new ObjectID()
+					, msg 		: p_msg 
+					, time 		: p_time
+					, tags 		: p_tags
+					, created 	: new Date()
 					}
 				, 
 					f_callback
@@ -101,12 +121,12 @@ module.exports = hero.worker(
 			}
 
 			function _get(p_appId, p_date, p_tags, p_from, p_limit, f_callback){
-				var dateFilter = p_date | new Date();
-				var from = p_from | 0;
-				var limit = p_limit | 25;
+				var dateFilter = p_date || new Date();
+				var from = p_from || 0;
+				var limit = p_limit || 25;
 				_logCol
 					.find(
-						{ appId : p_appId 
+						{ appId : new ObjectID(p_appId)
 						, created : {"$gte": dateFilter }
 						, tags : $in( p_tags.split(',')  )
 						}
@@ -125,6 +145,60 @@ module.exports = hero.worker(
 
 		}
 
+		function _app(p_collection){
+			var _appCol = p_collection;
+
+			function _create(p_uid, p_name, p_callback, f_callback){
+				_appCol.insert(
+					{
+					 	appId 		: new ObjectID()
+					,	uid			: p_uid
+					, 	name  		: p_name
+					, 	clientId	: _createToken( _CLIENT_ID_LENGTH )
+					, 	secretKey	: _createToken( _SCECRET_KEY_LENGTH )
+					, 	callback 	: p_callback
+					,	created		: new Date()
+					}
+				,
+					f_callback
+				);
+			}
+
+			function _getAppsByUser(p_uid, f_callback){
+				_appCol
+					.find(
+						{ 
+						}
+					)
+					.sort( { 'created' : 'asc' })
+					.toArray( f_callback )
+				;
+			}
+
+			function _get(p_date, p_from, p_limit, f_callback){
+				var dateFilter = p_date || new Date();
+				var from = p_from || 0;
+				var limit = p_limit || 25;
+				_appCol
+					.find(
+						{ created : {"$gte": dateFilter }
+						}
+					,
+						f_callback
+					)
+					.sort( { 'created' : 'asc' })
+					.skip(from)
+					.limit(limit)
+				;
+			}
+
+			this.save 		= _create;
+			this.getByUser 	= _getAppsByUser;
+			this.get 		= _get;
+			this.remove = function (f_callback){ _appCol.remove(f_callback) };
+		}
+
+
 		self.resetLogDatabase = function (f_callback){
 			async.parallel(
 				[
@@ -134,6 +208,10 @@ module.exports = hero.worker(
 				,
 					function (done){
 						self.log.remove( done );
+					}
+				,
+					function (done){
+						self.app.remove( done );
 					}
 				]
 				, f_callback
@@ -172,8 +250,9 @@ module.exports = hero.worker(
 					 	 					hero.error( err );
 					 	 				}
 					 	 				if ( client ) {
-					 	 					self.user = new _user( new mongodb.Collection(client, 'user') );
-											self.log = new _log( new mongodb.Collection(client, 'log') );
+					 	 					self.user 	= new _user( new mongodb.Collection(client, 'user') );
+											self.log 	= new _log( new mongodb.Collection(client, 'log') );
+											self.app 	= new _app( new mongodb.Collection(client, 'app') );
 								 	 		done(null);
 					 	 				}
 								 	 }
