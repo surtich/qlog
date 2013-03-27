@@ -23,6 +23,7 @@ iris.ui(function(self) {
 		self.get('lblCount').html(I);
 
 		upgradeDatatable();
+		$(self.get('data-table')).dataTable().fnSort([[0,'desc']]);
 
 		self.get('icon').removeClass('icon-spin');
 	}
@@ -40,7 +41,10 @@ iris.ui(function(self) {
 			"sDom": '<""l>t<"F"fp>',
 			aLengthMenu: [ 5, 10 ],
 			iDisplayLength : 5,
-			bAutoWidth : false
+			bAutoWidth : false,
+			aoColumnDefs: [
+				{ "asSorting": [ "desc", "asc" ], "aTargets": [ 0 ] }
+			]
 			//bLengthChange : false
 		});
 
