@@ -21,7 +21,13 @@ iris.path = {
 	ui_apps_log_item : 'app/ui/apps/apps_log_item.js',
 	ui_apps_log_item_tmpl : 'app/ui/apps/apps_log_item.html',
 
-	service_apps : 'app/service/apps.js'
+	service_apps : 'app/service/apps.js',
+
+	resource : {
+		user : "resource/user.js",
+		app : "resource/app.js",
+		log : "resource/log.js"
+	}
 };
 
 iris.evts = {
@@ -29,7 +35,7 @@ iris.evts = {
 		selected : "APP_SELECTED",
 		changed : "APP_CHANGED"
 	}
-}
+};
 
 function _hostContains () {
 	for(var i = 0 ; i< arguments.length; i++) {

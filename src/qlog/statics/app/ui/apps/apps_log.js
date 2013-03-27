@@ -24,6 +24,7 @@ iris.ui(function(self) {
 			"bJQueryUI": true,
 			"sPaginationType": "two_button", // "full_numbers"
 			"sDom": '<""l>t<"F"fp>',
+			aLengthMenu: [ 5, 10 ],
 			iDisplayLength : 5
 			//bLengthChange : false
 		});

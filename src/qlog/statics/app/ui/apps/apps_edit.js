@@ -50,6 +50,7 @@ iris.ui(function(self) {
 	function edit(p_txt){
 		show(p_txt);
 		prevValues[p_txt] = self.get('txt'+p_txt).val();
+		self.get('txt'+p_txt).select();
 	}
 
 	function cancel(p_txt){
