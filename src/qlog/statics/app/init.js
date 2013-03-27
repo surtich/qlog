@@ -21,12 +21,10 @@ iris.path = {
 	ui_apps_log_item : 'app/ui/apps/apps_log_item.js',
 	ui_apps_log_item_tmpl : 'app/ui/apps/apps_log_item.html',
 
-	service_apps : 'app/service/apps.js',
-
 	resource : {
-		user : "resource/user.js",
-		app : "resource/app.js",
-		log : "resource/log.js"
+		user : "app/resource/user.js",
+		app : "app/resource/app.js",
+		log : "app/resource/log.js"
 	}
 };
 

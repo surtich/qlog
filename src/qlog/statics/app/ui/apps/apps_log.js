@@ -6,7 +6,7 @@ iris.ui(function(self) {
 
 
 	self.awake = function() {
-		iris.resource(iris.path.service_apps).getAll(drawItems);
+		iris.resource(iris.path.resource.app).getAll(drawItems);
 	};
 
 	function drawItems(p_items){

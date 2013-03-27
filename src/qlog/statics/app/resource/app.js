@@ -38,5 +38,4 @@ iris.resource(
 		};
 
 	},
-
-iris.path.service_apps);
+	iris.path.resource.app);
