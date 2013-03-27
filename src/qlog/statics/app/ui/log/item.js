@@ -6,7 +6,7 @@ iris.ui(function(self) {
 
 		_app = self.setting('app');
 
-		self.tmpl(iris.path.ui_apps_log_item_tmpl, _app);
+		self.tmpl(iris.path.ui.log.item.html, _app);
 
 		self.get('row').click(rowSelected);
 		self.on(iris.evts.apps.changed, appChanged);
@@ -23,4 +23,4 @@ iris.ui(function(self) {
 		self.get('lblClientId').html(app.clientId);
 	}
 
-}, iris.path.ui_apps_log_item);
+}, iris.path.ui.log.item.js);

@@ -4,7 +4,7 @@ iris.ui(function(self) {
 	var _app = null;
 
 	self.create = function() {
-		self.tmpl(iris.path.ui_apps_edit_tmpl);
+		self.tmpl(iris.path.ui.app.edit.html);
 
 		//Setup interactions
 		setup('Name');
@@ -131,4 +131,4 @@ iris.ui(function(self) {
 		self.get('btnSecretKey').removeClass('icon-spin');
 	}
 
-}, iris.path.ui_apps_edit);
+}, iris.path.ui.app.edit.js);

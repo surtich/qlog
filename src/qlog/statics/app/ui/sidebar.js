@@ -1,7 +1,7 @@
 iris.ui(function(self) {
 
 	self.create = function() {
-		self.tmpl(iris.path.ui_sidebar_tmpl);
+		self.tmpl(iris.path.ui.sidebar.html);
 
 		self.on("SCREEN_CHANGE", screenChange);
 	};
@@ -17,4 +17,4 @@ iris.ui(function(self) {
 		}
 	}
 
-}, iris.path.ui_sidebar);
+}, iris.path.ui.sidebar.js);

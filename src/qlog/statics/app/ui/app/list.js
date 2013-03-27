@@ -1,22 +1,22 @@
 iris.ui(function(self) {
 
 	self.create = function() {
-		self.tmpl(iris.path.ui_apps_log_tmpl);
+		self.tmpl(iris.path.ui.app.list.html);
 	};
 
 
 	self.awake = function() {
 		iris.resource(iris.path.resource.app).getAll(drawItems);
+
+		upgradeDatatable();
 	};
 
 	function drawItems(p_items){
 		var i, I = p_items.length;
 		for(i = 0; i<I; i++){
-			self.ui('appsContainer', iris.path.ui_apps_log_item, {app: p_items[i]});
+			self.ui('appsContainer', iris.path.ui.app.item.js, {app: p_items[i]});
 		}
 		self.get('lblAppsCount').html(I);
-
-		upgradeDatatable();
 	}
 
 	function upgradeDatatable(){
@@ -24,8 +24,8 @@ iris.ui(function(self) {
 			"bJQueryUI": true,
 			"sPaginationType": "two_button", // "full_numbers"
 			"sDom": '<""l>t<"F"fp>',
-			aLengthMenu: [ 5, 10 ],
-			iDisplayLength : 5
+			"aLengthMenu": [ 10, 25 ],
+			iDisplayLength : 10
 			//bLengthChange : false
 		});
 
@@ -48,4 +48,4 @@ iris.ui(function(self) {
 		});
 	}
 
-}, iris.path.ui_apps_log);
+}, iris.path.ui.app.list.js);

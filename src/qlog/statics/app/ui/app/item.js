@@ -6,7 +6,7 @@ iris.ui(function(self) {
 
 		_app = self.setting('app');
 
-		self.tmpl(iris.path.ui_apps_item_tmpl, _app);
+		self.tmpl(iris.path.ui.app.item.html, _app);
 
 		self.get('row').click(rowSelected);
 		self.on(iris.evts.apps.changed, appChanged);
@@ -33,4 +33,4 @@ iris.ui(function(self) {
 		}
 	}
 
-}, iris.path.ui_apps_item);
+}, iris.path.ui.app.item.js);
