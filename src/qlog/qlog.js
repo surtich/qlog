@@ -1,13 +1,12 @@
 var commons  = require('../lib/commons.js')
 ,   async    = commons.async
+,   pastry   = commons.pastry
 ,   mongodb  = commons.mongodb
 ,   express  = commons.express
 ,   hero 	 = commons.hero
 , 	ObjectID = commons.ObjectID
 ,   crypto   = commons.crypto
 ;
-
-var qlog = {};
 
 module.exports = hero.worker(
 	function (self){
@@ -290,7 +289,9 @@ module.exports = hero.worker(
 		self.ready = function (next){
 			hero.app.configure (
 				function() {
+					hero.app.use( express.static(__dirname + '/statics') );
 					hero.app.use( express.bodyParser() );
+					hero.app.use( pastry.parseCookies() );
 					hero.app.use( hero.app.router );
 					hero.app.use(
 						express.errorHandler(

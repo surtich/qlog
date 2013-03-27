@@ -1,10 +1,11 @@
+var qlog = require('../qlog.js')
+;
 
 module.exports = function (req, res, next){
 
 	qlog.user.getByEmailAndPwd (
-		{'email' : req.body.e
-		,'pwd' 	 : req.body.p
-		}
+		req.body.e
+	,	req.body.p
 	, 
 		function (err, data){
 			if ( err ) {
@@ -17,8 +18,10 @@ module.exports = function (req, res, next){
 			else {
 				req.pastry.data.uid = data.uid;
 				res.writeHead(200);
+				data.pwd = null;
+				res.write( JSON.stringify(data) );
 			}
-			res.end( {} );
+			res.end();
 		}
 	);
 

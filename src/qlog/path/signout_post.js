@@ -1,3 +1,5 @@
+var qlog = require('../qlog.js')
+;
 
 module.exports = function (req, res, next){
 

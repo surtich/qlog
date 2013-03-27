@@ -24,7 +24,7 @@
 
 	module('Module User Services', {
 	  	setup: function() {
-	      	iris.notify("iris-reset");
+
 	  	},
 	  	teardown: function () {
 	      
@@ -32,16 +32,14 @@
 	});
 
 	function _userLogin(p_email, p_pwd){
-		iris.resource( iris.path.resource.user ).singin(
-			{
-				e : p_email
-			,	p : p_pwd
-			}
+		iris.resource( iris.path.resource.user ).signin(
+			p_email
+		,	p_pwd
 		, 
 			function (p_user) {
-				ok( p_user.email===p_email );
-				ok( p_user.pwd==='*****' );
 				ok( p_user.uid );
+				ok( p_user.email===p_email );
+				ok( !p_user.pwd );
 				start();
 			}
 		);
@@ -56,16 +54,14 @@
 			,	pwd   : "test_password"
 			} 
 
-			expect(4);
-
-			iris.resource( iris.path.resource.user ).singup(
+			expect(3);
+			iris.resource( iris.path.resource.user ).signup(
 				{
 					e : testUser.email
 				,	p : testUser.pwd	
 				}
 			, 
-				function (p_uid) {
-					ok( p_uid, "User created" );
+				function () {
     				_userLogin( testUser.email, testUser.pwd );
 				}
 			);
