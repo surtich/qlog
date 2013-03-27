@@ -1,22 +1,37 @@
 iris.ui(function(self) {
+	var _app = null;
 
 	self.create = function() {
-		self.tmpl(iris.path.ui_apps_list_tmpl);
+		self.tmpl(iris.path.ui.log.list.html);
+		upgradeDatatable();
+
+		self.on(iris.evts.apps.selected, appSelected);
+		self.on(iris.evts.log.tag.selected, tagSelected);
 	};
 
-
 	self.awake = function() {
-		iris.resource(iris.path.service_apps).getAll(drawItems);
-
-		upgradeDatatable();
 	};
 
 	function drawItems(p_items){
+		var dt = $(self.get('data-table')).dataTable();
+		dt.fnDestroy();
+
 		var i, I = p_items.length;
 		for(i = 0; i<I; i++){
-			self.ui('appsContainer', iris.path.ui_apps_item, {app: p_items[i]});
+			self.ui('appsContainer', iris.path.ui.log.item.js, {log: p_items[i]});
 		}
-		self.get('lblAppsCount').html(I);
+		self.get('lblCount').html(I);
+
+		upgradeDatatable();
+		$(self.get('data-table')).dataTable().fnSort([[0,'desc']]);
+
+		self.get('icon').removeClass('icon-spin');
+	}
+
+	function appSelected(app){
+		_app = app;
+		self.get('icon').addClass('icon-spin');
+		iris.resource(iris.path.resource.log).getAll({app:_app}, drawItems);
 	}
 
 	function upgradeDatatable(){
@@ -24,7 +39,12 @@ iris.ui(function(self) {
 			"bJQueryUI": true,
 			"sPaginationType": "two_button", // "full_numbers"
 			"sDom": '<""l>t<"F"fp>',
-			iDisplayLength : 10
+			aLengthMenu: [ 5, 10 ],
+			iDisplayLength : 5,
+			bAutoWidth : false,
+			aoColumnDefs: [
+				{ "asSorting": [ "desc", "asc" ], "aTargets": [ 0 ] }
+			]
 			//bLengthChange : false
 		});
 
@@ -47,4 +67,9 @@ iris.ui(function(self) {
 		});
 	}
 
-}, iris.path.ui_apps_list);
+	function tagSelected(tag){
+		var dt = $(self.get('data-table')).dataTable();
+		dt.fnFilter(tag.lbl, 2);
+	}
+
+}, iris.path.ui.log.list.js);

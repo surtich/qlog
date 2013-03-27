@@ -2,34 +2,47 @@ iris.path = {
 	welcome : 'app/screen/welcome.js',
 	welcome_tmpl : 'app/screen/welcome.html',
 
-	apps : 'app/screen/apps.js',
-	apps_tmpl : 'app/screen/apps.html',
+	screens : {
+		app : { js:'app/screen/app.js', html:'app/screen/app.html'}
+	},
 
-	ui_header : 'app/ui/header.js',
-	ui_header_tmpl : 'app/ui/header.html',
-	ui_sidebar : 'app/ui/sidebar.js',
-	ui_sidebar_tmpl : 'app/ui/sidebar.html',
+	ui : {
+		header : {js:'app/ui/header.js', html:'app/ui/header.html'},
+		sidebar : {js:'app/ui/sidebar.js', html:'app/ui/sidebar.html'},
+		app : {
+			list : { js:'app/ui/app/list.js' , html:'app/ui/app/list.html'},
+			edit : { js:'app/ui/app/edit.js' , html:'app/ui/app/edit.html'},
+			item : { js:'app/ui/app/item.js' , html:'app/ui/app/item.html'}
+		},
+		log : {
+			list : { js:'app/ui/log/list.js' , html:'app/ui/log/list.html'},
+			item : { js:'app/ui/log/item.js' , html:'app/ui/log/item.html'},
+			tags : { js:'app/ui/log/tags.js' , html:'app/ui/log/tags.html'},
+			tag_item : { js:'app/ui/log/tag_item.js' , html:'app/ui/log/tag_item.html'}
+		}
+	},
 
-	ui_apps_list : 'app/ui/apps/apps_list.js',
-	ui_apps_list_tmpl : 'app/ui/apps/apps_list.html',
-	ui_apps_edit : 'app/ui/apps/apps_edit.js',
-	ui_apps_edit_tmpl : 'app/ui/apps/apps_edit.html',
-	ui_apps_item : 'app/ui/apps/apps_item.js',
-	ui_apps_item_tmpl : 'app/ui/apps/apps_item.html',
-	ui_apps_log : 'app/ui/apps/apps_log.js',
-	ui_apps_log_tmpl : 'app/ui/apps/apps_log.html',
-	ui_apps_log_item : 'app/ui/apps/apps_log_item.js',
-	ui_apps_log_item_tmpl : 'app/ui/apps/apps_log_item.html',
-
-	service_apps : 'app/service/apps.js'
+	resource : {
+		user : "app/resource/user.js",
+		app : "app/resource/app.js",
+		log : "app/resource/log.js"
+	}
 };
 
 iris.evts = {
 	apps : {
 		selected : "APP_SELECTED",
 		changed : "APP_CHANGED"
+	},
+	log : {
+		selected : "LOG_SELECTED",
+		tag : {
+			changed : "LOG_TAG_CHANGED",
+			selected : "LOG_TAG_SELECTED",
+			unselected : "LOG_TAG_UNSELECTED"
+		}
 	}
-}
+};
 
 function _hostContains () {
 	for(var i = 0 ; i< arguments.length; i++) {
@@ -68,4 +81,4 @@ $(document).ready(
 
 		iris.welcome(iris.path.welcome);
 	}
-);
+	);

@@ -56,10 +56,8 @@
 
 			expect(3);
 			iris.resource( iris.path.resource.user ).signup(
-				{
-					e : testUser.email
-				,	p : testUser.pwd	
-				}
+				testUser.email
+			,	testUser.pwd
 			, 
 				function () {
     				_userLogin( testUser.email, testUser.pwd );

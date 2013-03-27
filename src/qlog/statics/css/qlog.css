@@ -2,3 +2,13 @@
 	cursor: hand;
 	cursor: pointer;
 }
+
+.lines3 {
+	overflow: hidden;
+	text-overflow: ellipsis;
+	display: -webkit-box;
+	-webkit-line-clamp: 3;
+	-webkit-box-orient: vertical;
+	-moz-box-orient: vertical;
+	-ms-box-orient: vertical;
+}

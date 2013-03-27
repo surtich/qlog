@@ -4,7 +4,7 @@ iris.ui(function(self) {
 	var _app = null;
 
 	self.create = function() {
-		self.tmpl(iris.path.ui_apps_edit_tmpl);
+		self.tmpl(iris.path.ui.app.edit.html);
 
 		//Setup interactions
 		setup('Name');
@@ -50,6 +50,7 @@ iris.ui(function(self) {
 	function edit(p_txt){
 		show(p_txt);
 		prevValues[p_txt] = self.get('txt'+p_txt).val();
+		self.get('txt'+p_txt).select();
 	}
 
 	function cancel(p_txt){
@@ -72,8 +73,8 @@ iris.ui(function(self) {
 		_app.name = self.get('txtName').val();
 		_app.callback = self.get('txtCallback').val();
 
-		iris.resource(iris.path.service_apps).save(
-			_app,
+		iris.resource(iris.path.resource.app).save(
+			{app:_app},
 			function(){saveAppOk(p_txt);},
 			function(){saveAppKo(p_txt);}
 		);
@@ -110,10 +111,12 @@ iris.ui(function(self) {
 	// ----------------
 
 	function resetSecretKey(){
+		self.get('btnSecretKey').addClass('icon-spin');
 		bootbox.confirm('Are you sure you want to regenerate the Secret Key for app "'+ _app.name +'"?', function(p_confirm){
 			if(p_confirm){
-				self.get('btnSecretKey').addClass('icon-spin');
-				iris.resource(iris.path.service_apps).resetSecretKey(resetSecretKeyOk,resetSecretKeyKo);
+				iris.resource(iris.path.resource.app).resetSecretKey({app:_app},resetSecretKeyOk,resetSecretKeyKo);
+			} else {
+				self.get('btnSecretKey').removeClass('icon-spin');
 			}
 		});
 	}
@@ -130,4 +133,4 @@ iris.ui(function(self) {
 		self.get('btnSecretKey').removeClass('icon-spin');
 	}
 
-}, iris.path.ui_apps_edit);
+}, iris.path.ui.app.edit.js);

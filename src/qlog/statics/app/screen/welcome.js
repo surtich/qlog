@@ -4,17 +4,17 @@ iris.screen(function(self) {
 
 		self.screens('screens',
 			[
-				[ 'apps', iris.path.apps]
+				[ 'app', iris.path.screens.app.js]
 			]
 			);
 
-		self.ui("header", iris.path.ui_header);
-		self.ui("sidebar", iris.path.ui_sidebar);
+		self.ui("header", iris.path.ui.header.js);
+		self.ui("sidebar", iris.path.ui.sidebar.js);
 
 		self.on("SCREEN_CHANGE", screenChange);
 
 		if ( !document.location.hash ) {
-			iris.navigate('#/apps');
+			iris.navigate('#/app');
 		}
 
 		function screenChange(screenPath){

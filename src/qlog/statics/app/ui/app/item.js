@@ -6,10 +6,11 @@ iris.ui(function(self) {
 
 		_app = self.setting('app');
 
-		self.tmpl(iris.path.ui_apps_item_tmpl, _app);
+		self.tmpl(iris.path.ui.app.item.html, _app);
 
 		self.get('row').click(rowSelected);
 		self.on(iris.evts.apps.changed, appChanged);
+		self.on(iris.evts.apps.selected, appSelected);
 	};
 
 	function rowSelected(){
@@ -21,6 +22,15 @@ iris.ui(function(self) {
 
 		self.get('lblName').html(app.name);
 		self.get('lblClientId').html(app.clientId);
+		self.get('lblCallback').html(app.callback);
 	}
 
-}, iris.path.ui_apps_item);
+	function appSelected(app){
+		if(_app.appId == app.appId){
+			self.get('row').addClass('info');
+		} else {
+			self.get('row').removeClass('info');
+		}
+	}
+
+}, iris.path.ui.app.item.js);
