@@ -74,7 +74,7 @@ iris.ui(function(self) {
 		_app.callback = self.get('txtCallback').val();
 
 		iris.resource(iris.path.resource.app).save(
-			_app,
+			{app:_app},
 			function(){saveAppOk(p_txt);},
 			function(){saveAppKo(p_txt);}
 		);
@@ -111,10 +111,12 @@ iris.ui(function(self) {
 	// ----------------
 
 	function resetSecretKey(){
+		self.get('btnSecretKey').addClass('icon-spin');
 		bootbox.confirm('Are you sure you want to regenerate the Secret Key for app "'+ _app.name +'"?', function(p_confirm){
 			if(p_confirm){
-				self.get('btnSecretKey').addClass('icon-spin');
-				iris.resource(iris.path.resource.app).resetSecretKey(resetSecretKeyOk,resetSecretKeyKo);
+				iris.resource(iris.path.resource.app).resetSecretKey({app:_app},resetSecretKeyOk,resetSecretKeyKo);
+			} else {
+				self.get('btnSecretKey').removeClass('icon-spin');
 			}
 		});
 	}

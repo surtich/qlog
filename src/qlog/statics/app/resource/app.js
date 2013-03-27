@@ -11,7 +11,8 @@ iris.resource(
 
 			var apps = [];
 
-			for(var i=1; i< 256; i++){
+			var i,I=Math.floor(Math.random() * 300);
+			for(i=1; i< I; i++){
 				var app = {
 					appId : i,
 					uid : 18276354 * i,
@@ -19,7 +20,7 @@ iris.resource(
 					clientId : String(35298374598753057 * i).substring(0,16),
 					secretKey : String(476521674523426731 * i).substring(0,16)+String(65298374598753057 * i).substring(0,16),
 					callback : "http://mydomain.com/callback",
-					created : new Date()
+					created : new Date().getTime()
 				};
 
 				apps.push(app);
@@ -29,11 +30,11 @@ iris.resource(
 
 		};
 
-		self.save = function (app, success, error) {
+		self.save = function (params, success, error) {
 			success();
 		};
 
-		self.resetSecretKey = function(success, error) {
+		self.resetSecretKey = function(params, success, error) {
 			success({secretKey : '0987654321changed1234567890'});
 		};
 

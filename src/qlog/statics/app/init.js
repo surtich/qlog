@@ -16,7 +16,9 @@ iris.path = {
 		},
 		log : {
 			list : { js:'app/ui/log/list.js' , html:'app/ui/log/list.html'},
-			item : { js:'app/ui/log/item.js' , html:'app/ui/log/item.html'}
+			item : { js:'app/ui/log/item.js' , html:'app/ui/log/item.html'},
+			tags : { js:'app/ui/log/tags.js' , html:'app/ui/log/tags.html'},
+			tag_item : { js:'app/ui/log/tag_item.js' , html:'app/ui/log/tag_item.html'}
 		}
 	},
 
@@ -31,6 +33,14 @@ iris.evts = {
 	apps : {
 		selected : "APP_SELECTED",
 		changed : "APP_CHANGED"
+	},
+	log : {
+		selected : "LOG_SELECTED",
+		tag : {
+			changed : "LOG_TAG_CHANGED",
+			selected : "LOG_TAG_SELECTED",
+			unselected : "LOG_TAG_UNSELECTED"
+		}
 	}
 };
 

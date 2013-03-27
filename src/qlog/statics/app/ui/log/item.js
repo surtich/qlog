@@ -1,23 +1,27 @@
 iris.ui(function(self) {
-	var _app = null;
+	var _log = null;
 
 	self.create = function() {
 		self.tmplMode(self.APPEND);
 
-		_app = self.setting('app');
+		_log = self.setting('log');
 
-		self.tmpl(iris.path.ui.log.item.html, _app);
+		_log.msgPretty = '<li>' + _log.msg.split('\n').join('</li><li>') + '</li>';
+		_log.tagsPretty = '<span class="label label-info">' + _log.tags.split(',').join('</span>&nbsp;<span class="label label-info">') + '</span>';
+
+
+		self.tmpl(iris.path.ui.log.item.html, _log);
 
 		self.get('row').click(rowSelected);
 		self.on(iris.evts.apps.changed, appChanged);
 	};
 
 	function rowSelected(){
-		self.notify(iris.evts.apps.selected, _app);
+		self.notify(iris.evts.apps.selected, _log);
 	}
 
 	function appChanged(app){
-		if(_app.appId != app.appId) return;
+		if(_log.appId != app.appId) return;
 
 		self.get('lblName').html(app.name);
 		self.get('lblClientId').html(app.clientId);

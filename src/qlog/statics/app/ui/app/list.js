@@ -7,16 +7,20 @@ iris.ui(function(self) {
 
 	self.awake = function() {
 		iris.resource(iris.path.resource.app).getAll(drawItems);
-
 		upgradeDatatable();
 	};
 
 	function drawItems(p_items){
+		var dt = $(self.get('data-table')).dataTable();
+		dt.fnDestroy();
+
 		var i, I = p_items.length;
 		for(i = 0; i<I; i++){
 			self.ui('appsContainer', iris.path.ui.app.item.js, {app: p_items[i]});
 		}
-		self.get('lblAppsCount').html(I);
+		self.get('lblCount').html(I);
+
+		upgradeDatatable();
 	}
 
 	function upgradeDatatable(){
@@ -25,7 +29,9 @@ iris.ui(function(self) {
 			"sPaginationType": "two_button", // "full_numbers"
 			"sDom": '<""l>t<"F"fp>',
 			"aLengthMenu": [ 10, 25 ],
-			iDisplayLength : 10
+			iDisplayLength : 10,
+			bDestroy : true,
+			bAutoWidth : false
 			//bLengthChange : false
 		});
 
