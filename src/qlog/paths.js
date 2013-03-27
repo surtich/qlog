@@ -16,18 +16,18 @@ exports.paths = [
 	}
 ,
 	{ 	"method"  	: "POST"
-	, 	"path"		: "/singup" 
-	, 	"handler" 	: require("./path/singup_post.js")
+	, 	"path"		: "/signup" 
+	, 	"handler" 	: require("./path/signup_post.js")
 	}
 ,
 	{ 	"method"  	: "POST"
-	, 	"path"		: "/singin" 
-	, 	"handler" 	: require("./path/singin_post.js")
+	, 	"path"		: "/signin" 
+	, 	"handler" 	: require("./path/signin_post.js")
 	}
 ,
 	{ 	"method"  	: "POST"
-	, 	"path"		: "/singout" 
-	, 	"handler" 	: require("./path/singout_post.js")
+	, 	"path"		: "/signout" 
+	, 	"handler" 	: require("./path/signout_post.js")
 	}
 ,
 	{ 	"method"  	: "GET"

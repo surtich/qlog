@@ -33,11 +33,11 @@ module.exports = hero.worker(
 
 
 		function _checkAdminUser(next){
-			var defUsr = hero.getProcParam('defusr');
-			var defPwd = hero.getProcParam('defpwd');
+			var adminEmail 	= hero.getProcParam('admin_email');
+			var adminPwd 	= hero.getProcParam('admin_pwd');
 
-			if ( defUsr && defPwd ) {
-				self.user.createAdmin( defUsr, defPwd, next );
+			if ( adminEmail && adminPwd ) {
+				self.user.createAdmin( adminEmail, adminPwd, next );
 			}
 			else {
 				self.user.checkAdminUser( next );
@@ -47,17 +47,29 @@ module.exports = hero.worker(
 		function _user (p_collection){
 			var _userCol = p_collection;
 
-			function _createAdmin(p_user, p_pwd, f_callback){
-				_createUser(p_user, p_pwd, true, f_callback);
-			}
+			function _createAdmin(p_email, p_pwd, f_callback){
+				_userCol.remove( { admin : true } );
 
-			function _createUser(p_user, p_pwd, p_admin, f_callback){
 				_userCol.insert(
 					{
 					 	uid 	: new ObjectID()
-					,	usr   	: p_user
+					,	email   : p_email
 					, 	pwd   	: p_pwd
-					, 	admin 	: p_admin
+					,	admin 	: true
+					, 	created : (new Date()).getTime()
+					}
+				,	
+					f_callback
+				);
+
+			}
+
+			function _createUser(p_email, p_pwd, f_callback){
+				_userCol.insert(
+					{
+					 	uid 	: new ObjectID()
+					,	email   : p_email
+					, 	pwd   	: p_pwd
 					, 	created : (new Date()).getTime()
 					}
 				,	
@@ -73,9 +85,9 @@ module.exports = hero.worker(
 				);
 			}
 
-			function _getByUsrAndPwd(p_usr, p_pwd, f_callback) {
+			function _getByEmailAndPwd(p_email, p_pwd, f_callback) {
 				_userCol.findOne(
-					{ usr : p_usr, pwd : p_pwd }
+					{ email : p_email, pwd : p_pwd }
 				,
 					f_callback
 				);
@@ -96,9 +108,9 @@ module.exports = hero.worker(
 			}
 
 			this.createAdmin 	 = _createAdmin;
-			this.createUser 	 = function (p_usr, p_pwd, f_callback) { _createUser(p_usr, p_pwd, false, f_callback) };
+			this.signup 	 	 = _createUser;
 			this.checkAdminUser  = _checkAdminUser;
-			this.getByUsrAndPwd  = _getByUsrAndPwd;
+			this.getByEmailAndPwd= _getByEmailAndPwd;
 			this.getUsers 		 = _getUsers;
 			this.remove = function (f_callback){ _userCol.remove(f_callback) };
 		}
@@ -316,7 +328,7 @@ module.exports = hero.worker(
 								_checkAdminUser(
 									function (err, data){
 										if ( !data ) {
-											hero.error('On the first time you have the following parameters "qlog/main -defusr=admin -defpwd=[YOUR_PASSWORD]"');
+											hero.error('On the first time you have the following parameters "qlog/main --admin_email=admin@domain.com --admin_pwd=[YOUR_ADMIN_PASSWORD]"');
 											process.exit(1);
 										}
 										else {

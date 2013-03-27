@@ -6,9 +6,8 @@ var commons = require("../lib/commons.js")
 ;
 
 var testUser = {
-	usr : 'user'
+	email : 'user_email@domain.com'
 ,	pwd : '123456'
-,	admin : false
 }
 
 var testApp = {
@@ -22,11 +21,6 @@ var testLog = {
 ,	"tags"	: ["tag1","tag2"]
 }
 
-var adminUser = {
-	usr : 'admin'
-,	pwd : 'admin'
-,	admin : true
-}
 
 var appName = 'test'
 
@@ -68,7 +62,7 @@ describe('QLog testing'
 						async.series(
 							[
 								function(next){
-									qlog.user.createUser( testUser.usr, testUser.pwd, next );
+									qlog.user.signup( testUser.email, testUser.pwd, next );
 								}
 							,
 								function(next){
@@ -77,9 +71,8 @@ describe('QLog testing'
 									,
 										function (err, data){
 											assert.equal(data.length, 1);
-											assert.equal(testUser.usr, data[0].usr);
+											assert.equal(testUser.email, data[0].email);
 											assert.equal(testUser.pwd, data[0].pwd);
-											assert.equal(testUser.admin, data[0].admin);
 											assert.notEqual(null, data[0].uid);
 											next();
 										} 
@@ -96,23 +89,22 @@ describe('QLog testing'
 
 
 
-				it('get user correctly for login using usr+pwd credentials'
+				it('get user correctly for login using email+pwd credentials'
 	    		, 	function(done){
 
 						async.series(
 							[
 								function(next){
-									qlog.user.createUser( testUser.usr, testUser.pwd, next );
+									qlog.user.signup( testUser.email, testUser.pwd, next );
 								}
 							,
 								function(next){
-									qlog.user.getByUsrAndPwd(
-										testUser.usr, testUser.pwd
+									qlog.user.getByEmailAndPwd(
+										testUser.email, testUser.pwd
 									,
 										function (err, data){											
-											assert.equal(testUser.usr, data.usr);
+											assert.equal(testUser.email, data.email);
 											assert.equal(testUser.pwd, data.pwd);
-											assert.equal(testUser.admin, data.admin);
 											next();
 										} 
 									);
@@ -128,18 +120,18 @@ describe('QLog testing'
 
 
 
-				it('get user fails for incorrect login using usr+pwd credentials'
+				it('get user fails for incorrect login using email+pwd credentials'
 	    		, 	function(done){
 
 						async.series(
 							[
 								function(next){
-									qlog.user.createUser( testUser.usr, testUser.pwd, next );
+									qlog.user.signup( testUser.email, testUser.pwd, next );
 								}
 							,
 								function(next){
-									qlog.user.getByUsrAndPwd(
-										'userIncorrect', 'pwdIncorrect'
+									qlog.user.getByEmailAndPwd(
+										'emailIncorrect', 'pwdIncorrect'
 									,
 										function (err, data){
 											assert.equal(null, data);
@@ -171,7 +163,7 @@ describe('QLog testing'
 
 						function _createUser(next){
 							_usersC++;
-							qlog.user.createUser( testUser.usr+'_'+_usersC, testUser.pwd, next );
+							qlog.user.signup( testUser.email+'_'+_usersC, testUser.pwd, next );
 						}
 
 						async.series(
@@ -212,12 +204,12 @@ describe('QLog testing'
 						async.series(
 							[
 								function(next){
-									qlog.user.createUser( testUser.usr, testUser.pwd, next );
+									qlog.user.signup( testUser.email, testUser.pwd, next );
 								}
 							,
 								function(next){
-									qlog.user.getByUsrAndPwd( 
-										testUser.usr
+									qlog.user.getByEmailAndPwd( 
+										testUser.email
 									, 	testUser.pwd
 									, 
 										function (err, data){
@@ -276,12 +268,12 @@ describe('QLog testing'
 						async.series(
 							[
 								function(next){
-									qlog.user.createUser( testUser.usr, testUser.pwd, next );
+									qlog.user.signup( testUser.email, testUser.pwd, next );
 								}
 							,
 								function(next){
-									qlog.user.getByUsrAndPwd( 
-										testUser.usr
+									qlog.user.getByEmailAndPwd( 
+										testUser.email
 									, 	testUser.pwd
 									, 
 										function (err, data){
@@ -353,12 +345,12 @@ describe('QLog testing'
 						async.series(
 							[
 								function(next){
-									qlog.user.createUser( testUser.usr, testUser.pwd, next );
+									qlog.user.signup( testUser.email, testUser.pwd, next );
 								}
 							,
 								function(next){
-									qlog.user.getByUsrAndPwd( 
-										testUser.usr
+									qlog.user.getByEmailAndPwd( 
+										testUser.email
 									, 	testUser.pwd
 									, 
 										function (err, data){
@@ -439,8 +431,8 @@ describe('QLog testing'
 						async.series(
 							[
 								function(next){
-									qlog.user.createUser( 
-										testUser.usr
+									qlog.user.signup( 
+										testUser.email
 									, 	testUser.pwd
 									, 
 										function (err, data){
@@ -451,8 +443,8 @@ describe('QLog testing'
 								}
 							,
 								function(next){
-									qlog.user.getByUsrAndPwd( 
-										testUser.usr
+									qlog.user.getByEmailAndPwd( 
+										testUser.email
 									, 	testUser.pwd
 									, 
 										function (err, data){

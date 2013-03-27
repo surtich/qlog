@@ -1,9 +1,9 @@
 
 module.exports = function (req, res, next){
 
-	qlog.user.getByUserAndPwd (
-		{'usr' : req.body.u
-		,'pwd' : req.body.p
+	qlog.user.getByEmailAndPwd (
+		{'email' : req.body.e
+		,'pwd' 	 : req.body.p
 		}
 	, 
 		function (err, data){
