@@ -21,15 +21,23 @@ iris.screen(function(self) {
 			iris.navigate('#/signin');
 		}
 
-		function screenChange(screenPath){
-			// unicorn.setup();
-		}
+		iris.resource(iris.path.resource.user).getMe(getMeOk);
 	};
+
+	function screenChange(screenPath){
+	}
 
 	function resourceError(p_params){
 		if(p_params.request.status == 401){
 			iris.navigate('#/signin');
 		}
+	}
+
+	function getMeOk(user){
+		if(user._id === undefined || user._id === null){
+			iris.navigate('#/signin');
+		}
+		iris.notify(iris.evts.signin.ok, user);
 	}
 
 }, iris.path.welcome);

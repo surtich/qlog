@@ -86,7 +86,7 @@ module.exports = hero.worker(
 				_userCol.findOne(
 					{ email : p_email, pwd : p_pwd }
 				,
-					{pwd:0}
+					{ pwd:0 }
 				,
 					f_callback
 				);
@@ -94,11 +94,15 @@ module.exports = hero.worker(
 
 			function _getUsers(p_filter, f_callback) {
 				p_filter = p_filter || {};
+				if(p_filter._id !== undefined) {
+					p_filter._id = ObjectID(String(p_filter._id));
+				}
+
 				var from  = p_filter.from || 0;
 				var limit = p_filter.limit || 25;
 				_userCol
 					.find(
-						{}, {pwd:0}
+						p_filter, {pwd:0}
 					)
 					.skip(from)
 					.limit(limit)

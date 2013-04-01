@@ -9,22 +9,22 @@ module.exports = function (req, res, next){
 		return;
 	}
 
-	qlog.user.getUsers(		
+	qlog.user.getUsers(
 		{
-			// 'uid' : req.pastry.data.uid,
-			// 'page'  : req.params('p'),
-			// 'count' : req.params('c')
+			_id : req.pastry.data.uid
+			// page  : req.params('p'),
+			// count : req.params('c')
 		},
 
 		function (err, data){
-			if ( err ) {
+			if ( err || data.length < 1) {
 				console.log(err);
 				res.writeHead(500);
 				res.write( JSON.stringify(err) );
 			}
 			else {
 				res.writeHead(200);
-				res.write( JSON.stringify(data) );
+				res.write( JSON.stringify(data[0]) );
 			}
 			res.end();
 		}

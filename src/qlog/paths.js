@@ -44,4 +44,9 @@ exports.paths = [
 	, 	"path"		: "/user" 
 	, 	"handler" 	: require("./path/user_get.js")
 	}
+,
+	{ 	"method"  	: "GET"
+	, 	"path"		: "/user/me" 
+	, 	"handler" 	: require("./path/user_me_get.js")
+	}
 ]

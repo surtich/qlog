@@ -24,6 +24,10 @@ iris.resource(
 			return self.get('/user', f_ok);
 		};
 
+		self.getMe = function (f_ok) {
+			return self.get('/user/me', f_ok);
+		};
+
 		self.isSignedin = function () {
 			return (_user !== null);
 		};
