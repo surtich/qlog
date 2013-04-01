@@ -2,46 +2,38 @@ iris.ui(function(self) {
 	var _app = null;
 
 	self.create = function() {
-		self.tmpl(iris.path.ui.log.list.html);
+		self.tmpl(iris.path.ui.user.list.html);
 		upgradeDatatable();
-
-		self.on(iris.evts.apps.selected, appSelected);
-		self.on(iris.evts.log.tag.selected, tagSelected);
 	};
 
 	self.awake = function() {
+		iris.resource(iris.path.resource.user).getAll(drawItems);
 	};
 
 	function drawItems(p_items){
-		var dt = $(self.get('dtLogList')).dataTable();
+		var dt = $(self.get('dtUserList')).dataTable();
 		dt.fnDestroy();
 
 		self.destroyUIs('container');
 		var i, I = p_items.length;
 		for(i = 0; i<I; i++){
-			self.ui('container', iris.path.ui.log.item.js, {log: p_items[i]});
+			self.ui('container', iris.path.ui.user.item.js, {user: p_items[i]});
 		}
 		self.get('lblCount').html(I);
 
 		upgradeDatatable();
-		$(self.get('dtLogList')).dataTable().fnSort([[0,'desc']]);
+		$(self.get('dtUserList')).dataTable().fnSort([[0,'desc']]);
 
 		self.get('icon').removeClass('icon-spin');
 	}
 
-	function appSelected(app){
-		_app = app;
-		self.get('icon').addClass('icon-spin');
-		iris.resource(iris.path.resource.log).getAll({app:_app}, drawItems);
-	}
-
 	function upgradeDatatable(){
-		$(self.get('dtLogList')).dataTable({
+		$(self.get('dtUserList')).dataTable({
 			"bJQueryUI": true,
 			"sPaginationType": "two_button", // "full_numbers"
 			"sDom": '<""l>t<"F"fp>',
-			aLengthMenu: [ 5, 10 ],
-			iDisplayLength : 5,
+			aLengthMenu: [ 10, 25 ],
+			iDisplayLength : 10,
 			bAutoWidth : false,
 			aoColumnDefs: [
 				{ "asSorting": [ "desc", "asc" ], "aTargets": [ 0 ] }
@@ -68,9 +60,4 @@ iris.ui(function(self) {
 		});
 	}
 
-	function tagSelected(tag){
-		var dt = $(self.get('dtLogList')).dataTable();
-		dt.fnFilter(tag.lbl, 2);
-	}
-
-}, iris.path.ui.log.list.js);
+}, iris.path.ui.user.list.js);

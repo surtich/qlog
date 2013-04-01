@@ -11,9 +11,10 @@ iris.ui(function(self) {
 	};
 
 	function drawItems(p_items){
-		var dt = $(self.get('data-table')).dataTable();
+		var dt = $(self.get('dtAppList')).dataTable();
 		dt.fnDestroy();
 
+		self.destroyUIs('container');
 		var i, I = p_items.length;
 		for(i = 0; i<I; i++){
 			self.ui('appsContainer', iris.path.ui.app.item.js, {app: p_items[i]});
@@ -24,7 +25,7 @@ iris.ui(function(self) {
 	}
 
 	function upgradeDatatable(){
-		$(self.get('data-table')).dataTable({
+		$(self.get('dtAppList')).dataTable({
 			"bJQueryUI": true,
 			"sPaginationType": "two_button", // "full_numbers"
 			"sDom": '<""l>t<"F"fp>',

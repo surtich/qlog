@@ -3,7 +3,8 @@ iris.path = {
 	welcome_tmpl : 'app/screen/welcome.html',
 
 	screens : {
-		app : { js:'app/screen/app.js', html:'app/screen/app.html'}
+		app : { js:'app/screen/app.js', html:'app/screen/app.html'},
+		user : { js:'app/screen/user.js', html:'app/screen/user.html'}
 	},
 
 	ui : {
@@ -19,6 +20,10 @@ iris.path = {
 			item : { js:'app/ui/log/item.js' , html:'app/ui/log/item.html'},
 			tags : { js:'app/ui/log/tags.js' , html:'app/ui/log/tags.html'},
 			tag_item : { js:'app/ui/log/tag_item.js' , html:'app/ui/log/tag_item.html'}
+		},
+		user : {
+			list : { js:'app/ui/user/list.js' , html:'app/ui/user/list.html'},
+			item : { js:'app/ui/user/item.js' , html:'app/ui/user/item.html'}
 		}
 	},
 
@@ -41,6 +46,10 @@ iris.evts = {
 			selected : "LOG_TAG_SELECTED",
 			unselected : "LOG_TAG_UNSELECTED"
 		}
+	},
+	user : {
+		selected : "USER_SELECTED",
+		changed : "USER_CHANGED"
 	}
 };
 
@@ -68,7 +77,7 @@ $(document).ready(
 			'en-US', {
 				dayNames: ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'],
 				monthNames: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
-				dateFormat: 'dd M yy H:i:s',
+				dateFormat: 'd M Y H:i:s',
 				currency: {
 					formatPos: 'n',
 					formatNeg: '-n',

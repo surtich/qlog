@@ -7,12 +7,15 @@ iris.ui(function(self) {
 	};
 
 	function screenChange(screenPath){
-		$(self.get('liApps')).removeClass('active');
-		$(self.get('liUsers')).removeClass('active');
+		$(self.get('liApp')).removeClass('active');
+		$(self.get('liUser')).removeClass('active');
 
 		switch(screenPath){
-			case iris.path.apps:
-				$(self.get('liApps')).addClass('active');
+			case iris.path.screens.app:
+				$(self.get('liApp')).addClass('active');
+				break;
+			case iris.path.screens.user:
+				$(self.get('liUser')).addClass('active');
 				break;
 		}
 	}
