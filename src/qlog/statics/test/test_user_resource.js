@@ -37,7 +37,7 @@
 		,	p_pwd
 		, 
 			function (p_user) {
-				ok( p_user.uid );
+				ok( p_user._id );
 				ok( p_user.email===p_email );
 				ok( !p_user.pwd );
 				start();
