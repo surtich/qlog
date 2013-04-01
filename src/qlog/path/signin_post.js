@@ -16,9 +16,9 @@ module.exports = function (req, res, next){
 					res.writeHead(401);
 			}
 			else {
-				req.pastry.data.uid = data.uid;
+				req.pastry.data.uid = data._id;
 				res.writeHead(200);
-				data.pwd = null;
+				delete data.pwd;
 				res.write( JSON.stringify(data) );
 			}
 			res.end();

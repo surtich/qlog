@@ -11,8 +11,7 @@ var testUser = {
 }
 
 var testApp = {
-	"uid"		: null
-, 	"name"  	: "Test app"
+	"name"  	: "Test app"
 , 	"callback" 	: "http://test.app.com/callback"
 }
 
@@ -73,7 +72,7 @@ describe('QLog testing'
 											assert.equal(data.length, 1);
 											assert.equal(testUser.email, data[0].email);
 											assert.equal(testUser.pwd, data[0].pwd);
-											assert.notEqual(null, data[0].uid);
+											assert.notEqual(null, data[0]._id);
 											next();
 										} 
 									);
@@ -213,7 +212,7 @@ describe('QLog testing'
 									, 	testUser.pwd
 									, 
 										function (err, data){
-											userId = data.uid;
+											userId = data._id;
 											next();
 										}
 									);
@@ -241,7 +240,7 @@ describe('QLog testing'
 											assert.equal(testApp.callback, data[0].callback);
 											assert.equal(16, data[0].clientId.length);
 											assert.equal(32, data[0].secretKey.length);
-											assert.notEqual(null, data[0].uid);
+											assert.notEqual(null, data[0]._id);
 											next();
 										} 
 									);
@@ -277,7 +276,7 @@ describe('QLog testing'
 									, 	testUser.pwd
 									, 
 										function (err, data){
-											userId = data.uid;
+											userId = data._id;
 											next();
 										}
 									);
@@ -290,7 +289,7 @@ describe('QLog testing'
 									,	testApp.callback
 									,
 										function (err, data){
-											appId = data[0].appId;
+											appId = data[0]._id;
 											next();
 										} 
 									);
@@ -318,7 +317,7 @@ describe('QLog testing'
 											assert.equal(testApp.callback+'_updated', data[0].callback);
 											assert.equal(16, data[0].clientId.length);
 											assert.equal(32, data[0].secretKey.length);
-											assert.notEqual(null, data[0].uid);
+											assert.notEqual(null, data[0]._id);
 											next();
 										} 
 									);
@@ -354,7 +353,7 @@ describe('QLog testing'
 									, 	testUser.pwd
 									, 
 										function (err, data){
-											userId = data.uid;
+											userId = data._id;
 											next();
 										}
 									);
@@ -367,7 +366,7 @@ describe('QLog testing'
 									,	testApp.callback
 									,
 										function (err, data){
-											appId = data[0].appId;
+											appId = data[0]._id;
 											secretKey = data[0].secretKey;
 											next();
 										} 
@@ -436,19 +435,7 @@ describe('QLog testing'
 									, 	testUser.pwd
 									, 
 										function (err, data){
-											userId = data[0].uid
-											next();
-										}
-									);
-								}
-							,
-								function(next){
-									qlog.user.getByEmailAndPwd( 
-										testUser.email
-									, 	testUser.pwd
-									, 
-										function (err, data){
-											userId = data.uid;
+											userId = data[0]._id
 											next();
 										}
 									);
@@ -461,7 +448,7 @@ describe('QLog testing'
 									,	testApp.callback
 									,
 										function (err, data){
-											appId = data[0].appId;
+											appId = data[0]._id;
 											next();
 										} 
 									);
@@ -489,7 +476,7 @@ describe('QLog testing'
 											assert.equal(data.length, 1);
 											assert.equal(testLog.msg, data[0].msg);
 											assert.deepEqual(testLog.tags, data[0].tags);
-											assert.notEqual(null, data[0].logId);
+											assert.notEqual(null, data[0]._id);
 											next();
 										} 
 									);

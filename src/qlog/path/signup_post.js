@@ -16,8 +16,7 @@ module.exports = function (req, res, next){
 					res.writeHead(401);
 			}
 			else {
-				console.log(req.pastry)
-				req.pastry.data.uid = data.uid;
+				req.pastry.data.uid = data._id;
 				res.writeHead(200);
 			}
 			res.end();

@@ -51,8 +51,7 @@ module.exports = hero.worker(
 
 				_userCol.insert(
 					{
-					 	uid 	: new ObjectID()
-					,	email   : p_email
+					 	email   : p_email
 					, 	pwd   	: p_pwd
 					,	admin 	: true
 					, 	created : (new Date()).getTime()
@@ -66,8 +65,7 @@ module.exports = hero.worker(
 			function _createUser(p_email, p_pwd, f_callback){
 				_userCol.insert(
 					{
-					 	uid 	: new ObjectID()
-					,	email   : p_email
+					 	email   : p_email
 					, 	pwd   	: p_pwd
 					, 	created : (new Date()).getTime()
 					}
@@ -121,8 +119,7 @@ module.exports = hero.worker(
 			function _create(p_appId, p_msg, p_time, p_tags, f_callback){
 				_logCol.insert(
 					{
-					  logId 	: new ObjectID()
-					, appId 	: p_appId
+					  appId 	: p_appId
 					, msg 		: p_msg 
 					, time 		: p_time
 					, tags 		: p_tags
@@ -173,8 +170,7 @@ module.exports = hero.worker(
 			function _create(p_uid, p_name, p_callback, f_callback){
 				_appCol.insert(
 					{
-					 	appId 		: new ObjectID()
-					,	uid			: p_uid
+					 	uid			: p_uid
 					, 	name  		: p_name
 					, 	clientId	: _createToken( _CLIENT_ID_LENGTH )
 					, 	secretKey	: _createToken( _SCECRET_KEY_LENGTH )
@@ -196,7 +192,7 @@ module.exports = hero.worker(
 				}
 
 				_appCol.update(
-					{ appId : new ObjectID(String(p_appId)) }
+					{ _id : new ObjectID(String(p_appId)) }
 				,
 					{
 						$set : updateData
@@ -208,7 +204,7 @@ module.exports = hero.worker(
 
 			function _refreshSecretKey(p_appId, f_callback){
 				_appCol.update(
-					{ appId : new ObjectID(String(p_appId)) }
+					{ _id : new ObjectID(String(p_appId)) }
 				,
 					{	
 						$set : {
@@ -329,7 +325,7 @@ module.exports = hero.worker(
 								_checkAdminUser(
 									function (err, data){
 										if ( !data ) {
-											hero.error('On the first time you have the following parameters "qlog/main --admin_email=admin@domain.com --admin_pwd=[YOUR_ADMIN_PASSWORD]"');
+											hero.error('On the first time you have the following parameters "node qlog/main --admin_email=admin@domain.com --admin_pwd=[YOUR_ADMIN_PASSWORD]"');
 											process.exit(1);
 										}
 										else {
