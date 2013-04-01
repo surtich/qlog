@@ -16,7 +16,7 @@ module.exports = function (req, res, next){
 			else {
 				res.writeHead(200);
 			}
-			res.end( {} );
+			res.end();
 		}
 	);
 

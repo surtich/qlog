@@ -1,12 +1,11 @@
 iris.resource(
 	function(self){
 
-		self.setting("path", iris.servicepaths.apps);
-
 		self.create = function( p_name, p_callback, f_ok, f_error) {
 			return self.put('/app', {n : p_name, cb : p_callback}, f_ok, f_error);
 		};
 
+		/*
 		// GET /api/userconf/kinds
 		self.getAll = function (success, error) {
 			// return self.get("/api/kinds", function(ret){
@@ -41,6 +40,7 @@ iris.resource(
 		self.resetSecretKey = function(params, success, error) {
 			success({secretKey : '0987654321changed1234567890'});
 		};
+		*/
 
 	},
 	iris.path.resource.app);

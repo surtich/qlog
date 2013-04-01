@@ -45,7 +45,7 @@
       , callback  : 'http://www.testsite.com'
       }
 
-      expect(4);
+      expect(1);
       user.signup(
         testUser.email
       , testUser.pwd
@@ -60,15 +60,11 @@
               app.create(
                 testApp.name
               , testApp.callback
-              , function(param1, param2, param3, param4){
-                console.log(param1, param2, param3, param5);
-                ok(param1);
-                ok(param2);
-                ok(param3);
-                ok(param4);
+              , function() {
+                ok(true);
               }
               , function(){
-
+                ok(false);
               });
             }
           );
