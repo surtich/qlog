@@ -4,7 +4,8 @@ iris.path = {
 
 	screens : {
 		app : { js:'app/screen/app.js', html:'app/screen/app.html'},
-		user : { js:'app/screen/user.js', html:'app/screen/user.html'}
+		user : { js:'app/screen/user.js', html:'app/screen/user.html'},
+		signin : { js:'app/screen/signin.js', html:'app/screen/signin.html'}
 	},
 
 	ui : {
@@ -35,6 +36,14 @@ iris.path = {
 };
 
 iris.evts = {
+	screen : {
+		change : 'SCREEN_CHANGE'
+	},
+	signin : {
+		ok : "SIGNIN_OK",
+		ko : "SIGNIN_KO",
+		out: "SIGNIN_OUT"
+	},
 	apps : {
 		selected : "APP_SELECTED",
 		changed : "APP_CHANGED"

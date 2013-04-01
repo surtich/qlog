@@ -1,4 +1,4 @@
-/*! Iris - v0.5.0 - 2013-03-08
+/*! Iris - v0.5.1-SNAPSHOT - 2013-03-20
 * http://thegameofcode.github.com/iris
 * Copyright (c) 2013 Iris; Licensed New-BSD */
 
@@ -528,6 +528,47 @@ window.iris = iris;
         return value;
     };
 
+    // The jQuery.browser() method has been deprecated since jQuery 1.3 and is removed in 1.9. If needed, it is available as part of the jQuery Migrate plugin
+    // https://github.com/jquery/jquery-migrate/blob/master/src/core.js
+
+    var browser;
+
+    function setBrowser (ua) {
+        ua = ua.toLowerCase();
+
+        var match = /(chrome)[ \/]([\w.]+)/.exec( ua ) ||
+            /(webkit)[ \/]([\w.]+)/.exec( ua ) ||
+            /(opera)(?:.*version|)[ \/]([\w.]+)/.exec( ua ) ||
+            /(msie) ([\w.]+)/.exec( ua ) ||
+            ua.indexOf("compatible") < 0 && /(mozilla)(?:.*? rv:([\w.]+)|)/.exec( ua ) ||
+            [];
+
+        return {
+            name: match[ 1 ] || "",
+            version: match[ 2 ] || "0"
+        };
+    }
+
+    iris.browser = function () {
+        if ( !browser ) {
+            var matched = setBrowser( navigator.userAgent );
+            browser = {};
+
+            if ( matched.name ) {
+                browser[ matched.name ] = true;
+                browser.version = matched.version;
+            }
+
+            // Chrome is Webkit, but Webkit is also Safari.
+            if ( browser.chrome ) {
+                browser.webkit = true;
+            } else if ( browser.webkit ) {
+                browser.safari = true;
+            }
+        }
+        return browser;
+    };
+
 })(jQuery);
 (function($) {
 
@@ -551,7 +592,6 @@ window.iris = iris;
     ;
 
     function _init() {
-
         // _screenJsUrl["#hash"] return the js-url associated with #hash
         _screenJsUrl = {};
 
@@ -570,9 +610,6 @@ window.iris = iris;
         _gotoCancelled = false;
         _lastFullHash = "";
 
-        $(window).off("hashchange");
-        document.location.hash = "#";
-
         // dependencies
         _dependencyCount = 0;
         _lastLoadedDependencies = [];
@@ -580,8 +617,14 @@ window.iris = iris;
 
         _paths = [];
 
-        iris.on("iris-reset", _init);
+        iris.on("iris-reset", function () {
+            $(window).off("hashchange");
+            document.location.hash = "#";
+
+            _init();
+        });
     }
+
 
     function _welcome(p_jsUrl) {
         if (_welcomeCreated === true) {
@@ -662,8 +705,11 @@ window.iris = iris;
                     script = document.createElement("script");
                     script.type = "text/javascript";
                     script.src = path;
-                    script.onload = _checkLoadFinish;
-                    script.onreadystatechange = onReadyStateChange;
+                    if (iris.browser().msie  && parseInt(iris.browser().version, 10) < 9) {
+                        script.onreadystatechange = onReadyStateChange;
+                    } else {
+                        script.onload = _checkLoadFinish;
+                    }
                     _head.appendChild(script);
                 }
             }
@@ -802,8 +848,8 @@ window.iris = iris;
 
                     var screenInstance = _screen[screenPath];
                     var screenParams = _navGetParams(curr[i]);
-                    screenInstance._awake(screenParams);
                     screenInstance.show();
+                    screenInstance._awake(screenParams);
                 }
 
             }
@@ -871,7 +917,7 @@ window.iris = iris;
         _includes[path] = ui;
     }
 
-    function _instanceUI(p_$container, p_uiId, p_jsUrl, p_uiSettings, p_templateMode) {
+    function _instanceUI(p_$container, p_uiId, p_jsUrl, p_uiSettings, p_templateMode, parentComponent) {
 
         var uiInstance = new UI();
         uiInstance.id = p_uiId;
@@ -880,6 +926,7 @@ window.iris = iris;
         uiInstance.events = {};
         uiInstance.con = p_$container;
         uiInstance.fileJs = p_jsUrl;
+        uiInstance.parentComponent = parentComponent;
         
         _includes[p_jsUrl](uiInstance);
         if(p_templateMode !== undefined) {
@@ -1191,14 +1238,27 @@ window.iris = iris;
                                 case "currency":
                                     value = iris.currency(value);
                                     break;
+                                case "number":
+                                    value = iris.number(value);
+                                    break;
                             }
                         }
 
                         nodeName = el.prop("nodeName").toLowerCase();
-                        if ( nodeName === "input" || nodeName === "textarea" ) {
-                            el.val(value);
-                        } else {
-                            el.text(value);
+                        switch (nodeName) {
+                            case "input":
+                                if ( el.prop("type").toLowerCase() === "checkbox" ) {
+                                    el.attr("checked", value);
+                                } else {
+                                    el.val(value);
+                                }
+                            break;
+                            case "textarea":
+                                el.val(value);
+                            break;
+                            default:
+                                el.html(value);
+                            break;
                         }
                     }
                 }
@@ -1261,7 +1321,7 @@ window.iris = iris;
         var $container = this.get(p_id);
         
         if($container !== undefined && $container.size() === 1) {
-            var uiInstance = _instanceUI($container, $container.data("id"), p_jsUrl, p_uiSettings, p_templateMode);
+            var uiInstance = _instanceUI($container, $container.data("id"), p_jsUrl, p_uiSettings, p_templateMode, this);
             if (uiInstance._tmplMode === undefined || uiInstance._tmplMode === uiInstance.REPLACE) {
                 this.el[p_id] = undefined;
             }
@@ -1275,12 +1335,16 @@ window.iris = iris;
 
 
     Component.prototype.destroyUI = function(p_ui) {
-        for(var f = 0, F = this.uis.length; f < F; f++) {
-            if(this.uis[f] === p_ui) {
-                this.uis.splice(f, 1);
-                p_ui._destroy();
-                p_ui.get().remove();
-                break;
+        if ( p_ui === undefined ) {
+            this.parentComponent.destroyUI(this);
+        } else {
+            for(var f = 0, F = this.uis.length; f < F; f++) {
+                if(this.uis[f] === p_ui) {
+                    this.uis.splice(f, 1);
+                    p_ui._destroy();
+                    p_ui.get().remove();
+                    break;
+                }
             }
         }
     };
@@ -1415,12 +1479,7 @@ window.iris = iris;
 
     function _registerRes (resourceOrPath, path) {
 
-console.log( '_registerRes', resourceOrPath, path );
-
         if ( typeof resourceOrPath === "string" ) {
-
-console.log( '_registerRes', 'getting', resourceOrPath, _includes );
-
             // resourceOrPath == path
             if ( !_includes.hasOwnProperty(resourceOrPath) ) {
                 throw "add service[" + resourceOrPath + "] to iris.path";
@@ -1435,7 +1494,6 @@ console.log( '_registerRes', 'getting', resourceOrPath, _includes );
             resourceOrPath(serv);
 
             _includes[path] = serv;
-console.log( '_registerRes', 'registering', path, _includes );
         }
 
     }
@@ -1447,6 +1505,7 @@ console.log( '_registerRes', 'registering', path, _includes );
     iris.ui = _registerUI;
     iris.tmpl = _registerTmpl;
     iris.resource = _registerRes;
+    iris.include = _load;
 
     //
     // Classes

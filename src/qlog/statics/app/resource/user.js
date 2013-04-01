@@ -1,30 +1,35 @@
 iris.resource(
 	function(self){
+		var _user = null;
+
+		iris.on(iris.RESOURCE_ERROR, resourceError);
 
 		self.signup = function (p_email, p_pwd, f_ok) {
 			return self.post("/signup", { 'e':p_email, 'p' : p_pwd}, f_ok);
 		};
 
-		self.signin = function (p_email, p_pwd, f_ok) {
-			return self.post("/signin", { 'e':p_email, 'p' : p_pwd}, f_ok);
+		self.signin = function (p_email, p_pwd, f_ok, f_ko) {
+			return self.post(
+				"/signin",
+				{ 'e':p_email, 'p' : p_pwd},
+				function(user){
+					_user = user;
+					f_ok(user);
+				},
+				f_ko
+			);
 		};
 
 		self.getAll = function (f_ok) {
-			var users = [];
-
-			var i,I=Math.floor(Math.random() * 50);
-			for(i=1; i< I; i++){
-				var user = {
-					uid	: 1827635418276354 * i,
-					email	: "long.length.email.address@email.server.com",
-					admin	: (Math.random() > 0.8),
-					created : (new Date()).getTime()
-				};
-
-				users.push(user);
-			}
-
-			f_ok (users);
+			return self.get('/user', f_ok);
 		};
+
+		self.isSignedin = function () {
+			return (_user !== null);
+		};
+
+		function resourceError(p_params){
+			iris.log('resourceError', p_params);
+		}
 	},
 	iris.path.resource.user);

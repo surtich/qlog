@@ -1,12 +1,14 @@
+var qlog = require('../qlog.js');
 
 module.exports = function (req, res, next){
 
-	qlog.user.get(
-		{ 'uid' : req.pastry.data.uid
-		, 'page'  : req.params('p')
-		, 'count' : req.params('c')
-		}
-	,
+	qlog.user.getUsers(
+		{
+			'uid' : req.pastry.data.uid
+			// 'page'  : req.params('p'),
+			// 'count' : req.params('c')
+		},
+
 		function (err, data){
 			if ( err ) {
 				console.log(err);
@@ -21,4 +23,4 @@ module.exports = function (req, res, next){
 		}
 	);
 
-}
+};
