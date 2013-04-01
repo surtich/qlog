@@ -221,7 +221,7 @@ module.exports = hero.worker(
 			function _getAppsByUser(p_uid, f_callback){
 				_appCol
 					.find(
-						{ uid : new ObjectID(String(p_uid))
+						{ _id : new ObjectID(String(p_uid))
 						}
 					)
 					.sort( { 'created' : 'asc' })
