@@ -60,23 +60,43 @@
       function _createApp(p_name, p_callback){
         start();
         app.create(p_name, p_callback, function(data){
-          console.log(data);
-          ok(data.appID);
-          //_getApps();
+          ok(data.appId);
         }, function(){
           ok(false);
         });
       }
 
+      expect(1);
+      _signUpUser(testUser.email, testUser.pwd, _signInUser);
+    }
+  );
+
+  asyncTest("GetAll Apps"
+  ,
+    function() {
+      var user = iris.resource( iris.path.resource.user );
+      var app = iris.resource( iris.path.resource.app );
+
+      var testUser = {
+        email : "test_email@domain.com"
+      , pwd   : "test_password"
+      }
+
+      function _signInUser(p_email, p_password) {
+        user.signin(p_email, p_password, function(){
+          _getApps();
+        });
+      }
+
       function _getApps(){
         app.getAll(function(data){
-          console.log(data);
-          ok(data);
+          start();
+          ok(data.length > 0);
         });
       }
 
       expect(1);
-      _signUpUser(testUser.email, testUser.pwd, _signInUser);
+      _signInUser(testUser.email, testUser.pwd);
     }
   );
 

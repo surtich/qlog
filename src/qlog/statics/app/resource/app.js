@@ -10,8 +10,8 @@ iris.resource(
 			return self.put('/app', {n : p_name, cb : p_callback}, f_ok);
 		};
 
-		self.getAll = function(f_ok){
-			return self.get('/app', {}, f_ok);
+		self.getAll = function(f_ok, f_error){
+			return self.get('/app', f_ok, f_error);
 		};
 
 		/*

@@ -172,6 +172,7 @@ module.exports = hero.worker(
 
 		function _app(p_collection){
 			var _appCol = p_collection;
+			_appCol.ensureIndex({'uid' : 1});
 
 			function _create(p_uid, p_name, p_callback, f_callback){
 				_appCol.insert(
@@ -225,10 +226,10 @@ module.exports = hero.worker(
 			function _getAppsByUser(p_uid, f_callback){
 				_appCol
 					.find(
-						{ _id : new ObjectID(String(p_uid))
+						{ uid : String(p_uid)
 						}
 					)
-					.sort( { 'created' : 'asc' })
+					.sort( { 'created' : 1 })
 					.toArray( f_callback )
 				;
 			}

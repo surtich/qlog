@@ -16,8 +16,7 @@ module.exports = function (req, res, next){
 			}
 			else {
 				res.writeHead(200);
-				console.log(data);
-				res.end( JSON.stringify( data ) );
+				res.end( JSON.stringify({appId: data[0]._id}) );
 			}
 		}
 	);
