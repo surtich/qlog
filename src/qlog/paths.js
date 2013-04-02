@@ -21,6 +21,16 @@ exports.paths = [
 	}
 ,
 	{ 	"method"  	: "POST"
+	, 	"path"		: "/app/:appId" 
+	, 	"handler" 	: require("./path/app_post.js")
+	}
+,
+	{ 	"method"  	: "POST"
+	, 	"path"		: "/app/:appId/resetkey" 
+	, 	"handler" 	: require("./path/app_secretkey_post.js")
+	}
+,
+	{ 	"method"  	: "POST"
 	, 	"path"		: "/signup" 
 	, 	"handler" 	: require("./path/signup_post.js")
 	}

@@ -15,7 +15,15 @@ iris.resource(
 		};
 
 		self.getById = function(p_appId, f_ok, f_error){
-			return self.get('/app/'+p_appId, f_ok, f_error);
+			return self.get('/app/' + p_appId, f_ok, f_error);
+		};
+
+		self.save = function(p_appId, p_name, p_callback, f_ok, f_error) {
+			return self.post('/app/' + p_appId, {n: p_name, cb: p_callback}, f_ok, f_error);
+		};
+
+		self.resetSecretKey = function(p_appId, f_ok, f_error) {
+			return self.post('/app/' + p_appId + '/resetkey', {}, f_ok, f_error);
 		};
 
 		/*

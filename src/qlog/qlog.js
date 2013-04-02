@@ -210,14 +210,18 @@ module.exports = hero.worker(
 			}
 
 			function _refreshSecretKey(p_appId, f_callback){
-				_appCol.update(
+				_appCol.findAndModify(
 					{ _id : new ObjectID(String(p_appId)) }
+				,
+					[]
 				,
 					{	
 						$set : {
 					 		secretKey	: _createToken( _SCECRET_KEY_LENGTH )
 					 	}
 					}
+				,
+					{'new' : true}
 				,
 					f_callback
 				);
