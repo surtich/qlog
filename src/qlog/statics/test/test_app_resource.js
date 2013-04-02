@@ -45,31 +45,39 @@
       , callback  : 'http://www.testsite.com'
       }
 
+      function _signUpUser(p_email, p_password) {
+        user.signup(p_email, p_password, function(data) {
+          _signInUser(p_email, p_password);
+        });
+      }
+
+      function _signInUser(p_email, p_password) {
+        user.signin(p_email, p_password, function(){
+          _createApp(testApp.name, testApp.callback);
+        });
+      }
+
+      function _createApp(p_name, p_callback){
+        start();
+        app.create(p_name, p_callback, function(data){
+          console.log(data);
+          ok(data.appID);
+          //_getApps();
+        }, function(){
+          ok(false);
+        });
+      }
+
+      function _getApps(){
+        app.getAll(function(data){
+          console.log(data);
+          ok(data);
+        });
+      }
+
       expect(1);
-      user.signup(
-        testUser.email
-      , testUser.pwd
-      , 
-        function () {
-          user.signin(
-            testUser.email
-          , testUser.pwd
-          , 
-            function (p_user) {
-              start();
-              app.create(
-                testApp.name
-              , testApp.callback
-              , function() {
-                ok(true);
-              }
-              , function(){
-                ok(false);
-              });
-            }
-          );
-        }
-      );
+      _signUpUser(testUser.email, testUser.pwd, _signInUser);
     }
   );
+
 }(jQuery));

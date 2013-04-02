@@ -12,11 +12,13 @@ module.exports = function (req, res, next){
 			if ( err ) {
 				console.log( err );
 				res.writeHead(500);
+				res.end();
 			}
 			else {
 				res.writeHead(200);
+				console.log(data);
+				res.end( JSON.stringify( data ) );
 			}
-			res.end();
 		}
 	);
 

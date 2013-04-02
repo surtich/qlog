@@ -1,8 +1,17 @@
 iris.resource(
 	function(self){
 
+		iris.on(iris.RESOURCE_ERROR, resourceError);
+		function resourceError(p_params){
+			iris.log('resourceError', p_params);
+		}
+
 		self.create = function( p_name, p_callback, f_ok, f_error) {
-			return self.put('/app', {n : p_name, cb : p_callback}, f_ok, f_error);
+			return self.put('/app', {n : p_name, cb : p_callback}, f_ok);
+		};
+
+		self.getAll = function(f_ok){
+			return self.get('/app', {}, f_ok);
 		};
 
 		/*
