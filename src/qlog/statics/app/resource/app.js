@@ -14,6 +14,10 @@ iris.resource(
 			return self.get('/app', f_ok, f_error);
 		};
 
+		self.getById = function(p_appId, f_ok, f_error){
+			return self.get('/app/'+p_appId, f_ok, f_error);
+		};
+
 		/*
 		// GET /api/userconf/kinds
 		self.getAll = function (success, error) {

@@ -71,7 +71,7 @@
     }
   );
 
-  asyncTest("GetAll Apps"
+  asyncTest("Get all apps and GetById"
   ,
     function() {
       var user = iris.resource( iris.path.resource.user );
@@ -90,12 +90,19 @@
 
       function _getApps(){
         app.getAll(function(data){
-          start();
           ok(data.length > 0);
+          _getAppById(data[0]._id);
         });
       }
 
-      expect(1);
+      function _getAppById(p_appId){
+        app.getById(p_appId, function(data){
+          start();
+          ok(data);
+        });
+      }
+
+      expect(2);
       _signInUser(testUser.email, testUser.pwd);
     }
   );

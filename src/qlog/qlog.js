@@ -234,7 +234,16 @@ module.exports = hero.worker(
 				;
 			}
 
-			function _get(p_date, p_filter, f_callback){
+			function _getAppById(p_appId, f_callback){
+				_appCol
+					.findOne(
+						{ _id : new ObjectID(String(p_appId))
+						}
+					,
+					f_callback);
+			}
+
+			function _get(p_filter, f_callback){
 				p_filter = p_filter || {};
 				var filter = {};
 
@@ -261,6 +270,7 @@ module.exports = hero.worker(
 			this.update = _update;
 			this.refreshSecretKey = _refreshSecretKey;
 			this.getByUser 	= _getAppsByUser;
+			this.getById 	= _getAppById;
 			this.get 		= _get;
 			this.remove = function (f_callback){ _appCol.remove(f_callback) };
 		}

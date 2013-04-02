@@ -10,6 +10,11 @@ exports.paths = [
 	, 	"handler" 	: require("./path/app_get.js")
 	}
 ,
+	{ 	"method"  	: "GET"
+	, 	"path"		: "/app/:appId" 
+	, 	"handler" 	: require("./path/app_details_get.js")
+	}
+,
 	{ 	"method"  	: "PUT"
 	, 	"path"		: "/app" 
 	, 	"handler" 	: require("./path/app_put.js")
