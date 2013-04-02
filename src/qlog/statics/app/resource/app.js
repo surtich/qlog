@@ -26,6 +26,11 @@ iris.resource(
 			return self.post('/app/' + p_appId + '/resetkey', {}, f_ok, f_error);
 		};
 
+		self.remove = function(p_appId, f_ok, f_error) {
+			return self.del('/app/' + p_appId, {}, f_ok, f_error);
+		};
+
+
 		/*
 		// GET /api/userconf/kinds
 		self.getAll = function (success, error) {

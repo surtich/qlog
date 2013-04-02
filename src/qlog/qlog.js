@@ -270,12 +270,23 @@ module.exports = hero.worker(
 				;
 			}
 
+			function _delete(p_appId, f_callback){
+				_appCol
+					.remove(
+						{ _id: new ObjectID( String(p_appId) ) }
+					, 	
+						true
+					, 
+						f_callback);
+			}
+
 			this.create = _create;
 			this.update = _update;
 			this.refreshSecretKey = _refreshSecretKey;
 			this.getByUser 	= _getAppsByUser;
 			this.getById 	= _getAppById;
 			this.get 		= _get;
+			this.erase 		= _delete;
 			this.remove = function (f_callback){ _appCol.remove(f_callback) };
 		}
 

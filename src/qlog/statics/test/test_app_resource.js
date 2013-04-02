@@ -205,4 +205,45 @@
     }
   );
 
+  asyncTest("Reset secret Key"
+  ,
+    function() {
+      var user = iris.resource( iris.path.resource.user );
+      var app = iris.resource( iris.path.resource.app );
+
+      var testUser = {
+        email : "test_email@domain.com"
+      , pwd   : "test_password"
+      }
+
+      function _signInUser(p_email, p_password) {
+        user.signin(p_email, p_password, function(data){
+          console.log('Sign in', data);
+          _getApps();
+        });
+      }
+
+      function _getApps(){
+        app.getAll(function(data){
+          expect(data.length);
+          console.log('getApps', data);
+          for (var item in data){
+            _deleteApp(data[item]._id);
+          }
+        });
+      }
+
+      function _deleteApp(p_appId){
+        console.log('delete app', arguments);
+        app.remove(p_appId, function(data){
+          start();
+          ok(true); 
+        });
+      }
+
+      expect(4);
+      _signInUser(testUser.email, testUser.pwd);
+    }
+  );
+
 }(jQuery));

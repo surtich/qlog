@@ -30,6 +30,11 @@ exports.paths = [
 	, 	"handler" 	: require("./path/app_secretkey_post.js")
 	}
 ,
+	{ 	"method"  	: "DELETE"
+	, 	"path"		: "/app/:appId" 
+	, 	"handler" 	: require("./path/app_delete.js")
+	}
+,
 	{ 	"method"  	: "POST"
 	, 	"path"		: "/signup" 
 	, 	"handler" 	: require("./path/signup_post.js")
