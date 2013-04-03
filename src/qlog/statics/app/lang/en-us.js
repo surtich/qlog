@@ -32,5 +32,5 @@
 	"SIGNIN" : {
 		"TITLE" : "Sign In"
 	},
-	"FOOTER" : "2013 &copy; QLog Config.<br/>Brought to you by <a href=\"https://plus.google.com/u/0/communities/116574043566473616843\" target=\"_blank\">New Technologies Team @ BBVA</a>"
+	"FOOTER" : "2013 &copy; QLog Administration<br/>Brought to you by New Technologies Team"
 }
