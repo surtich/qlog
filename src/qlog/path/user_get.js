@@ -2,14 +2,14 @@ var qlog = require('../qlog.js');
 
 module.exports = function (req, res, next){
 
-	if(req.pastry.data.uid === undefined){
+	if(req.pastry.data.uid === undefined || !req.pastry.data.isAdmin){
 		res.writeHead(401);
 		res.write('');
 		res.end();
 		return;
 	}
 
-	qlog.user.getUsers(		
+	qlog.user.getUsers(
 		{
 			// 'uid' : req.pastry.data.uid,
 			// 'page'  : req.params('p'),

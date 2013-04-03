@@ -17,6 +17,10 @@ module.exports = function (req, res, next){
 			}
 			else {
 				req.pastry.data.uid = data._id;
+				if(data.admin === true){
+					req.pastry.data.isAdmin = true;
+				}
+
 				res.writeHead(200);
 				delete data.pwd;
 				res.write( JSON.stringify(data) );
