@@ -2,12 +2,18 @@ iris.ui(function(self) {
 
 	self.create = function() {
 		self.tmpl(iris.path.ui.app.list.html);
+
+		self.on(iris.evts.apps.created, refreshItems);
 	};
 
 
 	self.awake = function() {
-		iris.resource(iris.path.resource.app).getAll(drawItems);
+		refreshItems();
 	};
+
+	function refreshItems(){
+		iris.resource(iris.path.resource.app).getAll(drawItems);
+	}
 
 	function drawItems(p_items){
 		var dt = $(self.get('dtAppList')).dataTable();

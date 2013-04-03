@@ -11,7 +11,12 @@
 		"CLIENT_ID" : "Client Id",
 		"SECRET_KEY" : "Secret Key",
 		"NAME" : "Application Name",
-		"CALLBACK" : "Callback Url"
+		"CALLBACK" : "Callback Url",
+		"CREATE" : {
+			"TITLE" : "Application details",
+			"CREATE" : "Create",
+			"CANCEL" : "Cancel"
+		}
 	},
 	"USER" : {
 		"TITLE" : "Users",
