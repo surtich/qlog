@@ -4,11 +4,17 @@ iris.ui(function(self) {
 	self.create = function() {
 		self.tmpl(iris.path.ui.user.list.html);
 		upgradeDatatable();
+
+		self.on(iris.evts.user.created, refreshItems);
 	};
 
 	self.awake = function() {
-		iris.resource(iris.path.resource.user).getAll(drawItems);
+		refreshItems();
 	};
+
+	function refreshItems(){
+		iris.resource(iris.path.resource.user).getAll(drawItems);
+	}
 
 	function drawItems(p_items){
 		var dt = $(self.get('dtUserList')).dataTable();

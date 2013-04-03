@@ -62,7 +62,8 @@ iris.evts = {
 	user : {
 		selected : "USER_SELECTED",
 		changed : "USER_CHANGED",
-		create : "USER_CREATE"
+		create : "USER_CREATE",
+		created : "USER_CREATED"
 	}
 };
 

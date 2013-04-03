@@ -46,6 +46,8 @@ iris.ui(function(self) {
 		self.get('txtEmail').val('');
 		self.get('lblPassword').html('--');
 		self.get('root').hide();
+
+		self.notify(iris.evts.user.created);
 	}
 
 	function saveUserKo(){
