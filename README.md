@@ -1,7 +1,7 @@
 QLog
 ====
 
-Log system deferred driven by amqp written in NodeJS
+Log system deferred driven by AMQP (written in NodeJS)
 
 
 Roles:
