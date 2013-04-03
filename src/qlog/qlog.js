@@ -6,6 +6,7 @@ var commons  = require('../lib/commons.js')
 ,   hero 	 = commons.hero
 , 	ObjectID = commons.ObjectID
 ,   crypto   = commons.crypto
+, 	request  = commons.request
 ;
 
 module.exports = hero.worker(
@@ -299,40 +300,146 @@ module.exports = hero.worker(
 			this.remove = function (f_callback){ _appCol.remove(f_callback) };
 		}
 
-		function _rabbit() {
-			function _getVhosts(){
-
+		function _rabbit(p_config) {
+			p_config = p_config || {};
+			var auth = {
+				user : p_config.user || 'guest'
+			,	password : p_config.password || 'guest'
 			}
 
-			function _createVhost(p_name) {
+			var baseUrl = 'http://' + (p_config.host || 'localhost') + ':' + (p_config.port || '15672');
 
+			function _getVhosts(f_callback){
+				var options = {
+					url  : baseUrl + '/api/vhosts/'
+				,	json : {}
+				,	auth : auth
+				};
+
+				request.get(options, f_callback);
 			}
 
-			function _deleteVhost(p_name){
+			function _getVhost(p_name, f_callback){
+				var options = {
+					url  : baseUrl + '/api/vhosts/' + p_name
+				,	json : {}
+				,	auth : auth
+				};
 
+				request.get(options, f_callback);
 			}
 
-			function _getUsers(){
+			function _createVhost(p_name, f_callback) {
+				var options = {
+					url  : baseUrl + '/api/vhosts/' + p_name
+				,	json : {}
+				,	auth : auth
+				};
 
+				request.put(options, f_callback);
 			}
 
-			function _getUser(p_user){
+			function _deleteVhost(p_name, f_callback){
+				var options = {
+					url  : baseUrl + '/api/vhosts/' + p_name
+				,	json : {}
+				,	auth : auth
+				};
 
+				request.del(options, f_callback);
 			}
 
-			function _createUser(p_user, p_password, p_tag) {
+			function _getUsers(f_callback){
+				var options = {
+					url  : baseUrl + '/api/users/'
+				,	json : {}
+				,	auth : auth
+				};
 
+				request.get(options, f_callback);
 			}
 
-			function _deleteUser(p_user){
+			function _getUser(p_user, f_callback){
+				var options = {
+					url  : baseUrl + '/api/users/' + p_user
+				,	json : {}
+				,	auth : auth
+				};
+
 				
+				request.get(options, f_callback);
 			}
 
-			function _setPermision(p_user, p_vhost, p_config, p_write, p_read){
-				
+			function _createUser(p_user, p_password, p_tags, f_callback) {
+				var options = {
+					url  : baseUrl + '/api/users/' + p_user
+				,	json : {
+						password : p_password
+					,	tags : p_tags
+					}
+				,	auth : auth
+				};
+
+				request.put(options, f_callback);
 			}
+
+			function _deleteUser(p_user, f_callback){
+				var options = {
+					url  : baseUrl + '/api/users/' + p_user
+				,	json : {}
+				,	auth : auth
+				};
+
+				request.del(options, f_callback);
+			}
+
+			function _getPermissions(p_user, p_vhost, f_callback){
+				var options = {
+					url  : baseUrl + '/api/permissions/' + p_vhost + '/' + p_user
+				,	json : {}
+				,	auth : auth
+				};
+
+				request.get(options, f_callback);
+			}
+
+			function _setPermissions(p_user, p_vhost, p_config, p_write, p_read, f_callback){
+				var options = {
+					url  : baseUrl + '/api/permissions/' + p_vhost + '/' + p_user
+				,	json : {
+						configure : p_config
+					,	write : p_write
+					,	read: p_read
+				}
+				,	auth : auth
+				};
+
+				request.put(options, f_callback);
+
+			}
+
+			function _revokePermissions(p_user, p_vhost, f_callback){
+				var options = {
+					url  : baseUrl + '/api/permissions/' + p_vhost + '/' + p_user
+				,	json : {}
+				,	auth : auth
+				};
+
+				request.del(options, f_callback);
+			}
+
+			this.getVhosts = _getVhosts;
+			this.getVhostByName = _getVhost;
+			this.createVhost = _createVhost;
+			this.deleteVhost = _deleteVhost;
+			this.getUsers = _getUsers;
+			this.getUserByName = _getUser;
+			this.createUser = _createUser;
+			this.delUser = _deleteUser;
+			this.getPermissions = _getPermissions;
+			this.setPermissions = _setPermissions;
+			this.revokePermissions = _revokePermissions;
 		}
-
 
 		self.resetLogDatabase = function (f_callback){
 			async.parallel(
