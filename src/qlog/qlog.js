@@ -428,6 +428,23 @@ module.exports = hero.worker(
 				request.del(options, f_callback);
 			}
 
+			function _createCredential(p_user, p_password, p_vhost, p_url, f_callback){
+				_createUser(p_user, p_password, '', function(error, response, data){
+					if(! error && response.statusCode === 204){
+						_setPermissions(p_user, p_vhost, '.*', '.*', '.*', function(error, response, data){
+							if(! error && response.statusCode === 204){
+								var url = 'amqp://' + p_user + ':' + p_password + '@' + p_url + '/' + p_vhost;
+								f_callback(null, {url: url});
+							} else {
+								f_callback(error || data, null);
+							}
+						});
+					} else {
+						f_callback(error || data, null);
+					}
+				});
+			}
+
 			this.getVhosts = _getVhosts;
 			this.getVhostByName = _getVhost;
 			this.createVhost = _createVhost;
@@ -435,10 +452,11 @@ module.exports = hero.worker(
 			this.getUsers = _getUsers;
 			this.getUserByName = _getUser;
 			this.createUser = _createUser;
-			this.delUser = _deleteUser;
+			this.deleteUser = _deleteUser;
 			this.getPermissions = _getPermissions;
 			this.setPermissions = _setPermissions;
 			this.revokePermissions = _revokePermissions;
+			this.createCredential = _createCredential;
 		}
 
 		self.resetLogDatabase = function (f_callback){
