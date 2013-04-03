@@ -1,21 +1,21 @@
 [ 
 	{ 
-	 	"appId" 	: 1
+	 	"_id" 		: 1
 	,	"uid"		: 1
 	, 	"name"  	: "my app 1"
 	, 	"clientId"	: "asdfasdfsdfasdfasdf"
 	, 	"secretKey"	: "asdfasdfsdfasdfasdf"
 	, 	"callback" 	: "http://mydomain.com/callback"
-	,	"created"	: "[DATE]"
+	,	"created"	: "[UNIX_TIME]"
 	}
 ,
 	{
-	 	"appId" 	: 1
+	 	"_id" 		: 2
 	,	"uid"		: 2
 	, 	"name"  	: "my app 2"
 	, 	"clientId"	: "asdfasdfsdfasdfasdf"
 	, 	"secretKey"	: "asdfasdfsdfasdfasdf"
 	, 	"callback" 	: "http://mydomain.com/callback"
-	,	"created"	: "[DATE]"
+	,	"created"	: "[UNIX_TIME]"
 	}
 ]

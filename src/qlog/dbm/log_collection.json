@@ -5,8 +5,8 @@
 	,	"appId" 	: 1
 	,	"msg"		: "my log message"
 	,	"tags" 		: ["log","app","usr"]
-	,	"time" 		: "[DATE]"
-	,	"created" 	: "[DATE]"
+	,	"time" 		: "[UNIX_TIME]"
+	,	"created" 	: "[UNIX_TIME]"
 	}
 ,
 	{
@@ -14,7 +14,7 @@
 	,	"appId" 	: 2
 	,	"msg"		: "my log message"
 	,	"tags" 		: ["log","app","usr"]
-	,	"time" 		: "[DATE]"
-	,	"created" 	: "[DATE]"
+	,	"time" 		: "[UNIX_TIME]"
+	,	"created" 	: "[UNIX_TIME]"
 	}
 ]

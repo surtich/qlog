@@ -1,18 +1,18 @@
 
 [
 	{
-		"uid"  	: 1
+		"_id"  	: 1
 	,	"usr" 	: "jdacruz"
 	,	"pwd" 	: "123"
 	,	"admin" : true
-	,	"created" : "[DATE]"
+	,	"created" : "[UNIX_TIME]"
 	}
 ,
 	{
-		"uid"  	: 2
+		"_id"  	: 2
 	,	"usr" 	: "lmesas"
 	,	"pwd" 	: "123"
 	,	"admin" : false
-	,	"created" : "[DATE]"
+	,	"created" : "[UNIX_TIME]"
 	}
 ]
