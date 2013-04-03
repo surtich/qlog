@@ -92,17 +92,25 @@ module.exports = hero.worker(
 				);
 			}
 
+			function _getUserById(p_id, f_callback) {
+				_userCol
+					.findOne(
+						{ _id : ObjectID(String(p_id)) }
+					, 	{ pwd:0 }
+					,	f_callback
+					)
+				;
+			}
+
 			function _getUsers(p_filter, f_callback) {
 				p_filter = p_filter || {};
-				if(p_filter._id !== undefined) {
-					p_filter._id = ObjectID(String(p_filter._id));
-				}
-
 				var from  = p_filter.from || 0;
 				var limit = p_filter.limit || 25;
+
 				_userCol
 					.find(
-						p_filter, {pwd:0}
+						{}
+					, 	{ pwd : 0 }
 					)
 					.skip(from)
 					.limit(limit)
@@ -115,6 +123,7 @@ module.exports = hero.worker(
 			this.checkAdminUser  = _checkAdminUser;
 			this.getByEmailAndPwd= _getByEmailAndPwd;
 			this.getUsers 		 = _getUsers;
+			this.getUserById 	 = _getUserById;
 			this.remove = function (f_callback){ _userCol.remove(f_callback) };
 		}
 

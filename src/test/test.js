@@ -52,7 +52,7 @@ describe('QLog testing'
 			}
 		);
 
-		describe('#User tests'
+		describe('#User test 1'
 	  	, 	function(){
 
 	    		it('create user'
@@ -71,7 +71,7 @@ describe('QLog testing'
 										function (err, data){
 											assert.equal(data.length, 1);
 											assert.equal(testUser.email, data[0].email);
-											assert.equal(testUser.pwd, data[0].pwd);
+											assert.equal(null, data[0].pwd);
 											assert.notEqual(null, data[0]._id);
 											next();
 										} 
@@ -85,9 +85,11 @@ describe('QLog testing'
 						);
 	    			}
 	    		);
+			}		
+		);
 
-
-
+		describe('#User test 2'
+	  	, 	function(){
 				it('get user correctly for login using email+pwd credentials'
 	    		, 	function(done){
 
@@ -103,7 +105,7 @@ describe('QLog testing'
 									,
 										function (err, data){											
 											assert.equal(testUser.email, data.email);
-											assert.equal(testUser.pwd, data.pwd);
+											assert.equal(null, data.pwd);
 											next();
 										} 
 									);
@@ -116,9 +118,12 @@ describe('QLog testing'
 						);
 	    			}
 	    		);
+			}		
+		);
 
 
-
+		describe('#User test 3'
+	  	, 	function(){
 				it('get user fails for incorrect login using email+pwd credentials'
 	    		, 	function(done){
 
@@ -146,8 +151,12 @@ describe('QLog testing'
 						);
 	    			}
 	    		);
+			}		
+		);
 
 
+		describe('#User test 4'
+	  	, 	function(){
 				it('get paginated users'
 	    		, 	function(done){
 
@@ -167,18 +176,18 @@ describe('QLog testing'
 
 						async.series(
 							_createUsers()
-							.concat(
-								function(next){
-									qlog.user.getUsers(
-										{ from : 10, limit : 20 }
-									,
-										function (err, data){
-											assert.equal(20, data.length);
-											next();
-										} 
-									);
-								}
-							)
+								.concat(
+									function(next){
+										qlog.user.getUsers(
+											{ from : 10, limit : 20 }
+										,
+											function (err, data){
+												assert.equal(20, data.length);
+												next();
+											} 
+										);
+									}
+								)
 							,
 							function(err, results){
 								done();
@@ -186,15 +195,12 @@ describe('QLog testing'
 						);
 	    			}
 	    		);
-
 	    	}
 	    );
 
 
 
-
-
-		describe('#App tests'
+		describe('#App test 1'
 	  	, 	function(){
 
 	    		it('create app'
@@ -254,10 +260,12 @@ describe('QLog testing'
 						);
 	    			}
 	    		);
+			}		
+		);
 
 
-
-
+		describe('#User App 2'
+	  	, 	function(){
 	    		it('update app'
 	    		, 	function(done){
 
@@ -331,9 +339,12 @@ describe('QLog testing'
 						);
 	    			}
 	    		);
+			}		
+		);
 
 
-
+		describe('#User App 3'
+	  	, 	function(){
 	    		it('refresh app secret token'
 	    		, 	function(done){
 
@@ -409,12 +420,6 @@ describe('QLog testing'
 	    	}
 
 	    );
-
-
-
-
-
-
 
 
 

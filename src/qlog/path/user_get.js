@@ -1,8 +1,10 @@
-var qlog = require('../qlog.js');
+var qlog = require('../qlog.js')
+;
 
 module.exports = function (req, res, next){
 
 	if(req.pastry.data.uid === undefined || !req.pastry.data.isAdmin){
+		console.log( req.pastry.data );
 		res.writeHead(401);
 		res.write('');
 		res.end();
