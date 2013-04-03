@@ -2,10 +2,10 @@ iris.ui(function(self) {
 
 	self.create = function() {
 		self.tmpl(iris.path.ui.app.list.html);
+		upgradeDatatable();
 
 		self.on(iris.evts.apps.created, refreshItems);
 	};
-
 
 	self.awake = function() {
 		refreshItems();

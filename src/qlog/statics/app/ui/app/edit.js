@@ -14,6 +14,7 @@ iris.ui(function(self) {
 
 		self.on(iris.evts.apps.selected, appSelected);
 		self.on(iris.evts.apps.create, appCreate);
+		self.on(iris.evts.screen.change, function(){self.get('root').hide();});
 	};
 
 	function setup(p_txt){

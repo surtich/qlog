@@ -11,6 +11,7 @@ iris.ui(function(self) {
 		self.get('btnCancel').click(cancel);
 
 		self.on(iris.evts.user.create, userCreate);
+		self.on(iris.evts.screen.change, function(){self.get('root').hide();});
 	};
 
 	function cancel(){

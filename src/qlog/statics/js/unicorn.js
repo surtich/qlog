@@ -132,5 +132,3 @@ unicorn.setup = function(){
 		$(this).css({'border-color':'#aaaaaa'});
 	});
 }
-
-console.log('unicorn', unicorn);

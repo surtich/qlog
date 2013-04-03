@@ -26,7 +26,8 @@ iris.path = {
 		user : {
 			list : { js:'app/ui/user/list.js' , html:'app/ui/user/list.html'},
 			item : { js:'app/ui/user/item.js' , html:'app/ui/user/item.html'},
-			create : { js:'app/ui/user/create.js' , html:'app/ui/user/create.html'}
+			create : { js:'app/ui/user/create.js' , html:'app/ui/user/create.html'},
+			edit : { js:'app/ui/user/edit.js' , html:'app/ui/user/edit.html'}
 		}
 	},
 
