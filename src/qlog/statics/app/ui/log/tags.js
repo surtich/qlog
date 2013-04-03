@@ -7,6 +7,8 @@ iris.ui(function(self) {
 		self.tmpl(iris.path.ui.log.tags.html);
 
 		self.on(iris.evts.log.tag.changed, tagsChanged);
+		self.on(iris.evts.apps.selected, function(){self.get('root').show();});
+		self.on(iris.evts.screen.change, function(){self.get('root').hide();});
 	};
 
 	function tagsChanged(tags){

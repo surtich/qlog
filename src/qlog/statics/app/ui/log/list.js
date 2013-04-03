@@ -7,6 +7,8 @@ iris.ui(function(self) {
 
 		self.on(iris.evts.apps.selected, appSelected);
 		self.on(iris.evts.log.tag.selected, tagSelected);
+		self.on(iris.evts.apps.selected, function(){self.get('root').show();});
+		self.on(iris.evts.screen.change, function(){self.get('root').hide();});
 	};
 
 	self.awake = function() {

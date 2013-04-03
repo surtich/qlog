@@ -10,6 +10,9 @@ iris.screen(function(self) {
 		self.ui("log_tags", iris.path.ui.log.tags.js);
 
 		self.get('btnCreate').click(appCreate);
+
+		self.on(iris.evts.apps.selected, function(){self.get('logsTitle').show();});
+		self.on(iris.evts.screen.change, function(){self.get('logsTitle').hide();});
 	};
 
 	self.awake = function(){
