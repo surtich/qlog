@@ -4,7 +4,7 @@ iris.ui(function(self) {
 	var _user = null;
 
 	self.create = function() {
-		self.tmpl(iris.path.ui.user.edit.html);
+		self.tmpl(iris.path.ui.user.create.html);
 
 		self.get('btnPassword').click(resetPassword);
 		self.get('btnSave').click(saveUser);
@@ -84,4 +84,4 @@ iris.ui(function(self) {
 	}
 
 
-}, iris.path.ui.user.edit.js);
+}, iris.path.ui.user.create.js);
