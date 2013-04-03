@@ -17,7 +17,7 @@ iris.ui(function(self) {
 	};
 
 	function rowSelected(){
-		self.notify(iris.evts.apps.selected, _log);
+		self.notify(iris.evts.log.selected, _log);
 	}
 
 	function appChanged(app){
