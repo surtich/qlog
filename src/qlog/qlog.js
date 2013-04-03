@@ -299,6 +299,40 @@ module.exports = hero.worker(
 			this.remove = function (f_callback){ _appCol.remove(f_callback) };
 		}
 
+		function _rabbit() {
+			function _getVhosts(){
+
+			}
+
+			function _createVhost(p_name) {
+
+			}
+
+			function _deleteVhost(p_name){
+
+			}
+
+			function _getUsers(){
+
+			}
+
+			function _getUser(p_user){
+
+			}
+
+			function _createUser(p_user, p_password, p_tag) {
+
+			}
+
+			function _deleteUser(p_user){
+				
+			}
+
+			function _setPermision(p_user, p_vhost, p_config, p_write, p_read){
+				
+			}
+		}
+
 
 		self.resetLogDatabase = function (f_callback){
 			async.parallel(
