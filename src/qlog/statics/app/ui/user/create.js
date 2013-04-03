@@ -42,18 +42,19 @@ iris.ui(function(self) {
 		}
 	}
 
-	function saveUserOk(){
+	function reset(){
 		self.get('txtEmail').val('');
 		self.get('lblPassword').html('--');
 		self.get('root').hide();
+	}
 
+	function saveUserOk(){
+		reset();
 		self.notify(iris.evts.user.created);
 	}
 
 	function saveUserKo(){
-		self.get('txtEmail').val('');
-		self.get('lblPassword').html('--');
-		self.get('root').hide();
+		reset();
 	}
 
 	function userCreate(){

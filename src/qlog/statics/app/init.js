@@ -14,7 +14,8 @@ iris.path = {
 		app : {
 			list : { js:'app/ui/app/list.js' , html:'app/ui/app/list.html'},
 			edit : { js:'app/ui/app/edit.js' , html:'app/ui/app/edit.html'},
-			item : { js:'app/ui/app/item.js' , html:'app/ui/app/item.html'}
+			item : { js:'app/ui/app/item.js' , html:'app/ui/app/item.html'},
+			create : { js:'app/ui/app/create.js' , html:'app/ui/app/create.html'}
 		},
 		log : {
 			list : { js:'app/ui/log/list.js' , html:'app/ui/log/list.html'},
@@ -49,7 +50,8 @@ iris.evts = {
 	apps : {
 		selected : "APP_SELECTED",
 		changed : "APP_CHANGED",
-		create : "APP_CREATE"
+		create : "APP_CREATE",
+		created : "APP_CREATED"
 	},
 	log : {
 		selected : "LOG_SELECTED",
