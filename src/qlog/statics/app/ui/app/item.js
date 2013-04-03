@@ -18,7 +18,7 @@ iris.ui(function(self) {
 	}
 
 	function appChanged(app){
-		if(_app.appId != app.appId) return;
+		if(_app._id != app._id) return;
 
 		self.get('lblName').html(app.name);
 		self.get('lblClientId').html(app.clientId);
@@ -26,7 +26,7 @@ iris.ui(function(self) {
 	}
 
 	function appSelected(app){
-		if(_app.appId == app.appId){
+		if(_app._id == app._id){
 			self.get('row').addClass('info');
 		} else {
 			self.get('row').removeClass('info');
