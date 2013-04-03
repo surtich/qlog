@@ -28,6 +28,7 @@ iris.ui(function(self) {
 		}
 		self.get('icoAdmin').removeClass();
 		self.get('icoAdmin').addClass(adminIcon);
+		self.get('icoAdminSort').html(user.admin? '1':'0');
 
 		var date = new Date( user.created );
 		self.get('lblCreated').html(iris.date(date));
