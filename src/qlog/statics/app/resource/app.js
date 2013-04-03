@@ -27,7 +27,7 @@ iris.resource(
 		};
 
 		self.remove = function(p_appId, f_ok, f_error) {
-			return self.del('/app/' + p_appId, {}, f_ok, f_error);
+			return self.del('/app/' + p_appId, f_ok, f_error);
 		};
 
 	},

@@ -11,6 +11,7 @@ iris.ui(function(self) {
 		setup('Callback');
 
 		self.get('btnSecretKey').click(resetSecretKey);
+		self.get('btnDelete').click(deleteApp);
 
 		self.on(iris.evts.apps.selected, appSelected);
 		self.on(iris.evts.apps.create, appCreate);
@@ -119,7 +120,6 @@ iris.ui(function(self) {
 	// ----------------
 
 	function resetSecretKey(){
-		iris.log(_app);
 		self.get('btnSecretKey').addClass('icon-spin');
 		bootbox.confirm('Are you sure you want to regenerate the Secret Key for app "'+ _app.name +'"?', function(p_confirm){
 			if(p_confirm){
@@ -140,6 +140,30 @@ iris.ui(function(self) {
 
 	function resetSecretKeyKo(){
 		self.get('btnSecretKey').removeClass('icon-spin');
+	}
+
+	// ----------------
+	// Reset Secret Key
+	// ----------------
+	function deleteApp(){
+		self.get('btnDelete').addClass('icon-spin');
+		bootbox.confirm('Are you sure you want to delete the app "'+ _app.name +'"?', function(p_confirm){
+			if(p_confirm){
+				iris.resource(iris.path.resource.app).remove(_app._id, deleteAppOk, deleteAppKo);
+			} else {
+				self.get('btnDelete').removeClass('icon-spin');
+			}
+		});
+	}
+
+	function deleteAppOk(){
+		self.notify(iris.evts.apps.deleted);
+		self.get('btnDelete').removeClass('icon-spin');
+		self.get('root').hide();
+	}
+
+	function deleteAppKo(){
+		self.get('btnDelete').removeClass('icon-spin');
 	}
 
 }, iris.path.ui.app.edit.js);

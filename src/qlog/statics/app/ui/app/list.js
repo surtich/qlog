@@ -5,6 +5,7 @@ iris.ui(function(self) {
 		upgradeDatatable();
 
 		self.on(iris.evts.apps.created, refreshItems);
+		self.on(iris.evts.apps.deleted, refreshItems);
 	};
 
 	self.awake = function() {

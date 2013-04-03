@@ -52,7 +52,8 @@ iris.evts = {
 		selected : "APP_SELECTED",
 		changed : "APP_CHANGED",
 		create : "APP_CREATE",
-		created : "APP_CREATED"
+		created : "APP_CREATED",
+		deleted : "APP_DELETED"
 	},
 	log : {
 		selected : "LOG_SELECTED",
