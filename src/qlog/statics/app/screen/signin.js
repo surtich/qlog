@@ -18,6 +18,9 @@ iris.screen(function(self) {
 			p : $(self.get('txtPassword')).val()
 		};
 
+		$(self.get('txtEmail')).val('');
+		$(self.get('txtPassword')).val('');
+
 		iris.resource(iris.path.resource.user).signin(p.e, p.p, signInOk, signInKo);
 	}
 

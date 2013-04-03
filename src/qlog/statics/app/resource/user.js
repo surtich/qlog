@@ -20,6 +20,10 @@ iris.resource(
 			);
 		};
 
+		self.signout = function (f_ok) {
+			return self.post("/signout", null, f_ok);
+		};
+
 		self.getAll = function (f_ok) {
 			return self.get('/user', f_ok);
 		};

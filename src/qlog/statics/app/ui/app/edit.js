@@ -30,8 +30,6 @@ iris.ui(function(self) {
 		self.get('cancel'+p_txt).click(function(){
 			cancel(p_txt);
 		});
-
-		self.get('txt'+p_txt).val('App name');
 	}
 
 	function show(p_txt){

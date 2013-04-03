@@ -7,7 +7,6 @@ iris.ui(function(self) {
 
 	self.awake = function() {
 		iris.resource(iris.path.resource.app).getAll(drawItems);
-		upgradeDatatable();
 	};
 
 	function drawItems(p_items){
@@ -17,7 +16,7 @@ iris.ui(function(self) {
 		self.destroyUIs('container');
 		var i, I = p_items.length;
 		for(i = 0; i<I; i++){
-			self.ui('appsContainer', iris.path.ui.app.item.js, {app: p_items[i]});
+			self.ui('container', iris.path.ui.app.item.js, {app: p_items[i]});
 		}
 		self.get('lblCount').html(I);
 

@@ -1,6 +1,6 @@
 <div id="content">
 	<div id="content-header">
-		<h1>@@APPS.TITLE@@</h1>
+		<h1>@@USER.TITLE@@</h1>
 	</div>
 	<div id="breadcrumb">
 		<!-- <a href="#/apps" title="Go to Home"  class="current"><i class="icon-cogs"></i>@@APPS.TITLE@@</a> -->
@@ -11,7 +11,18 @@
 			<hr></hr>
 		</div>
 		<div class="row-fluid">
-			<div data-id="users_list"></div>
+			<div data-id="user_list"></div>
+			<div class="span4">
+				<div class="widget-box">
+					<div class="widget-title">
+						<h5>Tools</h5>
+					</div>
+					<div class="widget-content">
+						<a href="javascript:;" data-id="btnCreate"><i class="icon-asterisk"></i> @@USER.CREATE@@</a>
+					</div>
+				</div>
+			</div>
+			<div data-id="user_edit"></div>	
 		</div>
 
 		<div class="row-fluid">

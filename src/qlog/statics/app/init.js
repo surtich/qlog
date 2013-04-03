@@ -24,14 +24,16 @@ iris.path = {
 		},
 		user : {
 			list : { js:'app/ui/user/list.js' , html:'app/ui/user/list.html'},
-			item : { js:'app/ui/user/item.js' , html:'app/ui/user/item.html'}
+			item : { js:'app/ui/user/item.js' , html:'app/ui/user/item.html'},
+			edit : { js:'app/ui/user/edit.js' , html:'app/ui/user/edit.html'}
 		}
 	},
 
 	resource : {
 		user : "app/resource/user.js",
 		app : "app/resource/app.js",
-		log : "app/resource/log.js"
+		log : "app/resource/log.js",
+		validation : "app/resource/validation.js"
 	}
 };
 
@@ -58,7 +60,8 @@ iris.evts = {
 	},
 	user : {
 		selected : "USER_SELECTED",
-		changed : "USER_CHANGED"
+		changed : "USER_CHANGED",
+		create : "USER_CREATE"
 	}
 };
 

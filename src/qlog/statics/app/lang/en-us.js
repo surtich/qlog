@@ -2,7 +2,8 @@
 	"APP_NAME" : "QLog Config",
 	"SIDEBAR" : {
 		"APP" : "Applications",
-		"USER" : "Users"
+		"USER" : "Users",
+		"SIGNOUT" : "Sign out"
 	},
 	"APPS" : {
 		"TITLE" : "Applications",
@@ -13,7 +14,15 @@
 		"CALLBACK" : "Callback Url"
 	},
 	"USER" : {
-		"TITLE" : "Users"
+		"TITLE" : "Users",
+		"CREATE" : "Create new user",
+		"EDIT" : {
+			"TITLE" : "User details",
+			"EMAIL" : "Email",
+			"PASSWORD" : "Password",
+			"CREATE" : "Create",
+			"CANCEL" : "Cancel"
+		}
 	},
 	"SIGNIN" : {
 		"TITLE" : "Sign In"

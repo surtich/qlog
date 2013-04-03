@@ -10,7 +10,7 @@ iris.screen(function(self) {
 	};
 
 	self.awake = function(){
-		self.notify("SCREEN_CHANGE", iris.path.screens.app);
+		self.notify(iris.evts.screen.change, iris.path.screens.app);
 	};
 
 }, iris.path.screens.app.js);

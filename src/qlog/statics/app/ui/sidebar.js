@@ -6,6 +6,8 @@ iris.ui(function(self) {
 		self.on(iris.evts.screen.change, screenChange);
 		self.on(iris.evts.signin.ok, onSignOk);
 		self.on(iris.RESOURCE_ERROR, resourceError);
+
+		self.get('liSignout').click(signout);
 	};
 
 	function screenChange(screenPath){
@@ -24,6 +26,7 @@ iris.ui(function(self) {
 
 	function onSignOk(user){
 		self.get('liApp').show();
+		self.get('liSignout').show();
 		if(user.admin) {
 			self.get('liUser').show();
 		}
@@ -31,9 +34,24 @@ iris.ui(function(self) {
 
 	function resourceError(p_params){
 		if(p_params.request.status == 401){
-			self.get('liApp').hide();
-			self.get('liUser').hide();
+			hideAll();
 		}
+	}
+
+	function hideAll(){
+		self.get('liApp').hide();
+		self.get('liUser').hide();
+		self.get('liSignout').hide();
+	}
+
+	function signout(){
+		iris.resource(iris.path.resource.user).signout(signoutOk);
+	}
+
+	function signoutOk(){
+		console.log('signed out');
+		iris.navigate('#/signin');
+		hideAll();
 	}
 
 }, iris.path.ui.sidebar.js);
