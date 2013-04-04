@@ -2,7 +2,6 @@ iris.ui(function(self) {
 
 	self.create = function() {
 		self.tmpl(iris.path.ui.app.list.html);
-		upgradeDatatable();
 
 		self.on(iris.evts.apps.created, refreshItems);
 		self.on(iris.evts.apps.deleted, refreshItems);
@@ -38,8 +37,10 @@ iris.ui(function(self) {
 			"aLengthMenu": [ 10, 25 ],
 			iDisplayLength : 10,
 			bDestroy : true,
-			bAutoWidth : false
-			//bLengthChange : false
+			bAutoWidth : false,
+			fnDrawCallback : function(oSettings){
+				// iris.log('table redraw start:' + oSettings._iDisplayStart + ' end:' + oSettings._iDisplayEnd + ' shown:' + oSettings._iDisplayLength);
+			}
 		});
 
 		$('input[type=checkbox],input[type=radio],input[type=file]').uniform();
