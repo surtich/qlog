@@ -304,7 +304,7 @@ module.exports = hero.worker(
 			p_config = p_config || {};
 			var auth = {
 				user : p_config.user || 'guest'
-			,	password : p_config.password || 'guest'
+			,	password : p_config.pwd || 'guest'
 			}
 
 			var baseUrl = 'http://' + (p_config.host || 'localhost') + ':' + (p_config.port || '15672');
@@ -433,7 +433,7 @@ module.exports = hero.worker(
 					if(! error && response.statusCode === 204){
 						_setPermissions(p_user, p_vhost, '.*', '.*', '.*', function(error, response, data){
 							if(! error && response.statusCode === 204){
-								var url = 'amqp://' + p_user + ':' + p_password + '@' + p_url + '/' + p_vhost;
+								var url = 'amqp://' + p_user + ':' + p_password + '@' + p_url + '/' + querystring.encode(p_vhost);
 								f_callback(null, {url: url});
 							} else {
 								f_callback(error || data, null);
@@ -481,6 +481,7 @@ module.exports = hero.worker(
 		self.user = null;
 		self.log = null;
 		self.app = null;
+		self.rabbitMan = null;
 
 		self.ready = function (next){
 			hero.app.configure (
@@ -512,9 +513,10 @@ module.exports = hero.worker(
 					 	 					hero.error( err );
 					 	 				}
 					 	 				if ( client ) {
-					 	 					self.user 	= new _user( new mongodb.Collection(client, 'user') );
-											self.log 	= new _log( new mongodb.Collection(client, 'log') );
-											self.app 	= new _app( new mongodb.Collection(client, 'app') );
+					 	 					self.user 		= new _user( new mongodb.Collection(client, 'user') );
+											self.log 		= new _log( new mongodb.Collection(client, 'log') );
+											self.app 		= new _app( new mongodb.Collection(client, 'app') );
+											self.rabbitMan 	= new _rabbit(hero.config().rabbitAdmin);
 								 	 		done(null);
 					 	 				}
 								 	 }

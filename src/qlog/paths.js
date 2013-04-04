@@ -35,6 +35,11 @@ exports.paths = [
 	, 	"handler" 	: require("./path/app_delete.js")
 	}
 ,
+	{	"method"	: "POST"
+	,	"path"		: "/app/:appId/getCredential"
+	,	"handler"	: require("./path/app_credential_post.js")
+	}
+,
 	{ 	"method"  	: "POST"
 	, 	"path"		: "/signup" 
 	, 	"handler" 	: require("./path/signup_post.js")
