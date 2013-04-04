@@ -17,3 +17,4 @@ module.exports.uuid = require('node-uuid');
 module.exports.pause = require('pause');
 module.exports.pastry = require('pastry'); //Sokobank cookie manager
 module.exports.crypto = require('crypto');
+module.exports.querystring = require('querystring');

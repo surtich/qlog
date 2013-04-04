@@ -19,6 +19,7 @@
 	, 	"pause" : "0.0.1"
 	,	"hero"	 : "https://github.com/thegameofcode/hero/tarball/master"
 	,	"pastry"	: "https://github.com/luismesas/pastry/tarball/master"
+	,	"querystring" : "0.2.x"
 	}
 ,
 	"engines" : {
