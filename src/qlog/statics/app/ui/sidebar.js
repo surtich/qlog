@@ -22,7 +22,7 @@ iris.ui(function(self) {
 			case iris.path.screens.user:
 				$(self.get('liUser')).addClass('active');
 				break;
-			case iris.path.screens.rtlog:
+			case iris.path.screens.rt:
 				$(self.get('liRT')).addClass('active');
 				break;
 		}
