@@ -265,7 +265,10 @@ function _rabbit(p_config) {
 
 	function _createCredential(p_user, p_password, p_vhost, p_url, f_callback){
 		p_vhost = (p_vhost === '/' ? '' : p_vhost);
-		_createUser(p_user, p_password, '', function(error, response, data){
+		var url = 'amqp://' + p_user + ':' + p_password + '@' + p_url + '/' + querystring.escape(p_vhost);
+		f_callback(null, {url : url, exchange : p_user});
+		
+		/*_createUser(p_user, p_password, '', function(error, response, data){
 			if(! error && response.statusCode === 204){
 				_setPermissions(p_user, p_vhost, '^$', '^' + p_user, '^$', function(error, response, data){
 					if(! error && response.statusCode === 204){
@@ -278,7 +281,7 @@ function _rabbit(p_config) {
 			} else {
 				f_callback(error || data, null);
 			}
-		});
+		});*/
 	}
 
 	this.getVhosts = _getVhosts;
