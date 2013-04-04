@@ -6,7 +6,8 @@ iris.screen(function(self) {
 			[
 				[ 'signin', iris.path.screens.signin.js],
 				[ 'app', iris.path.screens.app.js],
-				[ 'user', iris.path.screens.user.js]
+				[ 'user', iris.path.screens.user.js],
+				[ 'rt', iris.path.screens.rt.js]
 			]
 			);
 

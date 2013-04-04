@@ -3,6 +3,7 @@
 	"SIDEBAR" : {
 		"APP" : "Applications",
 		"USER" : "Users",
+		"RT" : "Real Time",
 		"SIGNOUT" : "Sign out"
 	},
 	"APPS" : {
@@ -28,6 +29,10 @@
 			"CREATE" : "Create",
 			"CANCEL" : "Cancel"
 		}
+	},
+	"RT" : {
+		"TITLE" : "Real Time",
+		"SUBTITLE" : "Real Time"
 	},
 	"SIGNIN" : {
 		"TITLE" : "Sign In"

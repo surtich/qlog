@@ -13,6 +13,7 @@ iris.ui(function(self) {
 	function screenChange(screenPath){
 		$(self.get('liApp')).removeClass('active');
 		$(self.get('liUser')).removeClass('active');
+		$(self.get('liRT')).removeClass('active');
 
 		switch(screenPath){
 			case iris.path.screens.app:
@@ -21,15 +22,19 @@ iris.ui(function(self) {
 			case iris.path.screens.user:
 				$(self.get('liUser')).addClass('active');
 				break;
+			case iris.path.screens.rtlog:
+				$(self.get('liRT')).addClass('active');
+				break;
 		}
 	}
 
 	function onSignOk(user){
 		self.get('liApp').show();
-		self.get('liSignout').show();
 		if(user.admin) {
 			self.get('liUser').show();
 		}
+		self.get('liRT').show();
+		self.get('liSignout').show();
 	}
 
 	function resourceError(p_params){
@@ -41,6 +46,7 @@ iris.ui(function(self) {
 	function hideAll(){
 		self.get('liApp').hide();
 		self.get('liUser').hide();
+		self.get('liRT').hide();
 		self.get('liSignout').hide();
 	}
 

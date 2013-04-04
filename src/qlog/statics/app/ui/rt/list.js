@@ -1,47 +1,44 @@
 iris.ui(function(self) {
+	var _app = null;
 
 	self.create = function() {
-		self.tmpl(iris.path.ui.app.list.html);
-		upgradeDatatable();
+		self.tmpl(iris.path.ui.rt.list.html);
 
-		self.on(iris.evts.apps.created, refreshItems);
-		self.on(iris.evts.apps.deleted, refreshItems);
+		// self.on(iris.evts.log.tag.selected, tagSelected);
 	};
 
 	self.awake = function() {
-		refreshItems();
 	};
 
-	function refreshItems(){
-		iris.resource(iris.path.resource.app).getAll(drawItems);
-	}
-
 	function drawItems(p_items){
-		var dt = $(self.get('dtAppList')).dataTable();
+		var dt = $(self.get('dtLogList')).dataTable();
 		dt.fnDestroy();
 
 		self.destroyUIs('container');
 		var i, I = p_items.length;
 		for(i = 0; i<I; i++){
-			self.ui('container', iris.path.ui.app.item.js, {app: p_items[i]});
+			self.ui('container', iris.path.ui.log.item.js, {log: p_items[i]});
 		}
 		self.get('lblCount').html(I);
 
 		upgradeDatatable();
+		$(self.get('dtLogList')).dataTable().fnSort([[0,'desc']]);
+
+		self.get('icon').removeClass('icon-spin');
 	}
 
 	function upgradeDatatable(){
-		$(self.get('dtAppList')).dataTable({
+		$(self.get('dtLogList')).dataTable({
 			"bJQueryUI": true,
 			"sPaginationType": "two_button", // "full_numbers"
 			"sDom": '<""l>t<"F"fp>',
-			"aLengthMenu": [ 10, 25 ],
-			iDisplayLength : 10,
-			bDestroy : true,
+			aLengthMenu: [ 5, 10 ],
+			iDisplayLength : 5,
 			bAutoWidth : false,
-			fnDrawCallback : function(oSettings){
-				// iris.log('table redraw start:' + oSettings._iDisplayStart + ' end:' + oSettings._iDisplayEnd + ' shown:' + oSettings._iDisplayLength);
-			}
+			aoColumnDefs: [
+				{ "asSorting": [ "desc", "asc" ], "aTargets": [ 0 ] }
+			]
+			//bLengthChange : false
 		});
 
 		$('input[type=checkbox],input[type=radio],input[type=file]').uniform();
@@ -63,4 +60,9 @@ iris.ui(function(self) {
 		});
 	}
 
-}, iris.path.ui.app.list.js);
+	function tagSelected(tag){
+		var dt = $(self.get('dtLogList')).dataTable();
+		dt.fnFilter(tag.lbl, 2);
+	}
+
+}, iris.path.ui.rt.list.js);

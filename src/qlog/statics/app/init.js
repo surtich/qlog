@@ -5,6 +5,7 @@ iris.path = {
 	screens : {
 		app : { js:'app/screen/app.js', html:'app/screen/app.html'},
 		user : { js:'app/screen/user.js', html:'app/screen/user.html'},
+		rt : { js:'app/screen/rt.js', html:'app/screen/rt.html'},
 		signin : { js:'app/screen/signin.js', html:'app/screen/signin.html'}
 	},
 
@@ -28,6 +29,10 @@ iris.path = {
 			item : { js:'app/ui/user/item.js' , html:'app/ui/user/item.html'},
 			create : { js:'app/ui/user/create.js' , html:'app/ui/user/create.html'},
 			edit : { js:'app/ui/user/edit.js' , html:'app/ui/user/edit.html'}
+		},
+		rt : {
+			list : { js:'app/ui/rt/list.js' , html:'app/ui/rt/list.html'},
+			item : { js:'app/ui/rt/item.js' , html:'app/ui/rt/item.html'}
 		}
 	},
 
@@ -68,6 +73,9 @@ iris.evts = {
 		changed : "USER_CHANGED",
 		create : "USER_CREATE",
 		created : "USER_CREATED"
+	},
+	rt : {
+		selected : "RT_SELECTED"
 	}
 };
 
