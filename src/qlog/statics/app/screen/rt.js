@@ -11,7 +11,10 @@ iris.screen(function(self) {
 
 		skbk.config({
 			container : 'skbk-container',
-			align : 'right'
+			align : 'right',
+			fMessageReceived : function(msg){
+				iris.log('push message', msg);
+			}
 		});
 	};
 
