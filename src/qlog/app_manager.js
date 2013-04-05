@@ -210,13 +210,47 @@ function _app(p_collection){
 	}
 
 	function _delete(p_appId, f_callback){
-		_appCol
-			.remove(
-				{ _id: new ObjectID( String(p_appId) ) }
-			, 	
-				true
-			, 
-				f_callback);
+		_appCol.findOne({
+			_id: new ObjectID( String(p_appId) )
+		}
+		, function(err, data){
+			var clientId = data.clientId;
+
+			async.parallel(
+				[
+				function(done){
+					rabbit.deleteUser(
+						clientId
+					, function(err, request, data){
+						done(err, data);
+					});
+				}
+			,
+				function(done) {
+					rabbit.deleteExchange(
+						_VIRTUAL_HOST
+					, 	clientId
+					, function(err, request, data){
+						done(err, data);
+					});
+				}
+			,	
+				function(done) {
+				_appCol
+					.remove(
+						{ _id: new ObjectID( String(p_appId) ) }
+					, 	
+						true
+					, 
+						done);
+				} 
+			]
+			, function(err, result){
+				f_callback(err, result);
+			}
+
+			);
+		});
 	}
 
 	this.create = _create;

@@ -89,7 +89,22 @@ module.exports = hero.worker(
 											self.log 		= new _log( new mongodb.Collection(client, 'log') );
 											self.app 		= new _app( new mongodb.Collection(client, 'app') );
 											self.rabbitMan 	= new _rabbit(hero.config().rabbitAdmin);
-								 	 		done(null);
+											self.rabbitMan.createQueue(
+												'/'
+											, 	hero.config().mq.log.queue
+											, 	{
+													"auto_delete":false
+												,	"durable":true
+												,	"arguments":[]
+												}
+											, function(error, request, data) {
+								 	 			if( !error ) {
+								 	 				done(null);
+								 	 			}
+								 	 			else {
+								 	 				done(error);
+								 	 			}
+											});
 					 	 				}
 								 	 }
 								);
