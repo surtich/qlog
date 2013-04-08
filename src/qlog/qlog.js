@@ -10,6 +10,7 @@ var commons  = require('../lib/commons.js')
 ,	_user  	 = require('./user_manager.js')
 ,	_log  	 = require('./log_manager.js')
 ,	_app  	 = require('./app_manager.js')
+,	_consumer = require('./consumer.js')
 ;
 
 module.exports = hero.worker(
@@ -108,6 +109,15 @@ module.exports = hero.worker(
 					 	 				}
 								 	 }
 								);
+							}
+						,
+							function (done) {
+								_consumer.ready(function(err){
+									if(!err){
+										console.log('Qlog Drainer Process ready');
+										done();
+									}
+								});
 							}
 						,
 							function (done){
