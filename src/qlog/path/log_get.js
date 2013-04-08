@@ -1,3 +1,5 @@
+var qlog = require('../qlog.js')
+;
 
 module.exports = function (req, res, next){
 
@@ -6,10 +8,12 @@ module.exports = function (req, res, next){
 		res.end();
 	}
 	else {
-		qlog.log.list(
+		qlog.log.getByApp(
+			req.params.appId
+		,
 			{ 'uid' : req.pastry.data.uid
-			, 'page'  : req.params('p')
-			, 'count' : req.params('c')
+			// , 'page'  : req.params('p')
+			// , 'count' : req.params('c')
 			}
 		,
 			function (err, data){
@@ -19,7 +23,7 @@ module.exports = function (req, res, next){
 				}
 				else {
 					res.writeHead(200);
-					res.end( data );
+					res.end(JSON.stringify(data));
 				}
 			}
 		);

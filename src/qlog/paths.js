@@ -56,12 +56,12 @@ exports.paths = [
 	}
 ,
 	{ 	"method"  	: "GET"
-	, 	"path"		: "/log" 
+	, 	"path"		: "/app/:appId/log"
 	, 	"handler" 	: require("./path/log_get.js")
 	}
 ,
 	{ 	"method"  	: "PUT"
-	, 	"path"		: "/log" 
+	, 	"path"		: "/app/:appId/log" 
 	, 	"handler" 	: require("./path/log_put.js")
 	}
 ,
