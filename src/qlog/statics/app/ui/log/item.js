@@ -5,9 +5,12 @@ iris.ui(function(self) {
 		self.tmplMode(self.APPEND);
 
 		_log = self.setting('log');
+		if(_log.msg === null){
+			_log.msg = '';
+		}
 
-		_log.msgPretty = '<li>' + _log.msg.split('\n').join('</li><li>') + '</li>';
-		_log.tagsPretty = '<span class="label label-info">' + _log.tags.split(',').join('</span>&nbsp;<span class="label label-info">') + '</span>';
+		_log.msgPretty = '<li>' + _log.msg.toString().split('\n').join('</li><li>') + '</li>';
+		_log.tagsPretty = '<span class="label label-info">' + _log.tags.join('</span>&nbsp;<span class="label label-info">') + '</span>';
 
 
 		self.tmpl(iris.path.ui.log.item.html, _log);

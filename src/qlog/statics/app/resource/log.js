@@ -8,10 +8,9 @@ iris.resource(
 				var tags = {};
 				var l,L=logs.length, t,T, lbl;
 				for(l=0; l<L; l++){
-					var split = logs[l].tags.split(',');
-					T = split.length;
+					T = logs[l].tags.length;
 					for(t=0;t<T;t++){
-						lbl = split[t];
+						lbl = logs[l].tags[t];
 						tags[lbl] = lbl;
 					}
 				}

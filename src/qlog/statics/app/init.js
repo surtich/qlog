@@ -117,3 +117,9 @@ $(document).ready(
 		iris.welcome(iris.path.welcome);
 	}
 	);
+
+iris.qlog.config({
+	url : 'http://localhost:5001',
+	clientId : 'H_RJxUWpHIr7foRF',
+	secretKey : 'kuNQeqsXZypy8eBYnwNB7gygPgo6lojI'
+});
