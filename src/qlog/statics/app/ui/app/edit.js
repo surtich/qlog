@@ -13,6 +13,8 @@ iris.ui(function(self) {
 		self.get('btnSecretKey').click(resetSecretKey);
 		self.get('btnDelete').click(deleteApp);
 
+		$(self.get('btnDelete')).tooltip();
+
 		self.on(iris.evts.apps.selected, appSelected);
 		self.on(iris.evts.apps.create, appCreate);
 		self.on(iris.evts.screen.change, function(){self.get('root').hide();});

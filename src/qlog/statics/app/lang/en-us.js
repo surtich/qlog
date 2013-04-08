@@ -17,6 +17,9 @@
 			"TITLE" : "Application details",
 			"CREATE" : "Create",
 			"CANCEL" : "Cancel"
+		},
+		"TOOLTIP":{
+			"DELETE": "Delete this app"
 		}
 	},
 	"USER" : {
