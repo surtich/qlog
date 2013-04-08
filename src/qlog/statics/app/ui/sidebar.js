@@ -33,7 +33,7 @@ iris.ui(function(self) {
 		if(user.admin) {
 			self.get('liUser').show();
 		}
-		self.get('liRT').show();
+		// self.get('liRT').show();
 		self.get('liSignout').show();
 	}
 
