@@ -22,7 +22,7 @@ function _log(p_collection){
 	function _get(p_clientId, p_filter, f_callback){;
 		p_filter = p_filter || {};
 		var filter = { 
-			clientId : p_clientId)
+			clientId : p_clientId
 		}
 		
 		var from 	= p_filter.from || 0;
