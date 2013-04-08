@@ -5,13 +5,13 @@ var commons  = require('../lib/commons.js')
 function _log(p_collection){
 	var _logCol = p_collection;
 
-	function _create(p_appId, p_msg, p_time, p_tags, f_callback){
+	function _create(p_clientId, p_msg, p_time, p_tags, f_callback){
 		_logCol.insert(
 			{
-			  appId 	: p_appId
+			  clientId 	: p_clientId
 			, msg 		: p_msg 
 			, time 		: p_time
-			, tags 		: p_tags
+			, tags 		: p_tags.split(',')
 			, created 	: (new Date()).getTime()
 			}
 		, 
@@ -19,10 +19,10 @@ function _log(p_collection){
 		)
 	}
 
-	function _get(p_appId, p_filter, f_callback){;
+	function _get(p_clientId, p_filter, f_callback){;
 		p_filter = p_filter || {};
 		var filter = { 
-			appId : new ObjectID(String(p_appId))
+			clientId : p_clientId)
 		}
 		
 		var from 	= p_filter.from || 0;

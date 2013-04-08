@@ -264,8 +264,8 @@ function _rabbit(p_config) {
 
 
 	function _createCredential(p_user, p_password, p_vhost, p_url, f_callback){
-		p_vhost = (p_vhost === '/' ? '' : p_vhost);
-		var url = 'amqp://' + p_user + ':' + p_password + '@' + p_url + '/' + querystring.escape(p_vhost);
+		p_vhost = (p_vhost === '/' ? '' : '/' + querystring.escape(p_vhost));
+		var url = 'amqp://' + p_user + ':' + p_password + '@' + p_url + p_vhost;
 		f_callback(null, {url : url, exchange : p_user});
 		
 		/*_createUser(p_user, p_password, '', function(error, response, data){

@@ -11,7 +11,7 @@ module.exports = function (req, res, next){
 				req.params.appId
 			, 	req.body.p
 			, 	'/'
-			, 	req.headers.host 
+			, 	qlog.config.mq.log.host + (qlog.config.mq.log.port ? ":" + qlog.config.mq.log.port : "")
 			, function (err, data){
 				if ( err ) {
 					console.log( err );
