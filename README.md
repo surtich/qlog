@@ -37,6 +37,8 @@ Installing QLog
 
 * Install NodeJS [http://nodejs.org]
 * Install NPM [https://npmjs.org]
+* Install RabbitMQ [http://www.rabbitmq.com]
+* Install RabbitMQ Management Plugin [http://www.rabbitmq.com/management.html]
 * Install Redis [http://redis.io/download]
 * Install MongoDB [http://www.mongodb.org/downloads]
 * Download, fork or clone qlog github repository [https://github.com/jdacruz/qlog.git]
