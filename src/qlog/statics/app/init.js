@@ -79,20 +79,6 @@ iris.evts = {
 	}
 };
 
-function _hostContains () {
-	for(var i = 0 ; i< arguments.length; i++) {
-		if ( document.location.host.indexOf(arguments[i]) > -1 ) {
-			return true;
-		}
-	}
-	return false;
-}
-
-var _local = _hostContains('local');
-iris.servicepaths = {
-	apps : _local ? 'http://localhost' :  'http://qlog.skbk.es'
-};
-
 $(document).ready(
 	function () {
 		iris.translations('en-US', './app/lang/en-us.js');
