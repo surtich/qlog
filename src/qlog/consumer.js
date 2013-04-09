@@ -31,7 +31,6 @@ module.exports = hero.worker (function(self) {
             ,
                 function (done) {
                     self.qlog_q.on(function(message, header, deliveryInfo){
-                        console.log(message);
                         self.logMan.create(deliveryInfo.exchange, message.msg, message.date || (new Date()).getTime(), message.tags || '');
                     });
                     done();
