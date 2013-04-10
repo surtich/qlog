@@ -13,6 +13,9 @@ iris.screen(function(self) {
 	function onBtnSend(e){
 		e.preventDefault();
 
+		self.get('iconSubtitle').addClass('icon-spin');
+		self.get('iconSignin').addClass('icon-spin');
+
 		var p = {
 			e : $(self.get('txtEmail')).val(),
 			p : $(self.get('txtPassword')).val()
@@ -27,10 +30,14 @@ iris.screen(function(self) {
 	function signInOk(p_data){
 		self.notify(iris.evts.signin.ok, p_data);
 		iris.navigate('#/app');
+		self.get('iconSubtitle').removeClass('icon-spin');
+		self.get('iconSignin').removeClass('icon-spin');
 	}
 
 	function signInKo(p_data){
 		iris.log('signin', p_data);
+		self.get('iconSubtitle').removeClass('icon-spin');
+		self.get('iconSignin').removeClass('icon-spin');
 	}
 
 }, iris.path.screens.signin.js);

@@ -14,6 +14,7 @@ iris.ui(function(self) {
 
 	function refreshItems(){
 		iris.resource(iris.path.resource.app).getAll(drawItems);
+		self.get('iconSubtitle').addClass('icon-spin');
 	}
 
 	function drawItems(p_items){
@@ -28,6 +29,8 @@ iris.ui(function(self) {
 		self.get('lblCount').html(I);
 
 		upgradeDatatable();
+
+		self.get('iconSubtitle').removeClass('icon-spin');
 	}
 
 	function upgradeDatatable(){

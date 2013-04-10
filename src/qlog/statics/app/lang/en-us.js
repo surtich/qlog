@@ -38,7 +38,8 @@
 		"SUBTITLE" : "Real Time"
 	},
 	"SIGNIN" : {
-		"TITLE" : "Sign In"
+		"TITLE" : "Sign In",
+		"SUBTITLE" : "Please Sign In"
 	},
 	"FOOTER" : "2013 &copy; QLog Administration<br/>Brought to you by New Technologies Team"
 }
