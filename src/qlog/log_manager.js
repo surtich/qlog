@@ -40,7 +40,7 @@ function _log(p_collection){
 			.find(
 				filter
 			)
-			.sort( { 'created' : 'asc' })
+			.sort( { 'created' : -1 })
 			.skip(from)
 			.limit(limit)
 			.toArray(f_callback)

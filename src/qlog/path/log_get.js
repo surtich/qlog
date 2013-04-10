@@ -18,8 +18,8 @@ module.exports = function (req, res, next){
 		,
 			function (err, data){
 				if ( err ) {
-					res.writeHead(500, err);
-					res.end();
+					res.writeHead(500);
+					res.end(JSON.stringify(err));
 				}
 				else {
 					res.writeHead(200);
