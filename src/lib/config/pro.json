@@ -1,18 +1,22 @@
 {
     "rabbitAdmin" : {
-        "user"  : "guest"
-    ,   "pwd"   : "guest"
-    ,   "host"  : "localhost"
-    ,   "port"  : "15672"
+        "user"      : "guest"
+    ,   "pwd"       : "guest"
+    ,   "host"      : "localhost"
+    ,   "port"      : "15672"
+    ,   "baseUrl"   : "api.qlog.io:5672"
     }
 ,
     "mq" : {
         "log" : {
-            "host"      : "localhost"
-        ,   "port"      : ""
-        ,   "exchange"  : "qlog_ex"
+           "type"      : "amqp"
+        ,   "host"      : "localhost"
+        ,   "port"      : "5672"
+        ,   "exchange"  : ""
+        ,   "exchange_opts"   : {"passive" : true}
+        ,   "routing_key"   : "*"
         ,   "queue"     : "qlog_q"
-        ,   "type"      : "amqp"
+        ,   "queue_opts"   : {"passive" : true}
         }
     }
 ,
