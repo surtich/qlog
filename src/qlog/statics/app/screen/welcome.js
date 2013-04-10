@@ -37,6 +37,10 @@ iris.screen(function(self) {
 	function getMeOk(user){
 		if(user._id === undefined || user._id === null){
 			iris.navigate('#/signin');
+		} else {
+			if ( !document.location.hash ) {
+				iris.navigate('#/app');
+			}
 		}
 		iris.notify(iris.evts.signin.ok, user);
 	}
