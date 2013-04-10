@@ -7,6 +7,7 @@ var commons = require('../lib/commons.js')
 
 module.exports = hero.worker (function(self) {
 
+    console.log('log', self.config.mq.log);
     self.qlog_q = self.mq('log', self.config.mq.log);
     self.dbLog  = self.db('log', self.config.db.log);
     self.logMan = null;
