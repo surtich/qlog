@@ -11,7 +11,7 @@ module.exports = function (req, res, next){
 				req.params.appId
 			, 	req.body.p
 			, 	'/'
-			, 	qlog.config.mq.log.host + (qlog.config.mq.log.port ? ":" + qlog.config.mq.log.port : "")
+			, 	qlog.config.rabbitAdmin.baseUrl
 			, function (err, data){
 				if ( err ) {
 					console.log( err );
