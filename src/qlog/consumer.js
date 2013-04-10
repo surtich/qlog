@@ -7,7 +7,6 @@ var commons = require('../lib/commons.js')
 
 module.exports = hero.worker (function(self) {
 
-    console.log('log', self.config.mq.log);
     self.qlog_q = self.mq('log', self.config.mq.log);
     self.dbLog  = self.db('log', self.config.db.log);
     self.logMan = null;
@@ -18,13 +17,11 @@ module.exports = hero.worker (function(self) {
                 function (done) {
                     self.dbLog.setup(
                         function(err, client){
-                            console.log('Consumer Setup', !!err, !!client )
                             if(err) {
                                 hero.error( err );
                                 done(err);
                             }
                             if ( client ) {
-                                console.log('Got Mongo Client')
                                 self.logMan = new log(new mongodb.Collection(client, 'log'));
                                 done();
                             }
@@ -33,7 +30,6 @@ module.exports = hero.worker (function(self) {
                 }
             ,
                 function (done) {
-                    console.log('Subscribing to queue')
                     self.qlog_q.on(function(message, header, deliveryInfo){
                         self.logMan.create(deliveryInfo.exchange, message.msg, message.date || (new Date()).getTime(), message.tags || '');
                     });
