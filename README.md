@@ -49,7 +49,7 @@ Starting QLog
 
 # First time or rewrite admin credentials:
 
-<pre><code>node qlog/main --env=pro --port=3001 --user_email=admin@domain.com --user_pwd=[YOUR_ADMIN_PASSWORD]</code></pre>
+<pre><code>node qlog/main --env=pro --port=3001 --admin_email=admin@domain.com --admin_pwd=[YOUR_ADMIN_PASSWORD]</code></pre>
 
 
 # Following times:
