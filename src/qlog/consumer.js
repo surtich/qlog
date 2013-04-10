@@ -17,11 +17,13 @@ module.exports = hero.worker (function(self) {
                 function (done) {
                     self.dbLog.setup(
                         function(err, client){
+                            console.log('Consumer Setup', !!err, !!client )
                             if(err) {
                                 hero.error( err );
                                 done(err);
                             }
                             if ( client ) {
+                                console.log('Got Mongo Client')
                                 self.logMan = new log(new mongodb.Collection(client, 'log'));
                                 done();
                             }
@@ -30,6 +32,7 @@ module.exports = hero.worker (function(self) {
                 }
             ,
                 function (done) {
+                    console.log('Subscribing to queue')
                     self.qlog_q.on(function(message, header, deliveryInfo){
                         self.logMan.create(deliveryInfo.exchange, message.msg, message.date || (new Date()).getTime(), message.tags || '');
                     });

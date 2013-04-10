@@ -90,6 +90,8 @@ module.exports = hero.worker(
 											self.log 		= new _log( new mongodb.Collection(client, 'log') );
 											self.app 		= new _app( new mongodb.Collection(client, 'app') );
 											self.rabbitMan 	= new _rabbit(hero.config().rabbitAdmin);
+											console.log('Rabbit admin config', hero.config().rabbitAdmin);
+											console.log('Create queue', hero.config().mq.log.queue);
 											self.rabbitMan.createQueue(
 												'/'
 											, 	hero.config().mq.log.queue
@@ -100,6 +102,7 @@ module.exports = hero.worker(
 												}
 											, function(error, request, data) {
 								 	 			if( !error ) {
+								 	 				console.log('Create queue', data)
 								 	 				done(null);
 								 	 			}
 								 	 			else {
