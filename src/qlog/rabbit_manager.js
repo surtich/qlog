@@ -229,7 +229,6 @@ function _rabbit(p_config) {
 		,	auth : auth
 		};
 
-		console.log('Create Queue options', options);
 		request.put(options, f_callback);
 	}
 
