@@ -18,10 +18,6 @@ iris.screen(function(self) {
 
 		self.on(iris.RESOURCE_ERROR, resourceError);
 
-		if ( !document.location.hash ) {
-			iris.navigate('#/signin');
-		}
-
 		iris.resource(iris.path.resource.user).getMe(getMeOk);
 	};
 
