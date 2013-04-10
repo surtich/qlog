@@ -19,12 +19,12 @@ module.exports = hero.worker (function(self) {
                         function(err, client){
                             if(err) {
                                 hero.error( err );
+                                done(err);
                             }
                             if ( client ) {
                                 self.logMan = new log(new mongodb.Collection(client, 'log'));
-
+                                done();
                             }
-                            done(err);
                         }
                     );
                 }

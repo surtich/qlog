@@ -115,11 +115,11 @@ module.exports = hero.worker(
 								_consumer.ready(function(err){
 									if(!err){
 										console.log('Qlog Drainer Process ready');
+										done();
 									} else {
 										hero.error("Qlog Drainer Process could not be launched.")
 										process.exit(1);
 									}
-									done(err);
 								});
 							}
 						,
