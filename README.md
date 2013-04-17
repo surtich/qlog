@@ -41,6 +41,20 @@ Installing QLog
 * Install MongoDB [http://www.mongodb.org/downloads]
 * Download, fork or clone qlog github repository [https://github.com/jdacruz/qlog.git]
 
+Configuring QLog
+----------------
+* Install RabbitMQ Management Command Line application [http://www.rabbitmq.com/management-cli.html]
+* Create and assign permisions to protected user
+```
+rabbitmqadmin declare user name=<user_name> password=<user_password> tags=administrator
+rabbitmqadmin declare permissions vhost=/ user=<user_name> configuration=.* write=.* read=.*
+```
+
+* Delete RabbitMQ default user (guest)
+```
+rabbitmqadmin delete user name=<default_user>
+```
+* Set protected user credentials in the desired environment file inside /lib/config/
 
 Starting QLog
 -------------
