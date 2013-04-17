@@ -1,7 +1,7 @@
 {
     "rabbitAdmin" : {
-        "user"      : "guest"
-    ,   "pwd"       : "guest"
+        "user"      : "innotech"
+    ,   "pwd"       : "dD65C8hd"
     ,   "host"      : "localhost"
     ,   "port"      : "15672"
     ,   "baseUrl"   : "api.qlog.io:5672"
