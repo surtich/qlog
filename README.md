@@ -1,5 +1,3 @@
-[WORK IN PROGRESS] [WORK IN PROGRESS] [WORK IN PROGRESS] [WORK IN PROGRESS]
-
 QLog
 ====
 
@@ -86,12 +84,12 @@ First Steps
 
 ## Using NodeJS
 
-* You have a NodeJS QLog client in the following folder of repository [/clients/nodejs/]
+* You have a NodeJS QLog client library [here](https://github.com/bbva-innotech/qlog-node)
 
 
 ## Using Java
 
-* You have a NodeJS QLog client in the following folder of repository [/clients/java/]
+* You have a Java QLog client library [here](https://github.com/bbva-innotech/qlog-java)
 
 
 
