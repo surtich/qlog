@@ -10,6 +10,7 @@ iris.ui(function(self) {
 
 		self.get('row').click(rowSelected);
 		self.on(iris.evts.user.changed, userChanged);
+		self.on(iris.evts.user.selected, userSelected);
 	};
 
 	function rowSelected(){
@@ -32,6 +33,14 @@ iris.ui(function(self) {
 
 		var date = new Date( user.created );
 		self.get('lblCreated').html(iris.date(date));
+	}
+
+	function userSelected(user){
+		if(_user._id == user._id){
+			self.get('row').addClass('info');
+		} else {
+			self.get('row').removeClass('info');
+		}
 	}
 
 }, iris.path.ui.user.item.js);

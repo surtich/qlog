@@ -69,7 +69,7 @@ function _user (p_collection){
 				_userCol
 					.find(
 						{}
-					, 	{ pwd : 0 }
+					, 	{}
 					)
 					.skip(from)
 					.limit(limit)

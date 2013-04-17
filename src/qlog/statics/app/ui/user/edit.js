@@ -5,7 +5,7 @@ iris.ui(function(self) {
 	self.create = function() {
 		self.tmpl(iris.path.ui.user.edit.html);
 
-		self.get('btnPassword').click(resetPassword);
+		// self.get('btnPassword').click(resetPassword);
 
 		self.on(iris.evts.user.selected, userSelected);
 		self.on(iris.evts.screen.change, function(){self.get('root').hide();});
@@ -15,7 +15,7 @@ iris.ui(function(self) {
 		iris.log('user selected', user);
 		_user = user;
 		self.get('lblEmail').html(_user.email);
-		self.get('lblPassword').html(_user.password);
+		self.get('lblPassword').html(_user.pwd);
 		self.get('root').show();
 	}
 
