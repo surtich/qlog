@@ -17,7 +17,7 @@ var testApp = {
 
 var testLog = {
 	"msg"	: "Test log message"
-,	"tags"	: ["tag1","tag2"]
+,	"tags"	: "tag1,tag2"
 }
 
 
@@ -71,7 +71,7 @@ describe('QLog testing'
 										function (err, data){
 											assert.equal(data.length, 1);
 											assert.equal(testUser.email, data[0].email);
-											assert.equal(null, data[0].pwd);
+											assert.equal(testUser.pwd, data[0].pwd);
 											assert.notEqual(null, data[0]._id);
 											next();
 										} 
@@ -480,7 +480,7 @@ describe('QLog testing'
 										function (err, data){								
 											assert.equal(data.length, 1);
 											assert.equal(testLog.msg, data[0].msg);
-											assert.deepEqual(testLog.tags, data[0].tags);
+											assert.deepEqual(testLog.tags, data[0].tags.join(','));
 											assert.notEqual(null, data[0]._id);
 											next();
 										} 

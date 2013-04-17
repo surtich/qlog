@@ -97,7 +97,7 @@ function _app(p_collection){
 			insert: function(done){
 				_appCol.insert(
 					{
-					 	uid			: p_uid
+					 	uid			: String(p_uid)
 					, 	name  		: p_name
 					, 	clientId	: clientId
 					, 	secretKey	: secretKey
