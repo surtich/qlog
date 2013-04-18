@@ -203,9 +203,11 @@ describe('QLog testing'
 		describe('#App test 1'
 	  	, 	function(){
 
+				var userId = null;
+				var appId = null;
+
 	    		it('create app'
 	    		, 	function(done){
-	    				var userId = null;
 						async.series(
 							[
 								function(next){
@@ -231,6 +233,7 @@ describe('QLog testing'
 									,	testApp.callback
 									,
 										function (err, data){
+											appId = data[0]._id;
 											next();
 										} 
 									);
@@ -255,7 +258,7 @@ describe('QLog testing'
 							]
 							,
 							function(err, results){
-								done();
+								qlog.app.erase(appId, done);
 							}
 						);
 	    			}
@@ -266,11 +269,11 @@ describe('QLog testing'
 
 		describe('#User App 2'
 	  	, 	function(){
+	  			var userId = null;
+				var appId  = null;
+	    		
 	    		it('update app'
 	    		, 	function(done){
-
-						var userId = null;
-						var appId  = null;
 
 						async.series(
 							[
@@ -334,23 +337,24 @@ describe('QLog testing'
 							]
 							,
 							function(err, results){
-								done();
+								qlog.app.erase(appId, done);
 							}
 						);
 	    			}
 	    		);
+
 			}		
 		);
 
 
 		describe('#User App 3'
 	  	, 	function(){
+	  			var userId = null;
+				var appId  = null;
+				var secretKey = null;
+
 	    		it('refresh app secret token'
 	    		, 	function(done){
-
-						var userId = null;
-						var appId  = null;
-						var secretKey = null;
 
 						async.series(
 							[
@@ -410,7 +414,7 @@ describe('QLog testing'
 							]
 							,
 							function(err, results){
-								done();
+								qlog.app.erase(appId, done);
 							}
 						);
 	    			}
@@ -490,7 +494,7 @@ describe('QLog testing'
 							]
 							,
 							function(err, results){
-								done();
+								qlog.app.erase(appId, done);
 							}
 						);
 	    			}
