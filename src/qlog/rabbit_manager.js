@@ -83,6 +83,7 @@ function _rabbit(p_config) {
 		//,	auth : auth
 		};
 
+		console.log('Create User', options);
 		request.put(options, f_callback);
 	}
 
@@ -117,6 +118,7 @@ function _rabbit(p_config) {
 		//,	auth : auth
 		};
 
+		console.log('Set Permissions', options);
 		request.put(options, f_callback);
 
 	}
@@ -168,6 +170,7 @@ function _rabbit(p_config) {
 		//,	auth : auth
 		};
 
+		console.log('Create Exchange', options);
 		request.put(options, f_callback);
 	}
 
@@ -259,6 +262,7 @@ function _rabbit(p_config) {
 		//,	auth : auth
 		};
 
+		console.log('Bind', options);
 		request.post(options, f_callback);
 	}
 
