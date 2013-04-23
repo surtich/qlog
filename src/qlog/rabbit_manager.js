@@ -7,7 +7,7 @@ function _rabbit(p_config) {
 	p_config = p_config || {};
 	var auth = {
 		user : p_config.user || 'guest'
-	,	password : p_config.password || 'guest'
+	,	password : p_config.pwd || 'guest'
 	};
 
 	var baseUrl = 'http://' + (auth.user + ':' + auth.password + '@') +(p_config.host || 'localhost') + ':' + (p_config.port || '15672');
@@ -83,6 +83,7 @@ function _rabbit(p_config) {
 		//,	auth : auth
 		};
 
+		console.log('Create User', options);
 		request.put(options, f_callback);
 	}
 
@@ -117,6 +118,7 @@ function _rabbit(p_config) {
 		//,	auth : auth
 		};
 
+		console.log('Set Permissions', options);
 		request.put(options, f_callback);
 
 	}
@@ -168,6 +170,7 @@ function _rabbit(p_config) {
 		//,	auth : auth
 		};
 
+		console.log('Create Exchange', options);
 		request.put(options, f_callback);
 	}
 
@@ -259,6 +262,7 @@ function _rabbit(p_config) {
 		//,	auth : auth
 		};
 
+		console.log('Bind', options);
 		request.post(options, f_callback);
 	}
 

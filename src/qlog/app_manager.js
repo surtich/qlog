@@ -48,6 +48,7 @@ function _app(p_collection){
 				, 	secretKey
 				, 	''
 				, function(error, request, data){
+					console.log(error, request.statusCode, data);
 					done(error, request.statusCode);
 				});
 			}
@@ -60,6 +61,7 @@ function _app(p_collection){
 				, 	_CLIENT_WRITE_PERMISSION + clientId
 				, 	_CLIENT_READ_PERMISSION
 				, function(error, request, data){
+					console.log(error, request.statusCode, data);
 					done(error, request.statusCode);
 				});
 			}
@@ -76,6 +78,7 @@ function _app(p_collection){
 					,	"arguments" 	: []
 				}
 				, function(error, request, data){
+					console.log(error, request.statusCode, data);
 					done(error, request.statusCode);
 				});
 			}
@@ -90,6 +93,7 @@ function _app(p_collection){
 					,	arguments : []
 					}
 				, function(error, request, data){
+					console.log(error, request.statusCode, data);
 					done(error, request.statusCode);
 				});
 			}
