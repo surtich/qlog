@@ -16,7 +16,6 @@ function _rabbit(p_config) {
 		var options = {
 			url  : baseUrl + '/api/vhosts/'
 		,	json : {}
-		//,	auth : auth
 		};
 
 		request.get(options, f_callback);
@@ -26,7 +25,6 @@ function _rabbit(p_config) {
 		var options = {
 			url  : baseUrl + '/api/vhosts/' + querystring.escape(p_name)
 		,	json : {}
-		//,	auth : auth
 		};
 
 		request.get(options, f_callback);
@@ -36,7 +34,6 @@ function _rabbit(p_config) {
 		var options = {
 			url  : baseUrl + '/api/vhosts/' + querystring.escape(p_name)
 		,	json : {}
-		//,	auth : auth
 		};
 
 		request.put(options, f_callback);
@@ -46,7 +43,6 @@ function _rabbit(p_config) {
 		var options = {
 			url  : baseUrl + '/api/vhosts/' + querystring.escape(p_name)
 		,	json : {}
-		//,	auth : auth
 		};
 
 		request.del(options, f_callback);
@@ -56,7 +52,6 @@ function _rabbit(p_config) {
 		var options = {
 			url  : baseUrl + '/api/users/'
 		,	json : {}
-		//,	auth : auth
 		};
 
 		request.get(options, f_callback);
@@ -66,7 +61,6 @@ function _rabbit(p_config) {
 		var options = {
 			url  : baseUrl + '/api/users/' + p_user
 		,	json : {}
-		//,	auth : auth
 		};
 
 		
@@ -80,10 +74,8 @@ function _rabbit(p_config) {
 				password : p_password
 			,	tags : p_tags
 			}
-		//,	auth : auth
 		};
 
-		console.log('Create User', options);
 		request.put(options, f_callback);
 	}
 
@@ -91,7 +83,6 @@ function _rabbit(p_config) {
 		var options = {
 			url  : baseUrl + '/api/users/' + p_user
 		,	json : {}
-		//,	auth : auth
 		};
 
 		request.del(options, f_callback);
@@ -101,7 +92,6 @@ function _rabbit(p_config) {
 		var options = {
 			url  : baseUrl + '/api/permissions/' + querystring.escape(p_vhost) + '/' + p_user
 		,	json : {}
-		//,	auth : auth
 		};
 
 		request.get(options, f_callback);
@@ -115,10 +105,8 @@ function _rabbit(p_config) {
 			,	write : p_write
 			,	read: p_read
 		}
-		//,	auth : auth
 		};
 
-		console.log('Set Permissions', options);
 		request.put(options, f_callback);
 
 	}
@@ -127,7 +115,6 @@ function _rabbit(p_config) {
 		var options = {
 			url  : baseUrl + '/api/permissions/' + querystring.escape(p_vhost) + '/' + p_user
 		,	json : {}
-		//,	auth : auth
 		};
 
 		request.del(options, f_callback);
@@ -137,7 +124,6 @@ function _rabbit(p_config) {
 		var options = {
 			url  : baseUrl + '/api/exchanges/'
 		,	json : {}
-		//,	auth : auth
 		};
 
 		request.get(options, f_callback);
@@ -147,7 +133,6 @@ function _rabbit(p_config) {
 		var options = {
 			url  : baseUrl + '/api/exchanges/' + querystring.escape(p_vhost)
 		,	json : {}
-		//,	auth : auth
 		};
 
 		request.get(options, f_callback);
@@ -157,7 +142,6 @@ function _rabbit(p_config) {
 		var options = {
 			url  : baseUrl + '/api/exchanges/' + querystring.escape(p_vhost) + '/' + p_exchange
 		,	json : {}
-		//,	auth : auth
 		};
 
 		request.get(options, f_callback);
@@ -167,10 +151,8 @@ function _rabbit(p_config) {
 		var options = {
 			url  : baseUrl + '/api/exchanges/' + querystring.escape(p_vhost) + '/' + p_exchange
 		,	json : p_params || { type: 'direct'}
-		//,	auth : auth
 		};
 
-		console.log('Create Exchange', options);
 		request.put(options, f_callback);
 	}
 
@@ -178,7 +160,6 @@ function _rabbit(p_config) {
 		var options = {
 			url  : baseUrl + '/api/exchanges/' + querystring.escape(p_vhost) + '/' + p_exchange
 		,	json : {}
-		//,	auth : auth
 		};
 
 		request.del(options, f_callback);
@@ -188,10 +169,8 @@ function _rabbit(p_config) {
 		var options = {
 			url  : baseUrl + '/api/exchanges/' + querystring.escape(p_vhost) + '/' + p_exchange + '/publish/'
 		,	json : p_params || {properties: {}, routing_key: '*', payload:'dummy', payload_encoding:'string'}
-		//,	auth : auth
 		};
 
-		console.log('Publish', options);
 		request.post(options, f_callback);
 	}*/
 
@@ -199,7 +178,6 @@ function _rabbit(p_config) {
 		var options = {
 			url  : baseUrl + '/api/queues/'
 		,	json : {}
-		//,	auth : auth
 		};
 
 		request.get(options, f_callback);
@@ -209,7 +187,6 @@ function _rabbit(p_config) {
 		var options = {
 			url  : baseUrl + '/api/queues/' + querystring.escape(p_vhost)
 		,	json : {}
-		//,	auth : auth
 		};
 
 		request.get(options, f_callback);
@@ -219,7 +196,6 @@ function _rabbit(p_config) {
 		var options = {
 			url  : baseUrl + '/api/queues/' + querystring.escape(p_vhost) + '/' + p_queue
 		,	json : {}
-		//,	auth : auth
 		};
 
 		request.get(options, f_callback);
@@ -229,7 +205,6 @@ function _rabbit(p_config) {
 		var options = {
 			url  : baseUrl + '/api/queues/' + querystring.escape(p_vhost) + '/' + p_queue
 		,	json : p_params || {}
-		//,	auth : auth
 		};
 
 		request.put(options, f_callback);
@@ -239,7 +214,6 @@ function _rabbit(p_config) {
 		var options = {
 			url  : baseUrl + '/api/queues/' + querystring.escape(p_vhost) + '/' + p_queue
 		,	json : {}
-		//,	auth : auth
 		};
 
 		request.del(options, f_callback);
@@ -249,7 +223,6 @@ function _rabbit(p_config) {
 		var options = {
 			url  : baseUrl + '/api/queues/' + querystring.escape(p_vhost) + '/' + p_queue + '/get'
 		,	json : {count: 1, requeue: false, encoding: 'auto'}
-		//,	auth : auth
 		};
 
 		request.post(options, f_callback);
@@ -259,10 +232,8 @@ function _rabbit(p_config) {
 		var options = {
 			url  : baseUrl + '/api/bindings/' + querystring.escape(p_vhost) + '/e/' + p_exchange + '/q/' + p_destination
 		,	json : p_params || { type: 'topic'}
-		//,	auth : auth
 		};
 
-		console.log('Bind', options);
 		request.post(options, f_callback);
 	}
 
