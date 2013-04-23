@@ -13,7 +13,7 @@ function _app(p_collection){
 	var rabbit = new rabbitM(hero.config().rabbitAdmin);
 
 	var _CLIENT_ID_LENGTH 	= 16
-	,	_SCECRET_KEY_LENGTH = 32
+	,	_SECRET_KEY_LENGTH = 32
 	;
 
 	var _CLIENT_CONFIG_PERMISSION = 
@@ -27,17 +27,17 @@ function _app(p_collection){
 	function _createToken(len){
 		var tkn = crypto
 			.randomBytes(Math.ceil(len * 3 / 4))
-		    .toString('base64')
-		    .slice(0, len)
-		    .replace(/\//g, '-')
-		    .replace(/\+/g, '_')
+			.toString('base64')
+			.slice(0, len)
+			.replace(/\//g, '-')
+			.replace(/\+/g, '_')
 		;
 		return tkn;
 	}
 
 	function _create(p_uid, p_name, p_callback, f_callback){
 		var clientId	= _createToken( _CLIENT_ID_LENGTH )
-		, 	secretKey	= _createToken( _SCECRET_KEY_LENGTH )
+		, 	secretKey	= _createToken( _SECRET_KEY_LENGTH )
 		;
 
 		async.series(
@@ -151,8 +151,8 @@ function _app(p_collection){
 		,
 			{	
 				$set : {
-			 		secretKey	: _createToken( _SCECRET_KEY_LENGTH )
-			 	}
+					secretKey	: _createToken( _SECRET_KEY_LENGTH )
+				}
 			}
 		,
 			{'new' : true}

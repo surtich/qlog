@@ -145,7 +145,7 @@ iris.ui(function(self) {
 	}
 
 	// ----------------
-	// Reset Secret Key
+	// Delete App
 	// ----------------
 	function deleteApp(){
 		self.get('btnDelete').addClass('icon-spin');
