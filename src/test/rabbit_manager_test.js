@@ -1,9 +1,10 @@
 var commons = require('../lib/commons.js')
-, 	rabbitMan = require('../qlog/rabbit_manager.js')({
-	host: 'localhost'
-,	port: '15672'
-,	user: 'guest'
-,	password: 'guest'
+	rbtm = require('../qlog/rabbit_manager.js')
+, 	rabbitMan = new rbtm({
+		host: 'localhost'
+	,	port: '15672'
+	,	user: 'guest'
+	,	password: 'guest'
 })
 ,	assert = commons.assert
 ;
