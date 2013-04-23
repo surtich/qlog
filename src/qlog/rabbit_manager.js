@@ -8,15 +8,15 @@ function _rabbit(p_config) {
 	var auth = {
 		user : p_config.user || 'guest'
 	,	password : p_config.password || 'guest'
-	}
+	};
 
-	var baseUrl = 'http://' + (p_config.host || 'localhost') + ':' + (p_config.port || '15672');
+	var baseUrl = 'http://' + (auth.user + ':' auth.password + '@') +(p_config.host || 'localhost') + ':' + (p_config.port || '15672');
 
 	function _getVhosts(f_callback){
 		var options = {
 			url  : baseUrl + '/api/vhosts/'
 		,	json : {}
-		,	auth : auth
+		//,	auth : auth
 		};
 
 		request.get(options, f_callback);
@@ -26,7 +26,7 @@ function _rabbit(p_config) {
 		var options = {
 			url  : baseUrl + '/api/vhosts/' + querystring.escape(p_name)
 		,	json : {}
-		,	auth : auth
+		//,	auth : auth
 		};
 
 		request.get(options, f_callback);
@@ -36,7 +36,7 @@ function _rabbit(p_config) {
 		var options = {
 			url  : baseUrl + '/api/vhosts/' + querystring.escape(p_name)
 		,	json : {}
-		,	auth : auth
+		//,	auth : auth
 		};
 
 		request.put(options, f_callback);
@@ -46,7 +46,7 @@ function _rabbit(p_config) {
 		var options = {
 			url  : baseUrl + '/api/vhosts/' + querystring.escape(p_name)
 		,	json : {}
-		,	auth : auth
+		//,	auth : auth
 		};
 
 		request.del(options, f_callback);
@@ -56,7 +56,7 @@ function _rabbit(p_config) {
 		var options = {
 			url  : baseUrl + '/api/users/'
 		,	json : {}
-		,	auth : auth
+		//,	auth : auth
 		};
 
 		request.get(options, f_callback);
@@ -66,7 +66,7 @@ function _rabbit(p_config) {
 		var options = {
 			url  : baseUrl + '/api/users/' + p_user
 		,	json : {}
-		,	auth : auth
+		//,	auth : auth
 		};
 
 		
@@ -80,7 +80,7 @@ function _rabbit(p_config) {
 				password : p_password
 			,	tags : p_tags
 			}
-		,	auth : auth
+		//,	auth : auth
 		};
 
 		request.put(options, f_callback);
@@ -90,7 +90,7 @@ function _rabbit(p_config) {
 		var options = {
 			url  : baseUrl + '/api/users/' + p_user
 		,	json : {}
-		,	auth : auth
+		//,	auth : auth
 		};
 
 		request.del(options, f_callback);
@@ -100,7 +100,7 @@ function _rabbit(p_config) {
 		var options = {
 			url  : baseUrl + '/api/permissions/' + querystring.escape(p_vhost) + '/' + p_user
 		,	json : {}
-		,	auth : auth
+		//,	auth : auth
 		};
 
 		request.get(options, f_callback);
@@ -114,7 +114,7 @@ function _rabbit(p_config) {
 			,	write : p_write
 			,	read: p_read
 		}
-		,	auth : auth
+		//,	auth : auth
 		};
 
 		request.put(options, f_callback);
@@ -125,7 +125,7 @@ function _rabbit(p_config) {
 		var options = {
 			url  : baseUrl + '/api/permissions/' + querystring.escape(p_vhost) + '/' + p_user
 		,	json : {}
-		,	auth : auth
+		//,	auth : auth
 		};
 
 		request.del(options, f_callback);
@@ -135,7 +135,7 @@ function _rabbit(p_config) {
 		var options = {
 			url  : baseUrl + '/api/exchanges/'
 		,	json : {}
-		,	auth : auth
+		//,	auth : auth
 		};
 
 		request.get(options, f_callback);
@@ -145,7 +145,7 @@ function _rabbit(p_config) {
 		var options = {
 			url  : baseUrl + '/api/exchanges/' + querystring.escape(p_vhost)
 		,	json : {}
-		,	auth : auth
+		//,	auth : auth
 		};
 
 		request.get(options, f_callback);
@@ -155,7 +155,7 @@ function _rabbit(p_config) {
 		var options = {
 			url  : baseUrl + '/api/exchanges/' + querystring.escape(p_vhost) + '/' + p_exchange
 		,	json : {}
-		,	auth : auth
+		//,	auth : auth
 		};
 
 		request.get(options, f_callback);
@@ -165,7 +165,7 @@ function _rabbit(p_config) {
 		var options = {
 			url  : baseUrl + '/api/exchanges/' + querystring.escape(p_vhost) + '/' + p_exchange
 		,	json : p_params || { type: 'direct'}
-		,	auth : auth
+		//,	auth : auth
 		};
 
 		request.put(options, f_callback);
@@ -175,7 +175,7 @@ function _rabbit(p_config) {
 		var options = {
 			url  : baseUrl + '/api/exchanges/' + querystring.escape(p_vhost) + '/' + p_exchange
 		,	json : {}
-		,	auth : auth
+		//,	auth : auth
 		};
 
 		request.del(options, f_callback);
@@ -185,7 +185,7 @@ function _rabbit(p_config) {
 		var options = {
 			url  : baseUrl + '/api/exchanges/' + querystring.escape(p_vhost) + '/' + p_exchange + '/publish/'
 		,	json : p_params || {properties: {}, routing_key: '*', payload:'dummy', payload_encoding:'string'}
-		,	auth : auth
+		//,	auth : auth
 		};
 
 		console.log('Publish', options);
@@ -196,7 +196,7 @@ function _rabbit(p_config) {
 		var options = {
 			url  : baseUrl + '/api/queues/'
 		,	json : {}
-		,	auth : auth
+		//,	auth : auth
 		};
 
 		request.get(options, f_callback);
@@ -206,7 +206,7 @@ function _rabbit(p_config) {
 		var options = {
 			url  : baseUrl + '/api/queues/' + querystring.escape(p_vhost)
 		,	json : {}
-		,	auth : auth
+		//,	auth : auth
 		};
 
 		request.get(options, f_callback);
@@ -216,7 +216,7 @@ function _rabbit(p_config) {
 		var options = {
 			url  : baseUrl + '/api/queues/' + querystring.escape(p_vhost) + '/' + p_queue
 		,	json : {}
-		,	auth : auth
+		//,	auth : auth
 		};
 
 		request.get(options, f_callback);
@@ -226,7 +226,7 @@ function _rabbit(p_config) {
 		var options = {
 			url  : baseUrl + '/api/queues/' + querystring.escape(p_vhost) + '/' + p_queue
 		,	json : p_params || {}
-		,	auth : auth
+		//,	auth : auth
 		};
 
 		request.put(options, f_callback);
@@ -236,7 +236,7 @@ function _rabbit(p_config) {
 		var options = {
 			url  : baseUrl + '/api/queues/' + querystring.escape(p_vhost) + '/' + p_queue
 		,	json : {}
-		,	auth : auth
+		//,	auth : auth
 		};
 
 		request.del(options, f_callback);
@@ -246,7 +246,7 @@ function _rabbit(p_config) {
 		var options = {
 			url  : baseUrl + '/api/queues/' + querystring.escape(p_vhost) + '/' + p_queue + '/get'
 		,	json : {count: 1, requeue: false, encoding: 'auto'}
-		,	auth : auth
+		//,	auth : auth
 		};
 
 		request.post(options, f_callback);
@@ -256,7 +256,7 @@ function _rabbit(p_config) {
 		var options = {
 			url  : baseUrl + '/api/bindings/' + querystring.escape(p_vhost) + '/e/' + p_exchange + '/q/' + p_destination
 		,	json : p_params || { type: 'topic'}
-		,	auth : auth
+		//,	auth : auth
 		};
 
 		request.post(options, f_callback);
@@ -267,7 +267,7 @@ function _rabbit(p_config) {
 		p_vhost = (p_vhost === '/' ? '' : '/' + querystring.escape(p_vhost));
 		var url = 'amqp://' + p_user + ':' + p_password + '@' + p_url + p_vhost;
 		f_callback(null, {url : url, exchange : p_user});
-		
+
 		/*_createUser(p_user, p_password, '', function(error, response, data){
 			if(! error && response.statusCode === 204){
 				_setPermissions(p_user, p_vhost, '^$', '^' + p_user, '^$', function(error, response, data){
