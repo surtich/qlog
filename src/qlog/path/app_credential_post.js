@@ -6,7 +6,7 @@ module.exports = function (req, res, next){
 	qlog.app.getByClientId(
 		req.params.appId
 	, function(err, data){
-		if(data.secretKey === req.body.p){
+		if(data && data.secretKey === req.body.p){
 			qlog.rabbitMan.createCredential(
 				req.params.appId
 			, 	req.body.p
