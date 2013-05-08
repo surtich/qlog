@@ -17,8 +17,8 @@
         ,   "routing_key"   : "*"
         ,   "queue"     : "qlog_q"
         ,   "queue_opts"   : {"passive" : true}
-        ,   "user" : "local"
-        ,   "password" : "local"
+        ,   "user"       : "local"
+        ,   "password"   : "local"
         }
     }
 ,

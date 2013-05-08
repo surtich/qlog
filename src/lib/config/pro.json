@@ -17,6 +17,8 @@
         ,   "routing_key"   : "*"
         ,   "queue"     : "qlog_q"
         ,   "queue_opts"   : {"passive" : true}
+        ,   "user"       : "innotech"
+        ,   "password"   : "dD65C8hd"
         }
     }
 ,
