@@ -18,7 +18,7 @@
 	,	"node-uuid": "1.4.x"
 	, 	"pause" : "0.0.1"
 	,	"hero"	 : "https://github.com/thegameofcode/hero/tarball/master"
-	,	"pastry"	: "https://github.com/luismesas/pastry/tarball/master"
+	,	"pastry"	: "https://github.com/luismesas/pastry/archive/0.9.6.tar.gz"
 	,	"querystring" : "0.2.x"
 	}
 ,
