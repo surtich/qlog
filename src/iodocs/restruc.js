@@ -96,7 +96,7 @@ function Restruc(basedir, apisConfig) {
   for (var i = 0; i < apiDefinition.endpoints.length; i++) {
    var endpoint = apiDefinition.endpoints[i];
    var service = formatName(endpoint.name);
-   skelApp[ service + ".js"] = "";
+   //skelApp[ service + ".js"] = "";
    for (var j = 0; j < endpoint.methods.length; j++) {
     var method = endpoint.methods[j];
     if (method["hero"] && method["hero"]["handler"]) {
