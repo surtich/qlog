@@ -6,7 +6,7 @@
             {
                "MethodName":"./path/signin_post.js -> qlog.user.getByEmailAndPwd",
                "hero": {
-                 "require": "signin_post.js"
+                 "handler": "signin_post.js"
                },
                "Synopsis":"Connects an user to QLog",
                "HTTPMethod":"POST",
@@ -33,7 +33,7 @@
             {
                "MethodName":"./path/signout_post.js -> req.pastry.invalidate",
                "hero": {
-                 "require": "signout_post.js"
+                 "handler": "signout_post.js"
                },               
                "Synopsis":"Disconnects an user from QLog",
                "HTTPMethod":"POST",
@@ -49,7 +49,7 @@
             {
                "MethodName":"./path/user_get.js -> qlog.user.getUsers",
                "hero": {
-                "require": "user_get.js"
+                "handler": "user_get.js"
                },
                "Synopsis":"Gets all users from QLog",
                "HTTPMethod":"GET",
@@ -69,7 +69,7 @@
             {
                "MethodName":"./path/signup_post.js -> qlog.user.signup",
                "hero": {
-                 "require": "signup_post.js"
+                 "handler": "signup_post.js"
                },
                "Synopsis":"Creates a new QLog user",
                "HTTPMethod":"POST",
@@ -96,7 +96,7 @@
             {
                "MethodName":"./path/user_me_get.js -> qlog.user.getUserById",
                "hero": {
-                 "require": "user_me_get.js"
+                 "handler": "user_me_get.js"
                },
                "Synopsis":"Gets the information of the connected user",
                "HTTPMethod":"GET",
@@ -121,7 +121,7 @@
             {
                "MethodName":"./path/app_get.js -> qlog.app.getByUser",
                "hero": {
-                 "require": "app_get.js"
+                 "handler": "app_get.js"
                },
                "APIParams" : "req.pastry.data.uid",
                "Synopsis":"Gets all apps from an user",
@@ -142,7 +142,7 @@
             {
                "MethodName":"./path/app_details_get.js -> qlog.app.getById",
                "hero": {
-                 "require": "app_details_get.js"
+                 "handler": "app_details_get.js"
                },
                "Synopsis":"Gets an app from its _id",
                "HTTPMethod":"GET",
@@ -162,7 +162,7 @@
             {
                "MethodName":"./path/app_put.js -> qlog.app.create",
                "hero": {
-                 "require": "app_put.js"
+                 "handler": "app_put.js"
                },
                "Synopsis":"Creates a new app",
                "HTTPMethod":"PUT",
@@ -197,7 +197,7 @@
             {
                "MethodName":"./path/app_post.js -> qlog.app.update",
                "hero": {
-                 "require": "app_post.js"
+                 "handler": "app_post.js"
                },
                "Synopsis":"Updates an app",
                "HTTPMethod":"POST",
@@ -232,7 +232,7 @@
             {
                "MethodName":"./path/app_secretkey_post.js -> qlog.app.refreshSecretKey",
                "hero": {
-                 "require": "app_secretkey_post.js"
+                 "handler": "app_secretkey_post.js"
                },
                "Synopsis":"Renews the secretKey",
                "HTTPMethod":"POST",
@@ -252,7 +252,7 @@
             {
                "MethodName":"./path/app_delete.js -> qlog.app.erase",
                "hero": {
-                 "require": "app_delete.js"
+                 "handler": "app_delete.js"
                },
                "Synopsis":"Delete an app",
                "HTTPMethod":"DELETE",
@@ -272,7 +272,7 @@
             {
                "MethodName":"./path/app_credential_post.js -> qlog.app.getByClientId",
                "hero": {
-                 "require": "app_credential_post.js"
+                 "handler": "app_credential_post.js"
                },
                "Synopsis":"Returns the RabbitMQ URL and the exchange identifier of the app",
                "HTTPMethod":"POST",
@@ -305,7 +305,7 @@
             {
                "MethodName":"./path/log_put.js -> qlog.log.create",
                "hero": {
-                 "require": "log_put.js"
+                 "handler": "log_put.js"
                },
                "Synopsis":"Adds a log to an application",
                "HTTPMethod":"PUT",
@@ -357,7 +357,7 @@
             {
                "MethodName":"./path/log_get.js -> qlog.log.getByApp",
                "hero": {
-                 "require": "log_get.js"
+                 "handler": "log_get.js"
                },
                "Synopsis":"Gets the logs from application",
                "HTTPMethod":"GET",

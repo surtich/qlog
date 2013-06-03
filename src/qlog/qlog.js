@@ -11,6 +11,7 @@ var commons  = require('../lib/commons.js')
 ,	_log  	 = require('./log_manager.js')
 ,	_app  	 = require('./app_manager.js')
 ,	_consumer = require('./consumer.js')
+,	path = require('path')
 ;
 
 module.exports = hero.worker(
@@ -74,7 +75,9 @@ module.exports = hero.worker(
 			);
 
 			hero.init(
-				require("./paths.js").paths
+				require('../iodocs/public/data/apiconfig.json')
+			,
+				path.join(__dirname , "/../..")
 			,
 				function (){
 					async.series(

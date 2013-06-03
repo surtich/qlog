@@ -13,9 +13,5 @@
   "port" : 6379,
   "password" : "",
   "database" : "0"
- },
- "restruc" : {
-  "projectName": "qlog",
-  "dirBase": "/home/jperez/intelygenz"
  }
 }
