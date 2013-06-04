@@ -43,9 +43,6 @@ function Restruc(basedir, apisConfig) {
 	
  self.skelApi = {
   "path": {},
-  "app": {
-   "main.js": ""
-  },
   "test": {},
   "www": {
    "test": {},
@@ -118,7 +115,7 @@ function Restruc(basedir, apisConfig) {
        } else if (param.Location === "pathReplace") {
         contents +=  "\n\treq.params.";
        } else if (param.Location === "header") {
-        contents +=  "\n\treq.readers.";
+        contents +=  "\n\treq.headers.";
        }
 
        contents +=  param.Name + "\t\t\t: " + param["Description"];
