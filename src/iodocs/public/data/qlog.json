@@ -126,7 +126,7 @@
                "APIParams" : "req.pastry.data.uid",
                "Synopsis":"Gets all apps from an user",
                "HTTPMethod":"GET",
-               "URI":"/app",
+               "URI":"/app/",
                "RequiresOAuth":"N",
                "parameters":[
                   {

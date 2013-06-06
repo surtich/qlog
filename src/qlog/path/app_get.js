@@ -2,7 +2,7 @@
 
 	Synopsis	: Gets all apps from an user
 	Method		: GET
-	Path		: /app
+	Path		: /app/
 
 	Num Params		: 1
 
