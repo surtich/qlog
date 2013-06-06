@@ -1,0 +1,34 @@
+{
+ "skelProject" : {
+  "src" : {
+   "test" : {},
+   "lib" : {
+    "package.json": ""
+   }
+  }
+ },
+ "dirPaths": "path",
+ "skelApi": {
+  "path": {},
+  "test": {},
+  "www": {
+   "test": {},
+   "app": {
+    "init.js": "",
+    "lang": {
+     "en-us.js": ""
+    },
+    "resource": {},
+    "screen": {
+     "welcome.js": "",
+     "welcome.html": ""
+    },
+    "ui": {}
+   },
+   "css": {},
+   "js": {},
+   "img": {},
+   "index.html": ""
+  }
+ }
+}

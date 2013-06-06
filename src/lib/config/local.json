@@ -38,4 +38,9 @@
         ,   "params" : {}
         }
     }
+,
+    "iodocs" : {
+        "active" :  false,
+        "dir"    :  "src/iodocs" 
+    }
 }
