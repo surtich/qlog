@@ -60,10 +60,10 @@ module.exports = hero.worker(
 		self.ready = function (next){
 			hero.app.configure (
 				function() {
-					hero.app.use( express.static(__dirname + '/statics') );
 					hero.app.use( express.bodyParser() );
 					hero.app.use( pastry.parseCookies() );
 					hero.app.use( hero.app.router );
+					hero.app.use( express.static(__dirname + '/statics') );
 					hero.app.use(
 						express.errorHandler(
 							{	dumpExceptions 	: true
