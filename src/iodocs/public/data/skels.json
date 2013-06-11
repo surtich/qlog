@@ -8,10 +8,11 @@
   }
  },
  "dirPaths": "path",
+ "iris": {"baseURI": "statics", "resourcePaths": "app/resource", "initPath": "app/init.js"},
  "skelApi": {
   "path": {},
   "test": {},
-  "www": {
+  "statics": {
    "test": {},
    "app": {
     "init.js": "",

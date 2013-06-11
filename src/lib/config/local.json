@@ -40,7 +40,7 @@
     }
 ,
     "iodocs" : {
-        "active" :  true,
+        "filter" :  true,
         "dir"    :  "src/iodocs" 
     }
 }
