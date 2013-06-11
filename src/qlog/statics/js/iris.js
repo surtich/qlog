@@ -1487,13 +1487,12 @@ window.iris = iris;
 
         } else {
             // resourceOrPath == resource
-            var serv = new iris.Resource();
+            var serv = serv = new iris.Resource();
             serv.cfg = {};
-            serv.settings({ type: "json", path: "" });
+            serv.settings({ type: "json", path: "" });                
 
             if (parentPath) {
                 if (!_includes[parentPath]) {
-                    serv.parentPath = parentPath;
                     var url = parentPath;
                     if ( !iris.cache() ) {
                         url += "?_=" + new Date().getTime();
@@ -1510,12 +1509,15 @@ window.iris = iris;
                     });
                 }
 
-                serv = _includes[parentPath];
+                var parent = _includes[parentPath]
+                serv.parentPath = parentPath;
                 serv.super = {};
-                for (var prop in _includes[parentPath]) {
-                    serv.super[prop] = _includes[parentPath][prop];
+                for (var prop in parent) {
+                    if (parent.hasOwnProperty(prop)) {
+                        serv[prop] = parent[prop];
+                        serv.super[prop] = parent[prop];
+                    }
                 }
-                serv.signin = function() {};
             }
 
             resourceOrPath(serv);
