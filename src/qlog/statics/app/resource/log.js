@@ -2,7 +2,7 @@ iris.resource(
 	function(self){
 
 		self.getAll = function (params, f_ok, f_error) {
-			return self.get('/app/'+params.app.clientId+'/log', function(logs){
+			return self.super.getAll(params.app.clientId, function(logs){
 
 				//Extracts all tags from received logs
 				var tags = {};
@@ -27,4 +27,4 @@ iris.resource(
 
 	},
 
-	iris.path.resource.log);
+	iris.path.resource.log, iris.path.resource._log);

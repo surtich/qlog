@@ -1477,8 +1477,7 @@ window.iris = iris;
         }
     };
 
-    function _registerRes (resourceOrPath, path) {
-
+    function _registerRes (resourceOrPath, path, parentPath) {
         if ( typeof resourceOrPath === "string" ) {
             // resourceOrPath == path
             if ( !_includes.hasOwnProperty(resourceOrPath) ) {
@@ -1491,9 +1490,39 @@ window.iris = iris;
             var serv = new iris.Resource();
             serv.cfg = {};
             serv.settings({ type: "json", path: "" });
-            resourceOrPath(serv);
 
+            if (parentPath) {
+                if (!_includes[parentPath]) {
+                    serv.parentPath = parentPath;
+                    var url = parentPath;
+                    if ( !iris.cache() ) {
+                        url += "?_=" + new Date().getTime();
+                    } else if( iris.cacheVersion() ) {
+                        url += "?_=" + iris.cacheVersion();
+                    }
+                    
+                    iris.ajax({
+                        url: url,
+                        dataType: "script",
+                        async: false
+                    }).done(function(data) {
+                        eval(data);
+                    });
+                }
+
+                serv = _includes[parentPath];
+                serv.super = {};
+                for (var prop in _includes[parentPath]) {
+                    serv.super[prop] = _includes[parentPath][prop];
+                }
+                serv.signin = function() {};
+            }
+
+            resourceOrPath(serv);
+            
             _includes[path] = serv;
+
+            return serv;
         }
 
     }
